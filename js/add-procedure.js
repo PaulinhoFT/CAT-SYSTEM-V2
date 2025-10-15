@@ -1,4 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Registra o módulo de redimensionamento de imagem
+    Quill.register('modules/imageResize', window.ImageResize.default);
+
     // Função para o upload de imagem
     function imageHandler() {
         const input = document.createElement('input');
@@ -14,21 +17,26 @@ document.addEventListener('DOMContentLoaded', () => {
                 const imageRef = storageRef.child(`images/${imageName}`);
 
                 try {
+                    // Mostra um feedback de carregamento (opcional, mas bom para UX)
+                    const range = this.quill.getSelection(true);
+                    this.quill.insertText(range.index, ' [Uploading image...] ', 'user');
+
                     const snapshot = await imageRef.put(file);
                     const url = await snapshot.ref.getDownloadURL();
 
-                    // Insere a imagem no editor
-                    const range = this.quill.getSelection();
+                    // Remove o texto de carregamento e insere a imagem
+                    this.quill.deleteText(range.index, ' [Uploading image...] '.length);
                     this.quill.insertEmbed(range.index, 'image', url);
+                    this.quill.setSelection(range.index + 1, Quill.sources.SILENT);
+
                 } catch (error) {
                     console.error("Erro ao fazer upload da imagem: ", error);
                     alert("Falha no upload da imagem.");
+                    this.quill.deleteText(range.index, ' [Uploading image...] '.length);
                 }
             }
         };
     }
-
-    Quill.register('modules/imageResize', ImageResize);
 
     // Inicializa o editor Quill
     const quill = new Quill('#editor', {
@@ -48,7 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
             },
             imageResize: {
                 parchment: Quill.import('parchment'),
-                modules: ['Resize', 'DisplaySize']
+                modules: ['Resize', 'DisplaySize', 'Toolbar']
             }
         }
     });
