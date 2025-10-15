@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adicionar Procedimento</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="navbar">
+        <ul>
+            <li>
+                <a href="index.html">Voltar para a Home</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="corpodireito">
+        <div class="titulo">
+            <h1>Adicionar Novo Procedimento</h1>
+        </div>
+        <form id="add-procedure-form">
+            <div class="form-group">
+                <label for="title">Título do Procedimento</label>
+                <input type="text" id="title" required>
+            </div>
+            <div class="form-group">
+                <label for="content">Conteúdo do Procedimento (em HTML)</label>
+                <textarea id="content" rows="20" required></textarea>
+            </div>
+            <button type="submit">Salvar Procedimento</button>
+        </form>
+    </div>
+
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+
+    <!-- Seus scripts -->
+    <script src="js/firebase-config.js"></script>
+    <script src="js/add-procedure.js"></script>
+</body>
+</html>
