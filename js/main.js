@@ -5,36 +5,54 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let allProcedures = []; // Armazena todos os procedimentos
 
-    // Carrega a lista de procedimentos na barra lateral
+    // Carrega e renderiza os procedimentos
     db.collection('procedures').orderBy('title').onSnapshot(snapshot => {
-        allProcedures = []; // Limpa a lista antes de preencher
-        proceduresList.innerHTML = ''; // Limpa a lista antes de adicionar os novos itens
-        snapshot.forEach(doc => {
-            const procedure = { id: doc.id, ...doc.data() };
-            allProcedures.push(procedure);
-            renderProcedure(procedure);
-        });
+        allProcedures = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        renderGroupedProcedures(allProcedures);
     });
 
-    // Função para renderizar um procedimento na lista
-    function renderProcedure(procedure) {
-        const li = document.createElement('li');
-        li.innerHTML = `
-            <a href="#" class="procedure-link" data-id="${procedure.id}">${procedure.title}</a>
-            <div class="procedure-actions">
-                <button class="edit-btn" data-id="${procedure.id}">✏️</button>
-                <button class="delete-btn" data-id="${procedure.id}">❌</button>
-            </div>
-        `;
-        proceduresList.appendChild(li);
+    function renderGroupedProcedures(procedures) {
+        proceduresList.innerHTML = ''; // Limpa a lista
+        const grouped = procedures.reduce((acc, p) => {
+            const category = p.category || 'Sem Categoria';
+            if (!acc[category]) {
+                acc[category] = [];
+            }
+            acc[category].push(p);
+            return acc;
+        }, {});
+
+        for (const category in grouped) {
+            const details = document.createElement('details');
+            details.className = 'category-group';
+            details.open = true; // Mantém as categorias abertas por padrão
+
+            const summary = document.createElement('summary');
+            summary.textContent = category;
+            details.appendChild(summary);
+
+            const ul = document.createElement('ul');
+            grouped[category].forEach(p => {
+                const li = document.createElement('li');
+                li.innerHTML = `
+                    <a href="#" class="procedure-link" data-id="${p.id}">${p.title}</a>
+                    <div class="procedure-actions">
+                        <button class="edit-btn" data-id="${p.id}">✏️</button>
+                        <button class="delete-btn" data-id="${p.id}">❌</button>
+                    </div>
+                `;
+                ul.appendChild(li);
+            });
+            details.appendChild(ul);
+            proceduresList.appendChild(details);
+        }
     }
 
     // Filtra os procedimentos em tempo real
     searchInput.addEventListener('input', (e) => {
         const searchTerm = e.target.value.toLowerCase();
-        proceduresList.innerHTML = ''; // Limpa a lista
         const filteredProcedures = allProcedures.filter(p => p.title.toLowerCase().includes(searchTerm));
-        filteredProcedures.forEach(renderProcedure);
+        renderGroupedProcedures(filteredProcedures);
     });
 
     // Lida com cliques na lista de procedimentos (visualizar, editar, excluir)
@@ -74,5 +92,26 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             }
         }
+    });
+
+    // Lógica para o modo claro/escuro
+    const themeToggle = document.getElementById('theme-toggle');
+    const currentTheme = localStorage.getItem('theme');
+
+    if (currentTheme === 'dark') {
+        document.body.classList.add('dark-mode');
+        themeToggle.textContent = '☀️';
+    }
+
+    themeToggle.addEventListener('click', () => {
+        document.body.classList.toggle('dark-mode');
+        let theme = 'light';
+        if (document.body.classList.contains('dark-mode')) {
+            theme = 'dark';
+            themeToggle.textContent = '☀️';
+        } else {
+            themeToggle.textContent = '🌙';
+        }
+        localStorage.setItem('theme', theme);
     });
 });

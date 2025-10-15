@@ -27,6 +27,17 @@
                 <input type="text" id="title" required>
             </div>
             <div class="form-group">
+                <label for="category">Categoria</label>
+                <select id="category" required>
+                    <option value="" disabled selected>Selecione uma categoria</option>
+                    <option value="Suporte">Suporte</option>
+                    <option value="Financeiro">Financeiro</option>
+                    <option value="Contratos">Contratos</option>
+                    <option value="SVA">SVA</option>
+                    <option value="Informativo">Informativo</option>
+                </select>
+            </div>
+            <div class="form-group">
                 <label for="editor">Conteúdo do Procedimento</label>
                 <!-- O editor Quill será inserido aqui -->
                 <div id="editor" style="height: 300px; background-color: white;"></div>
