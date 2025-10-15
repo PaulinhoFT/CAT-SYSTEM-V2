@@ -28,6 +28,8 @@ document.addEventListener('DOMContentLoaded', () => {
         };
     }
 
+    Quill.register('modules/imageResize', ImageResize);
+
     // Inicializa o editor Quill
     const quill = new Quill('#editor', {
         theme: 'snow',
@@ -43,6 +45,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 handlers: {
                     'image': imageHandler
                 }
+            },
+            imageResize: {
+                parchment: Quill.import('parchment'),
+                modules: ['Resize', 'DisplaySize']
             }
         }
     });
