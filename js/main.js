@@ -1,22 +1,40 @@
 document.addEventListener('DOMContentLoaded', () => {
     const proceduresList = document.getElementById('procedures-list');
     const procedureContent = document.getElementById('procedure-content');
+    const searchInput = document.getElementById('search-input');
+
+    let allProcedures = []; // Armazena todos os procedimentos
 
     // Carrega a lista de procedimentos na barra lateral
     db.collection('procedures').orderBy('title').onSnapshot(snapshot => {
+        allProcedures = []; // Limpa a lista antes de preencher
         proceduresList.innerHTML = ''; // Limpa a lista antes de adicionar os novos itens
         snapshot.forEach(doc => {
-            const procedure = doc.data();
-            const li = document.createElement('li');
-            li.innerHTML = `
-                <a href="#" class="procedure-link" data-id="${doc.id}">${procedure.title}</a>
-                <div class="procedure-actions">
-                    <button class="edit-btn" data-id="${doc.id}">✏️</button>
-                    <button class="delete-btn" data-id="${doc.id}">❌</button>
-                </div>
-            `;
-            proceduresList.appendChild(li);
+            const procedure = { id: doc.id, ...doc.data() };
+            allProcedures.push(procedure);
+            renderProcedure(procedure);
         });
+    });
+
+    // Função para renderizar um procedimento na lista
+    function renderProcedure(procedure) {
+        const li = document.createElement('li');
+        li.innerHTML = `
+            <a href="#" class="procedure-link" data-id="${procedure.id}">${procedure.title}</a>
+            <div class="procedure-actions">
+                <button class="edit-btn" data-id="${procedure.id}">✏️</button>
+                <button class="delete-btn" data-id="${procedure.id}">❌</button>
+            </div>
+        `;
+        proceduresList.appendChild(li);
+    }
+
+    // Filtra os procedimentos em tempo real
+    searchInput.addEventListener('input', (e) => {
+        const searchTerm = e.target.value.toLowerCase();
+        proceduresList.innerHTML = ''; // Limpa a lista
+        const filteredProcedures = allProcedures.filter(p => p.title.toLowerCase().includes(searchTerm));
+        filteredProcedures.forEach(renderProcedure);
     });
 
     // Lida com cliques na lista de procedimentos (visualizar, editar, excluir)
