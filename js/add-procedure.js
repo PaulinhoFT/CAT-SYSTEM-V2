@@ -1,9 +1,13 @@
 document.addEventListener('DOMContentLoaded', () => {
     // Registra o módulo de redimensionamento de imagem
-    Quill.register('modules/imageResize', window.ImageResize.default);
+    if (window.ImageResize) {
+        Quill.register('modules/imageResize', window.ImageResize.default);
+    }
 
     // Função para o upload de imagem
     function imageHandler() {
+        const quillInstance = this.quill; // Armazena a instância do Quill
+
         const input = document.createElement('input');
         input.setAttribute('type', 'file');
         input.setAttribute('accept', 'image/*');
@@ -16,23 +20,23 @@ document.addEventListener('DOMContentLoaded', () => {
                 const imageName = `${Date.now()}-${file.name}`;
                 const imageRef = storageRef.child(`images/${imageName}`);
 
+                const range = quillInstance.getSelection(true);
                 try {
-                    // Mostra um feedback de carregamento (opcional, mas bom para UX)
-                    const range = this.quill.getSelection(true);
-                    this.quill.insertText(range.index, ' [Uploading image...] ', 'user');
+                    // Mostra um feedback de carregamento
+                    quillInstance.insertText(range.index, ' [Uploading image...] ', 'user');
 
                     const snapshot = await imageRef.put(file);
                     const url = await snapshot.ref.getDownloadURL();
 
                     // Remove o texto de carregamento e insere a imagem
-                    this.quill.deleteText(range.index, ' [Uploading image...] '.length);
-                    this.quill.insertEmbed(range.index, 'image', url);
-                    this.quill.setSelection(range.index + 1, Quill.sources.SILENT);
+                    quillInstance.deleteText(range.index, ' [Uploading image...] '.length);
+                    quillInstance.insertEmbed(range.index, 'image', url);
+                    quillInstance.setSelection(range.index + 1, Quill.sources.SILENT);
 
                 } catch (error) {
                     console.error("Erro ao fazer upload da imagem: ", error);
-                    alert("Falha no upload da imagem.");
-                    this.quill.deleteText(range.index, ' [Uploading image...] '.length);
+                    alert("Falha no upload da imagem. Verifique o console para mais detalhes (F12).");
+                    quillInstance.deleteText(range.index, ' [Uploading image...] '.length);
                 }
             }
         };
