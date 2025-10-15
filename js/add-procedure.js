@@ -1,15 +1,49 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Função para o upload de imagem
+    function imageHandler() {
+        const input = document.createElement('input');
+        input.setAttribute('type', 'file');
+        input.setAttribute('accept', 'image/*');
+        input.click();
+
+        input.onchange = async () => {
+            const file = input.files[0];
+            if (file) {
+                const storageRef = storage.ref();
+                const imageName = `${Date.now()}-${file.name}`;
+                const imageRef = storageRef.child(`images/${imageName}`);
+
+                try {
+                    const snapshot = await imageRef.put(file);
+                    const url = await snapshot.ref.getDownloadURL();
+
+                    // Insere a imagem no editor
+                    const range = this.quill.getSelection();
+                    this.quill.insertEmbed(range.index, 'image', url);
+                } catch (error) {
+                    console.error("Erro ao fazer upload da imagem: ", error);
+                    alert("Falha no upload da imagem.");
+                }
+            }
+        };
+    }
+
     // Inicializa o editor Quill
     const quill = new Quill('#editor', {
         theme: 'snow',
         modules: {
-            toolbar: [
-                [{ 'header': [1, 2, false] }],
-                ['bold', 'italic', 'underline'],
-                [{ 'color': [] }, { 'background': [] }],
-                [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-                ['link', 'image']
-            ]
+            toolbar: {
+                container: [
+                    [{ 'header': [1, 2, false] }],
+                    ['bold', 'italic', 'underline'],
+                    [{ 'color': [] }, { 'background': [] }],
+                    [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                    ['link', 'image']
+                ],
+                handlers: {
+                    'image': imageHandler
+                }
+            }
         }
     });
 
