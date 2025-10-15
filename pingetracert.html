@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CAT - Ping e Tracert</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="navbar"></div>
+
+    <div class="main">
+
+        <div class="corpodireito">
+
+            <div class="titulo">
+                <div class="voltar"><a href="index.html"> Voltar </a></div>
+                <h1>Ping e Tracert - CAT | TrixNet</h1>
+
+            <div class="ping">
+            <h2>Oque é os comandos de Ping e Tracert ?</h2>
+            <p>Os comandos ping e tracert são ferramentas de diagnóstico de rede usadas para testar conectividade e identificar problemas na comunicação entre dispositivos.</p>
+            <p>🔹 ping → Verifica se um host está acessível na rede e mede a latência (tempo de resposta).</p>
+            <p>🔹 tracert (Traceroute) → Mostra a rota que os pacotes percorrem até um destino, útil para identificar onde há lentidão ou falhas na conexão.</p>
+            <p>Ambos são usados no Prompt de Comando (cmd no Windows) para testar conexões com servidores, sites ou dispositivos na rede. 🚀</p>
+            <h2>Como usar PING ?</h2>
+            <p>1. Abra o Prompt de Comando (cmd no Windows).</p>
+            <p>Clicando no botão Windows (bandeira) e digitando CMD.</p>
+            <img src="img/windowscmd.png">
+            <p>2. Basta digitar ping + o IP ou Host que desejar pingar.</p>
+            <img src="img/ping.png">
+            <p>3. vai ser apresentado a seguinte maneira:</p>
+            <p>Resposta de<span class="red">(IP do serviço em IPv4 ou IPv6) (Tamanho em bytes) (Tempo de resposta) (Tempo de vida do pacote antes de ser descartado)</span></p>
+            <br>
+            <h2>Como usar Tracert ?</h2>
+            <p>2. Basta digitar o tracert + IP do serviço</p>
+            <img src="img/tracert.png">
+            <p>3. Na leitura vai levar como base 1, 2, 3... Número do salto na rota.</p>
+            <p>4. MS é tempo de resposta em milissegundos. Indica a latência entre o seu PC e cada roteador.</p>
+            <p>5. E o IP é IP do roteador pelo qual o pacote passou. Se mostrar * * *, o roteador pode estar bloqueando resposta.</p>
+            </div>
+        
+            </div>
+        </div>
+    </div>
+</body>
+</html>

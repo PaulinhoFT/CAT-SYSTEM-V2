@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CAT - Lentidão</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="navbar"></div>
+
+    <div class="main">
+
+        <div class="corpodireito">
+
+            <div class="titulo">
+                <div class="voltar"><a href="index.html"> Voltar </a></div>
+                <h1>Lentidão - CAT | TrixNet</h1>
+            </div>
+            <div class="lentidao">
+                <h2>1. Coleta de Informações do Assinante</h2>
+                <h3>Solicitar detalhes sobre a reclamação:</h3>
+                <p>Dispositivo afetado.</p>
+                <p>Serviço ou site com problema.</p>
+                <p>Horário em que o problema ocorre.</p>
+                <br>
+                <h2>2. Verificação da Rede Local do Assinante</h2>
+                <h3>Identificar se a conexão é via:</h3>
+                <p>Cabo de rede.</p>
+                <p>Wi-Fi (principal ou adicional).</p>
+                <p>Pedir ao assinante para testar na rede principal, se possível.</p>
+                <br>
+                <h2>3. Validação da Conexão do Dispositivo</h2>
+                <h3>Conexão via Cabo</h3>
+                <h5>Verificar velocidade da conexão:</h5>
+                <p>1 Gbps se ambos os dispositivos suportam.</p>
+                <p>100 Mbps se houver limitação em um dos dispositivos.</p>
+                <p>10 Mbps pode indicar problema no cabo.</p>
+                <h3>Conexão via Wi-Fi</h3>
+                <h5>Analisar:</h5>
+                <p>Intensidade do sinal (RSSI).</p>
+                <p>Banda conectada (2.4 GHz ou 5.8 GHz).</p>
+                <p>Distância do Access Point.</p>
+                <p>Conexão via Redes Adicionais</p>
+                <p>Questionar sobre os pontos acima, pois leituras podem ser comprometidas.</p>
+                <br>
+                <h2>4. Análises Técnicas Adicionais</h2>
+                <h3>Histórico de Autenticação Radius</h3>
+                <p><span class="yellow">Motivo:</span> Identificar quedas pela quantidade de autenticações.</p>
+                <p><span class="red">Causa:</span> Problemas físicos como sinal fraco ou falha na ONU.</p>
+                <p><span class="green">Solução:</span> Validar configurações da ONU e encaminhar técnico, se necessário.</p>
+                <h3>Versão da Firmware da ONU <a href="firmware.html">Clique aqui.</a></h3>
+                <p><span class="yellow">Motivo:</span> Correção de bugs via atualizações.</p>
+                <p><span class="red">Causa:</span> Necessidade de atualização.</p>
+                <p><span class="green">Solução:</span> Verificar versão e atualizar se necessário.</p>
+                <h3>Topologia da Rede (via ONU)</h3>
+                <p><span class="yellow">Motivo:</span> Identificar dispositivos conectados e infraestrutura local.</p>
+                <p><span class="red">Causa:</span> Muitos dispositivos, sinal fraco ou cabos mal conectados.</p>
+                <p><span class="green">Solução:</span> Ajustar cabos, reestruturar a rede ou reposicionar dispositivos.</p>
+                <h3>Configurações de DNS (via ONU) <a href="dns.html">Clique aqui.</a></h3>
+                <p><span class="yellow">Motivo:</span> DNS externo pode aumentar a latência.</p>
+                <p><span class="red">Causa:</span> Alteração por terceiros ou malware.</p>
+                <p><span class="green">Solução:</span> Configurar DNS adequado.</p>
+                <h3>Servidor DHCP e Conflitos de IP <a href="dhcp.html">Clique aqui.</a></h3>
+                <p><span class="yellow">Motivo:</span> Garantir que os IPs estão sendo distribuídos corretamente.</p>
+                <p><span class="red">Causa:</span> Configurações incorretas ou interferências.</p>
+                <p><span class="green">Solução:</span> Ajustar faixa de IPs no modem.</p>
+                <h3>Configuração do Servidor SNTP 168.121.96.25 <a href="sntp.html">Clique aqui.</a></h3>
+                <p><span class="yellow">Motivo:</span> Boa prática para sincronização de horário.</p>
+                <p><span class="red">Causa:</span> Possível alteração por terceiros.</p>
+                <p><span class="green">Solução:</span> Reconfigurar no modem.</p>
+                <h3>Habilitação do UPnP (via ONU) <a href="upnp.html">Clique aqui.</a></h3>
+                <p><span class="yellow">Motivo:</span> Permite abertura automática de portas para dispositivos.</p>
+                <p><span class="red">Causa:</span> Alteração indevida nas configurações.</p>
+                <p><span class="green">Solução:</span> Reconfigurar modem para habilitar UPnP.</p>
+                <br>
+                <h2>5. Verificações Externas</h2>
+                <h3>Status do Serviço no Downdetector <a href="https://downdetector.com.br/">Downdetector</a></h3>
+                <p><span class="yellow">Motivo:</span> Identificar falhas amplas em serviços populares.</p>
+                <p><span class="red">Causa:</span> Instabilidades temporárias nos serviços.</p>
+                <p><span class="green">Solução:</span> Informar o assinante e aguardar normalização.</p>
+                <h3>Teste de Ping e Traceroute <a href="pingetracert.html">Clique aqui.</a></h3>
+                <p><span class="yellow">Motivo:</span> Analisar latência e perdas na transmissão.</p>
+                <p><span class="red">Causa:</span> Problemas na rota de conexão.</p>
+                <p><span class="green">Solução:</span> Coletar logs e encaminhar ao NOC, se necessário.</p>
+                <h3>Desempenho do Dispositivo</h3>
+                <p><span class="yellow">Motivo:</span> Identificar se o problema está no equipamento do assinante.</p>
+                <p><span class="red">Causa:</span> Dispositivos obsoletos ou de baixo desempenho.</p>
+                <p><span class="green">Solução:</span> Testar em outro dispositivo ou orientar sobre limitações.</p>
+                <h3>Leitura do Nível de Sinal Óptico (via Trixwatch)</h3>
+                <p><span class="yellow">Motivo:</span> Analisar a qualidade do sinal recebido.</p>
+                <p><span class="red">Causa:</span> Atenuação elevada pode indicar falha na fibra.</p>
+                <p><span class="green">Solução:</span> Encaminhar técnico para verificação se necessário.</p>
+                <br>
+                <H2>SEMPRE IMPORTANTE ESTAR REINICIANDO A ONU EM QUALQUER ALTERAÇÃO REALIZADA !!!</H2>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

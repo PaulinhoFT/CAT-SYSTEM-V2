@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CAT - Mesh</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="navbar"></div>
+
+    <div class="main">
+
+        <div class="corpodireito">
+
+            <div class="titulo">
+                <div class="voltar"><a href="index.html"> Voltar </a></div>
+                <h1>Mesh - CAT | TrixNet</h1>
+
+            <div class="Mesh">
+            <h2>Oque é um Mesh ?</h2>
+            <p>Um equipamento Mesh em redes é um dispositivo utilizado em uma rede mesh, uma tecnologia sem fio que melhora a cobertura e a estabilidade do sinal Wi-Fi. Esse sistema é composto por um roteador principal e vários nós que trabalham juntos para distribuir o sinal de forma eficiente.</p>
+            <h2>Passo a passo de como ativar o Mesh F6600 (Interface cinza)</h2>
+            <p>Para acessar a area de ativação do Mesh na ONU cinza, segue abaixo:</p>
+            <img src="img/ativarmeshf6600.png">
+            <p>1. Acesse Rede local>WLAN>Mesh Wi-Fi.</p>
+            <p>2. Selecione a opção Ligado e Aplicar.</p>
+            <br>
+            <h2>Passo a passo de como ativar o Mesh F680 (Interface azul)</h2>
+            <p>Para acessar a area de ativação do Mesh na ONU azul, segue abaixo:</p>
+            <img src="img/ativarmeshf680.png">
+            <p>1. Acesse Network>WLAN Common Setting>NetSphere.</p>
+            <p>2. Selecione Mesh Enable e Submit.</p>
+            <p>OBS: Na ONU Azul, a firmware precisa estar atualizada para esta opção.</p>
+            <h2>Segue abaixo um video de como parear o Mesh.</h2>
+            <video id="meuVideo">
+                <source src="img/Configuração MESH.mp4" type="video/mp4">
+                Seu navegador não suporta vídeos.
+            </video>
+        
+            <br>
+            <button onclick="playVideo()">Play Video</button>
+            <button onclick="pauseVideo()">Pause Video</button>
+            
+            <br>
+            <input type="range" id="barraProgresso" value="0" min="0" step="0.1" onchange="avancarVideo()">
+        
+            <script>
+                const video = document.getElementById("meuVideo");
+                const barra = document.getElementById("barraProgresso");
+        
+                video.addEventListener("timeupdate", () => {
+                    barra.value = video.currentTime;
+                    barra.max = video.duration;
+                });
+        
+                function playVideo() {
+                    video.play();
+                }
+        
+                function pauseVideo() {
+                    video.pause();
+                }
+        
+                function avancarVideo() {
+                    video.currentTime = barra.value;
+                }
+            </script>            
+            </div>
+        
+            </div>
+        </div>
+    </div>
+</body>
+</html>

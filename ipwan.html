@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CAT - IP WAN</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="navbar"></div>
+
+    <div class="main">
+
+        <div class="corpodireito">
+
+            <div class="titulo">
+                <div class="voltar"><a href="index.html"> Voltar </a></div>
+                <h1>IP WAN - CAT | TrixNet</h1>
+
+            <div class="ipwan1">
+            <h2>Oque é um IP WAN ?</h2>
+            <p>O IP WAN (Wide Area Network) é o endereço de IP que o seu roteador recebe do provedor de internet (ISP). Ele é usado para identificar sua rede na internet e pode ser dinâmico ou estático.</p>
+            <h2>Passo a passo de como alterar IP WAN</h2>
+            <p>1. Acessar o RBX na area do cliente.</p>
+            <img src="img/ipwan1.png">
+            <p>2. Clicar no campo IP do cliente que desejar alterar o IP WAN</p>
+            <img src="img/ipwan2.png">
+            </div>
+            <div class="ipwan">
+            <p>3. Clicar no lapiz para editar o IP WAN do cliente</p>
+            <img src="img/ipwan3.png">
+            <p>4. Clicar no Globinho para abrir a area de alteração do IP WAN</p>
+            <img src="img/ipwan4.png">
+            <p>5. Nesta area, temos duas opções de IP para uso, o IP PRIVADO (CGNAT) e IP PUBLICO (CONGENT)</p>
+            <img src="img/ipwan5.png">
+            <p>6. Sempre que alterar um IP, deixar como AUTOMATICO</p>
+            <img src="img/ipwan6.png">
+            <p>7. Clique em OK para adicionar o IP configurado na rede do assinante</p>
+            <img src="img/ipwan7.png" style="width: 90%; height: auto;">
+            <p>8. Para entrar em vigor o IP configurado, sempre reiniciar a ONU no TrixWatch</p>
+            <h2>⚠️ Importante</h2>
+            <h2>Tipos de IP WAN:</h2>
+            <h3>IP PRIVADO DINAMICO</h3>
+            <p>Um IP privado dinâmico é um endereço IP local que muda periodicamente dentro da sua rede interna.</p>
+            <h3>IP PRIVADO FIXO</h3>
+            <p>Um IP privado fixo (ou IP privado estático) é um endereço IP local que não muda dentro da sua rede.</p>
+            <h3>IP PUBLICO DINAMICO</h3>
+            <p>Um IP público dinâmico é um endereço de IP que o seu provedor de internet (ISP) atribui à sua conexão e que muda periodicamente. Esse IP é utilizado para identificar sua rede na internet e pode ser alterado a cada reconexão do roteador ou em intervalos definidos pelo provedor.</p>
+            <h3>IP PUBLICO FIXO (NUNCA SELECIONAR PARA O ASSINANTE ESTE TIPO DE IP SEM AUTORIZAÇÃO DO NOC OU SUPERIORES)</h3>
+            <p>Um IP público fixo (ou IP público estático) é um endereço de IP atribuído pelo seu provedor de internet (ISP) que não muda. Ele identifica sua conexão na internet e permite acessos remotos mais previsíveis.</p>
+            <h2><spanc class="red">SEMPRE QUE ADICIONAR UM IP PUBLICO AO ASSINANTE, TROCAR A SENHA DA ONU PARA NÃO RECEBER UM ATAQUE DNS</span></h2>
+            <h2>Oque é CGNAT ?</h2>
+            <p>CGNAT (Carrier-Grade NAT) é uma tecnologia usada pelos provedores de internet para economizar endereços IPv4 públicos. Em vez de fornecer um IP público exclusivo para cada cliente, o provedor coloca vários clientes sob um mesmo IP compartilhado.</p>
+            <h2>Porque não utilizar IP publico fixo ?</h2>
+            <p>O IPv4 suporta cerca de 4,3 bilhões de endereços, mas com o crescimento da internet, eles se esgotaram. Para contornar isso, provedores adotaram CGNAT (compartilhamento de IPs) e começaram a migrar para IPv6, que tem um número praticamente infinito de endereços. No entanto, muitos sistemas ainda dependem do IPv4, dificultando a transição total.</p>
+            </div>
+        
+            </div>
+        </div>
+    </div>
+</body>
+</html>

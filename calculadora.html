@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Calculadora de Desconto</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 40px;
+      background-color: #f9f9f9;
+    }
+    .flex-container {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .container {
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      max-width: 400px;
+      width: 100%;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    input, button {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+    }
+    button {
+      background-color: #525151;
+      color: white;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #646363;
+      transition: 1s;
+    }
+    .resultado {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: bold;
+      color: #333;
+    }
+
+  </style>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  
+  <div class="flex-container">
+
+    <!-- Calculadora de Desconto -->
+    <div class="container">
+      <h2><span class="red">Calculadora de Desconto</span></h2>
+
+      <label for="mensalidade">Valor da mensalidade (R$):</label>
+      <input type="number" id="mensalidade" step="0.01" required>
+
+      <label for="diasMes">Número de dias do mês:</label>
+      <input type="number" id="diasMes" required>
+
+      <label>Tempo sem conexão:</label>
+      <input type="number" id="horas" placeholder="Horas" min="0">
+      <input type="number" id="minutos" placeholder="Minutos" min="0" max="59">
+      <input type="number" id="segundos" placeholder="Segundos" min="0" max="59">
+
+      <button onclick="calcularDesconto()">Calcular Desconto</button>
+
+      <div class="resultado" id="resultadoDesconto"></div>
+    </div>
+
+    <!-- Calculadora de Tempo -->
+    <div class="container">
+      <h2><span class="red">Calculadora de Tempo</span></h2>
+      <label>Data de quando caiu:</label>
+      <input type="date" id="data1">
+
+      <label>Hora que caiu (hh:mm:ss)</label>
+      <input type="time" id="hora1" step="1">
+
+      <label>Data de quando volto:</label>
+      <input type="date" id="data2">
+
+      <label>Hora que volto (hh:mm:ss)</label>
+      <input type="time" id="hora2" step="1">
+
+      <button onclick="calcularTempo()">Subtrair</button>
+
+      <div class="resultado" id="resultadoTempo"></div>
+    </div>
+
+  </div>
+
+  <script>
+    function calcularDesconto() {
+      const mensalidade = parseFloat(document.getElementById("mensalidade").value);
+      const diasMes = parseInt(document.getElementById("diasMes").value);
+      const horas = parseInt(document.getElementById("horas").value) || 0;
+      const minutos = parseInt(document.getElementById("minutos").value) || 0;
+      const segundos = parseInt(document.getElementById("segundos").value) || 0;
+
+      if (isNaN(mensalidade) || isNaN(diasMes) || diasMes <= 0 || mensalidade < 0 ||
+          horas < 0 || minutos < 0 || segundos < 0 || minutos >= 60 || segundos >= 60) {
+        document.getElementById("resultadoDesconto").innerText = "Por favor, preencha todos os campos corretamente.";
+        return;
+      }
+
+      const valorPorHora = mensalidade / diasMes / 24;
+      const totalHoras = horas + (minutos / 60) + (segundos / 3600);
+      const desconto = valorPorHora * totalHoras;
+
+      document.getElementById("resultadoDesconto").innerText = `Desconto: R$ ${desconto.toFixed(2)}`;
+    }
+
+    function calcularTempo() {
+      const data1Str = document.getElementById('data1').value;
+      const hora1Str = document.getElementById('hora1').value;
+      const data2Str = document.getElementById('data2').value;
+      const hora2Str = document.getElementById('hora2').value;
+
+      if (!data1Str || !hora1Str || !data2Str || !hora2Str) {
+        alert("Preencha todas as datas e horários.");
+        return;
+      }
+
+      const data1 = new Date(`${data1Str}T${hora1Str}`);
+      const data2 = new Date(`${data2Str}T${hora2Str}`);
+
+      const diffMs = Math.abs(data2.getTime() - data1.getTime());
+      const totalSegundos = Math.floor(diffMs / 1000);
+
+      const horas = Math.floor(totalSegundos / 3600);
+      const minutos = Math.floor((totalSegundos % 3600) / 60);
+      const segundos = totalSegundos % 60;
+
+      document.getElementById("resultadoTempo").innerText =
+        `Resultado: ${horas}h ${minutos}min ${segundos}s`;
+    }
+  </script>
+</body>
+</html>

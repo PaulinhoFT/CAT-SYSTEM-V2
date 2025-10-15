@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CAT - DHCP</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="navbar"></div>
+
+    <div class="main">
+
+        <div class="corpodireito">
+
+            <div class="titulo">
+                <div class="voltar"><a href="index.html"> Voltar </a></div>
+                <h1>Configuração DHCP - CAT | TrixNet</h1>
+
+            <div class="dhcp">
+            <h2>Oque é DHCP ?</h2>
+            <p>DHCP (Dynamic Host Configuration Protocol) é um protocolo de rede que automatiza a atribuição de endereços IP e outras configurações para dispositivos em uma rede.</p>
+            <h2>Como Funciona?</h2>
+            <p>Quando um dispositivo (como um computador, smartphone ou modem) se conecta a uma rede, ele envia uma solicitação para um servidor DHCP. Esse servidor responde fornecendo:</p>
+            <p><span class="green">✔</span> Endereço IP (único para cada dispositivo na rede)</p>
+            <p><span class="green">✔</span> Máscara de Sub-rede (define o alcance da rede local)</p>
+            <p><span class="green">✔</span> Gateway Padrão (roteador que conecta à internet)</p>
+            <p><span class="green">✔</span> Servidores DNS (para resolução de nomes de domínio)</p>
+            <h2>Passo a passo de como configurar DHCP F6600 (Interface cinza)</h2>
+            <p>1. Para acessar o DHCP na ONU da interface cinza, vá até:
+                Rede Local > LAN > Servidor DHCP. (Veja a imagem abaixo para referência).</p>
+            <img src="img/DHCPf6600.png" alt="DHCP F6600">
+            <p>2. O padrão recomendado para o bom funcionamento é conforme a configuração indicada na imagem.</p>
+            <p>3. Para salvar qualquer alteração realizada no DHCP só clicar em Aplicar.</p>
+            <h2>Passo a passo de como configurar DHCP F680 (Interface azul)</h2>
+            <p>1. Para acessar o DHCP na ONU da interface azul, vá até:
+                Network > LAN > DHCP Server. (Veja a imagem abaixo para referência).</p>
+            <img src="img/DHCPf680.png" alt="DHCP F680">
+            <p>2. O padrão recomendado para o bom funcionamento é conforme a configuração indicada na imagem.</p>
+            <p>3. Para salvar qualquer alteração realizada no DHCP só clicar em Submit.</p>
+            <h2>⚠️ Importante</h2>
+            <p>Qualquer equipamento que estiver com um endereço IP fora da faixa configurada no DHCP poderá causar conflito de rede e perda de navegação.</p>
+            <br>
+            <h3>Exemplo de Configuração DHCP Correta:</h3>
+            <br>
+            <p>Gateway: 192.168.1.1</p>
+            <p>Máscara de Sub-rede: 255.255.255.0</p>
+            <p>IP Inicial: 192.168.1.2</p>
+            <p>IP Final: 192.168.1.254</p>
+            <p>DNS: 192.168.1.1</p>      
+            <br> 
+            <p>Se um equipamento estiver configurado com um IP fora dessa faixa, como 192.168.2.1, ele não conseguirá se conectar à rede.</p>
+        
+        </div>
+
+            </div>
+        </div>
+    </div>
+</body>
+</html>
