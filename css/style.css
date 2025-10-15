@@ -77,6 +77,24 @@ body {
     left: 0;
 }
 
+/* Estilos da barra de pesquisa */
+#search-container {
+    padding: 10px 15px;
+}
+
+#search-input {
+    width: 100%;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #555;
+    background-color: #444;
+    color: #f0f0f0;
+}
+
+#search-input::placeholder {
+    color: #aaa;
+}
+
 /* Títulos da barra lateral */
 .le {
     color: #f0e000;
