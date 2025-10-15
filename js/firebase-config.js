@@ -1,12 +1,12 @@
-// Cole aqui a configuração do seu projeto Firebase
-// Para obter, acesse o console do Firebase, vá para as configurações do seu projeto e encontre a seção "Seus aplicativos".
+// Configuração do seu projeto Firebase
 const firebaseConfig = {
-  apiKey: "SUA_API_KEY",
-  authDomain: "SEU_AUTH_DOMAIN",
-  projectId: "SEU_PROJECT_ID",
-  storageBucket: "SEU_STORAGE_BUCKET",
-  messagingSenderId: "SEU_MESSAGING_SENDER_ID",
-  appId: "SEU_APP_ID"
+  apiKey: "AIzaSyDp9bA5SDrIbcMRU5RP8pFMDpEHVyy2cYk",
+  authDomain: "trello-4a099.firebaseapp.com",
+  projectId: "trello-4a099",
+  storageBucket: "trello-4a099.appspot.com",
+  messagingSenderId: "261260246938",
+  appId: "1:261260246938:web:3f9747f5f22a18a679c423",
+  measurementId: "G-NN2XV21WSK"
 };
 
 // Inicializa o Firebase
