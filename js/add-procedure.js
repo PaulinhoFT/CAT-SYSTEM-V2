@@ -68,6 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('procedure-form');
     const pageTitle = document.getElementById('page-title');
     const titleInput = document.getElementById('title');
+    const categoryInput = document.getElementById('category');
 
     // Verifica se estamos em modo de edição
     const urlParams = new URLSearchParams(window.location.search);
@@ -81,6 +82,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 const procedure = doc.data();
                 titleInput.value = procedure.title;
                 quill.root.innerHTML = procedure.content;
+                if (procedure.category) {
+                    categoryInput.value = procedure.category;
+                }
             }
         });
     }
@@ -90,12 +94,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const title = titleInput.value;
         const content = quill.root.innerHTML;
+        const category = categoryInput.value;
 
         if (procedureId) {
             // Atualiza o procedimento existente
             db.collection('procedures').doc(procedureId).update({
                 title: title,
                 content: content,
+                category: category,
                 updatedAt: firebase.firestore.FieldValue.serverTimestamp()
             }).then(() => {
                 alert('Procedimento atualizado com sucesso!');
@@ -108,6 +114,7 @@ document.addEventListener('DOMContentLoaded', () => {
             db.collection('procedures').add({
                 title: title,
                 content: content,
+                category: category,
                 createdAt: firebase.firestore.FieldValue.serverTimestamp()
             }).then(() => {
                 alert('Procedimento salvo com sucesso!');
