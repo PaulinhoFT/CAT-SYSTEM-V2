@@ -426,5 +426,56 @@ button[type="submit"]:hover {
 
 .manual h3 {
     margin-bottom: 10px;
-    color: #333;
+    color: var(--text-primary);
+}
+
+/* Estilos para o Log de Atividades */
+.activity-log {
+    margin-top: 40px;
+}
+
+.activity-log h2 {
+    color: var(--title-color);
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+#log-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: var(--procedure-bg);
+    box-shadow: 0 0 10px var(--procedure-shadow);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+#log-table th, #log-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid var(--sidebar-border);
+}
+
+#log-table thead th {
+    background-color: var(--navbar-bg);
+    color: var(--navbar-text);
+}
+
+.log-action {
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: bold;
+    color: white;
+}
+
+.log-novo {
+    background-color: #28a745; /* Verde */
+}
+
+.log-editado {
+    background-color: #ffc107; /* Amarelo */
+}
+
+.log-excluido {
+    background-color: #dc3545; /* Vermelho */
 }

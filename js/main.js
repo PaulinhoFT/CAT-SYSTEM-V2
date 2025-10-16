@@ -51,8 +51,20 @@ document.addEventListener('DOMContentLoaded', () => {
     // Filtra os procedimentos em tempo real
     searchInput.addEventListener('input', (e) => {
         const searchTerm = e.target.value.toLowerCase();
-        const filteredProcedures = allProcedures.filter(p => p.title.toLowerCase().includes(searchTerm));
-        renderGroupedProcedures(filteredProcedures);
+        document.querySelectorAll('.category-group').forEach(group => {
+            let hasVisibleProcedures = false;
+            group.querySelectorAll('li').forEach(li => {
+                const title = li.querySelector('.procedure-link').textContent.toLowerCase();
+                if (title.includes(searchTerm)) {
+                    li.style.display = '';
+                    hasVisibleProcedures = true;
+                } else {
+                    li.style.display = 'none';
+                }
+            });
+            // Oculta o título da categoria se não houver procedimentos visíveis
+            group.style.display = hasVisibleProcedures ? '' : 'none';
+        });
     });
 
     // Lida com cliques na lista de procedimentos (visualizar, editar, excluir)
@@ -83,8 +95,11 @@ document.addEventListener('DOMContentLoaded', () => {
         } else if (target.classList.contains('delete-btn')) {
             // Exclui o procedimento
             const id = target.dataset.id;
+            const procedureToDelete = allProcedures.find(p => p.id === id);
             if (confirm('Tem certeza que deseja excluir este procedimento?')) {
-                db.collection('procedures').doc(id).delete().then(() => {
+                logActivity('Excluído', procedureToDelete.title).then(() => {
+                    return db.collection('procedures').doc(id).delete();
+                }).then(() => {
                     alert('Procedimento excluído com sucesso!');
                     // O onSnapshot irá atualizar a lista automaticamente
                 }).catch(error => {
@@ -93,6 +108,14 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     });
+
+    const logActivity = (action, title) => {
+        return db.collection('activity_logs').add({
+            action: action,
+            title: title,
+            timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        });
+    };
 
     // Lógica para o modo claro/escuro
     const themeToggle = document.getElementById('theme-toggle');
@@ -113,5 +136,25 @@ document.addEventListener('DOMContentLoaded', () => {
             themeToggle.textContent = '🌙';
         }
         localStorage.setItem('theme', theme);
+    });
+
+    // Carrega o log de atividades
+    const logTableBody = document.getElementById('log-table-body');
+    db.collection('activity_logs').orderBy('timestamp', 'desc').limit(10).onSnapshot(snapshot => {
+        logTableBody.innerHTML = ''; // Limpa a tabela
+        snapshot.forEach(doc => {
+            const log = doc.data();
+            const tr = document.createElement('tr');
+
+            const date = log.timestamp ? log.timestamp.toDate().toLocaleString('pt-BR') : 'N/A';
+            const actionClass = log.action.toLowerCase().replace('í', 'i');
+
+            tr.innerHTML = `
+                <td><span class="log-action log-${actionClass}">${log.action}</span></td>
+                <td>${log.title}</td>
+                <td>${date}</td>
+            `;
+            logTableBody.appendChild(tr);
+        });
     });
 });

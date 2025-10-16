@@ -89,6 +89,14 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    const logActivity = (action, title) => {
+        return db.collection('activity_logs').add({
+            action: action,
+            title: title,
+            timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        });
+    };
+
     form.addEventListener('submit', (e) => {
         e.preventDefault();
 
@@ -104,6 +112,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 category: category,
                 updatedAt: firebase.firestore.FieldValue.serverTimestamp()
             }).then(() => {
+                return logActivity('Editado', title);
+            }).then(() => {
                 alert('Procedimento atualizado com sucesso!');
                 window.location.href = 'index.html';
             }).catch(error => {
@@ -116,6 +126,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 content: content,
                 category: category,
                 createdAt: firebase.firestore.FieldValue.serverTimestamp()
+            }).then(() => {
+                return logActivity('Novo', title);
             }).then(() => {
                 alert('Procedimento salvo com sucesso!');
                 form.reset();
