@@ -12,7 +12,7 @@ def run_verification():
         # Verify Activity Log
         activity_log_section = page.locator(".activity-log")
         expect(activity_log_section).to_be_visible()
-        activity_log_section.screenshot(path="jules-scratch/verification/activity-log.png")
+        activity_log_section.screenshot(path="jules-scratch/verification/activity-log-with-category.png")
 
         browser.close()
 

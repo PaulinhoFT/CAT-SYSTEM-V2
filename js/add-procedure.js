@@ -89,10 +89,11 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    const logActivity = (action, title) => {
+    const logActivity = (action, title, category) => {
         return db.collection('activity_logs').add({
             action: action,
             title: title,
+            category: category,
             timestamp: firebase.firestore.FieldValue.serverTimestamp()
         });
     };
@@ -112,7 +113,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 category: category,
                 updatedAt: firebase.firestore.FieldValue.serverTimestamp()
             }).then(() => {
-                return logActivity('Editado', title);
+                return logActivity('Editado', title, category);
             }).then(() => {
                 alert('Procedimento atualizado com sucesso!');
                 window.location.href = 'index.html';
@@ -127,7 +128,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 category: category,
                 createdAt: firebase.firestore.FieldValue.serverTimestamp()
             }).then(() => {
-                return logActivity('Novo', title);
+                return logActivity('Novo', title, category);
             }).then(() => {
                 alert('Procedimento salvo com sucesso!');
                 form.reset();
