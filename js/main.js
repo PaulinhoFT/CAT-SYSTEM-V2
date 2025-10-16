@@ -1,21 +1,69 @@
 document.addEventListener('DOMContentLoaded', () => {
     const proceduresList = document.getElementById('procedures-list');
     const procedureContent = document.getElementById('procedure-content');
+    const searchInput = document.getElementById('search-input');
 
-    // Carrega a lista de procedimentos na barra lateral
+    let allProcedures = []; // Armazena todos os procedimentos
+
+    // Carrega e renderiza os procedimentos
     db.collection('procedures').orderBy('title').onSnapshot(snapshot => {
-        proceduresList.innerHTML = ''; // Limpa a lista antes de adicionar os novos itens
-        snapshot.forEach(doc => {
-            const procedure = doc.data();
-            const li = document.createElement('li');
-            li.innerHTML = `
-                <a href="#" class="procedure-link" data-id="${doc.id}">${procedure.title}</a>
-                <div class="procedure-actions">
-                    <button class="edit-btn" data-id="${doc.id}">✏️</button>
-                    <button class="delete-btn" data-id="${doc.id}">❌</button>
-                </div>
-            `;
-            proceduresList.appendChild(li);
+        allProcedures = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        renderGroupedProcedures(allProcedures);
+    });
+
+    function renderGroupedProcedures(procedures) {
+        proceduresList.innerHTML = ''; // Limpa a lista
+        const grouped = procedures.reduce((acc, p) => {
+            const category = p.category || 'Sem Categoria';
+            if (!acc[category]) {
+                acc[category] = [];
+            }
+            acc[category].push(p);
+            return acc;
+        }, {});
+
+        for (const category in grouped) {
+            const details = document.createElement('details');
+            details.className = 'category-group';
+            details.open = true; // Mantém as categorias abertas por padrão
+
+            const summary = document.createElement('summary');
+            summary.textContent = category;
+            details.appendChild(summary);
+
+            const ul = document.createElement('ul');
+            grouped[category].forEach(p => {
+                const li = document.createElement('li');
+                li.innerHTML = `
+                    <a href="#" class="procedure-link" data-id="${p.id}">${p.title}</a>
+                    <div class="procedure-actions">
+                        <button class="edit-btn" data-id="${p.id}">✏️</button>
+                        <button class="delete-btn" data-id="${p.id}">❌</button>
+                    </div>
+                `;
+                ul.appendChild(li);
+            });
+            details.appendChild(ul);
+            proceduresList.appendChild(details);
+        }
+    }
+
+    // Filtra os procedimentos em tempo real
+    searchInput.addEventListener('input', (e) => {
+        const searchTerm = e.target.value.toLowerCase();
+        document.querySelectorAll('.category-group').forEach(group => {
+            let hasVisibleProcedures = false;
+            group.querySelectorAll('li').forEach(li => {
+                const title = li.querySelector('.procedure-link').textContent.toLowerCase();
+                if (title.includes(searchTerm)) {
+                    li.style.display = '';
+                    hasVisibleProcedures = true;
+                } else {
+                    li.style.display = 'none';
+                }
+            });
+            // Oculta o título da categoria se não houver procedimentos visíveis
+            group.style.display = hasVisibleProcedures ? '' : 'none';
         });
     });
 
@@ -47,16 +95,13 @@ document.addEventListener('DOMContentLoaded', () => {
         } else if (target.classList.contains('delete-btn')) {
             // Exclui o procedimento
             const id = target.dataset.id;
+            const procedureToDelete = allProcedures.find(p => p.id === id);
             if (confirm('Tem certeza que deseja excluir este procedimento?')) {
-                db.collection('procedures').doc(id).get().then(doc => {
-                    if (doc.exists) {
-                        const procedure = doc.data();
-                        return logActivity('Excluído', procedure.title, procedure.category || 'N/A').then(() => {
-                            return db.collection('procedures').doc(id).delete();
-                        });
-                    }
+                logActivity('Excluído', procedureToDelete.title, procedureToDelete.category).then(() => {
+                    return db.collection('procedures').doc(id).delete();
                 }).then(() => {
                     alert('Procedimento excluído com sucesso!');
+                    // O onSnapshot irá atualizar a lista automaticamente
                 }).catch(error => {
                     console.error("Erro ao excluir procedimento: ", error);
                 });
@@ -72,6 +117,27 @@ document.addEventListener('DOMContentLoaded', () => {
             timestamp: firebase.firestore.FieldValue.serverTimestamp()
         });
     };
+
+    // Lógica para o modo claro/escuro
+    const themeToggle = document.getElementById('theme-toggle');
+    const currentTheme = localStorage.getItem('theme');
+
+    if (currentTheme === 'dark') {
+        document.body.classList.add('dark-mode');
+        themeToggle.textContent = '☀️';
+    }
+
+    themeToggle.addEventListener('click', () => {
+        document.body.classList.toggle('dark-mode');
+        let theme = 'light';
+        if (document.body.classList.contains('dark-mode')) {
+            theme = 'dark';
+            themeToggle.textContent = '☀️';
+        } else {
+            themeToggle.textContent = '🌙';
+        }
+        localStorage.setItem('theme', theme);
+    });
 
     // Carrega o log de atividades
     const logTableBody = document.getElementById('log-table-body');
