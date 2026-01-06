@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Procedimentos TrixNet</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="shortcut icon" href="img/Logo-TRIXNET.png" type="image/x-icon">
+</head>
+<body>
+    <div class="navbar">
+        <ul>
+            <li>
+                <a href="att.html" rel="noopener noreferrer">Abertura de ATT</a>
+                <a href="https://textformater-cat.netlify.app/" target="_blank" rel="noopener noreferrer">Formatador de texto</a>
+                <a href="calculadora.html" target="_blank" rel="noopener noreferrer">Calcu. de desconto</a>
+                <a href="add-procedure.html">Adicionar Procedimento</a>
+                <button id="theme-toggle">🌙</button>
+            </li>
+        </ul>
+    </div>
+
+    <div class="main">
+        <input type="checkbox" id="menu-toggle">
+        <label for="menu-toggle" class="hamburger">&#9776;</label>
+
+        <nav class="sidebar">
+            <h1 class="le">Procedimentos</h1>
+            <div id="search-container">
+                <input type="text" id="search-input" placeholder="Pesquisar...">
+            </div>
+            <ul class="barra" id="procedures-list">
+                <!-- Os procedimentos serão carregados aqui pelo JavaScript -->
+            </ul>
+        </nav>
+    </div>
+
+    <div class="corpodireito" id="procedure-content">
+        <div class="titulo">
+            <h1>Central de Procedimentos da Area de Atendimento | TrixNet</h1>
+        </div>
+
+        <p>Bem-vindo à Central de Procedimentos da Area de Atendimento da TrixNet! Aqui você encontra de forma organizada e acessível todos os protocolos, diretrizes e soluções utilizadas pelo nosso setor de Atendimento. Nosso objetivo é garantir um suporte eficiente e ágil, proporcionando aos nossos colaboradores os melhores procedimentos para atender nossos clientes com excelência.</p>
+
+        <h4>Seu acesso rápido e eficiente ao conhecimento da Area de Atendimento da TrixNet começa aqui! 🚀</h4>
+
+        <div class="activity-log">
+            <h2>Atualização recente</h2>
+            <table id="log-table">
+                <thead>
+                    <tr>
+                        <th>Ação</th>
+                        <th>Título do Procedimento</th>
+                        <th>Categoria</th>
+                        <th>Data</th>
+                    </tr>
+                </thead>
+                <tbody id="log-table-body">
+                    <!-- As linhas do log serão inseridas aqui -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+
+    <!-- Seus scripts -->
+    <script src="js/firebase-config.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
