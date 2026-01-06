@@ -1,92 +1,73 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Site Descontinuado</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        body {
-            min-height: 100vh;
-            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #ffffff;
-            text-align: center;
-        }
-
-        .container {
-            max-width: 900px;
-            padding: 50px 30px;
-        }
-
-        .icon {
-            font-size: 90px;
-            margin-bottom: 25px;
-            opacity: 0.9;
-        }
-
-        h1 {
-            font-size: clamp(2.5rem, 6vw, 4.5rem);
-            font-weight: 800;
-            line-height: 1.2;
-            margin-bottom: 25px;
-            text-transform: uppercase;
-        }
-
-        .subtitle {
-            font-size: clamp(1.1rem, 2.5vw, 1.4rem);
-            opacity: 0.85;
-            margin-bottom: 40px;
-        }
-
-        .divider {
-            width: 120px;
-            height: 4px;
-            background: #00e0ff;
-            margin: 0 auto 35px auto;
-            border-radius: 2px;
-        }
-
-        footer {
-            font-size: 0.85rem;
-            opacity: 0.6;
-        }
-    </style>
+    <title>Procedimentos TrixNet</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="shortcut icon" href="img/Logo-TRIXNET.png" type="image/x-icon">
 </head>
 <body>
-
-    <div class="container">
-        <div class="icon">⚠️</div>
-
-        <h1>
-            Devido a mudanças internas,<br>
-            o site foi descontinuado
-        </h1>
-
-        <div class="divider"></div>
-
-        <p class="subtitle">
-            Agradecemos a compreensão.<br>
-            Esta página não receberá novas atualizações.
-        </p>
-
-        <footer>
-            © <span id="year"></span> • Todos os direitos reservados
-        </footer>
+    <div class="navbar">
+        <ul>
+            <li>
+                <a href="att.html" rel="noopener noreferrer">Abertura de ATT</a>
+                <a href="https://textformater-cat.netlify.app/" target="_blank" rel="noopener noreferrer">Formatador de texto</a>
+                <a href="calculadora.html" target="_blank" rel="noopener noreferrer">Calcu. de desconto</a>
+                <a href="add-procedure.html">Adicionar Procedimento</a>
+                <button id="theme-toggle">🌙</button>
+            </li>
+        </ul>
     </div>
 
-    <script>
-        document.getElementById("year").textContent = new Date().getFullYear();
-    </script>
+    <div class="main">
+        <input type="checkbox" id="menu-toggle">
+        <label for="menu-toggle" class="hamburger">&#9776;</label>
 
+        <nav class="sidebar">
+            <h1 class="le">Procedimentos</h1>
+            <div id="search-container">
+                <input type="text" id="search-input" placeholder="Pesquisar...">
+            </div>
+            <ul class="barra" id="procedures-list">
+                <!-- Os procedimentos serão carregados aqui pelo JavaScript -->
+            </ul>
+        </nav>
+    </div>
+
+    <div class="corpodireito" id="procedure-content">
+        <div class="titulo">
+            <h1>Central de Procedimentos da Area de Atendimento | TrixNet</h1>
+        </div>
+
+        <p>Bem-vindo à Central de Procedimentos da Area de Atendimento da TrixNet! Aqui você encontra de forma organizada e acessível todos os protocolos, diretrizes e soluções utilizadas pelo nosso setor de Atendimento. Nosso objetivo é garantir um suporte eficiente e ágil, proporcionando aos nossos colaboradores os melhores procedimentos para atender nossos clientes com excelência.</p>
+
+        <h4>Seu acesso rápido e eficiente ao conhecimento da Area de Atendimento da TrixNet começa aqui! 🚀</h4>
+
+        <div class="activity-log">
+            <h2>Atualização recente</h2>
+            <table id="log-table">
+                <thead>
+                    <tr>
+                        <th>Ação</th>
+                        <th>Título do Procedimento</th>
+                        <th>Categoria</th>
+                        <th>Data</th>
+                    </tr>
+                </thead>
+                <tbody id="log-table-body">
+                    <!-- As linhas do log serão inseridas aqui -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+
+    <!-- Seus scripts -->
+    <script src="js/firebase-config.js"></script>
+    <script src="js/main.js"></script>
 </body>
 </html>
