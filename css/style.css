@@ -88,6 +88,33 @@ body {
     margin-left: 20px;
 }
 
+/* Banner Carousel */
+.banner-carousel {
+    width: 100%;
+    background-color: #8b0000;
+    color: white;
+    overflow: hidden;
+    position: fixed;
+    top: 50px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    z-index: 999;
+    font-weight: bold;
+}
+
+.banner-text {
+    display: inline-block;
+    white-space: nowrap;
+    animation: scroll-left 20s linear infinite;
+    padding-left: 100%;
+}
+
+@keyframes scroll-left {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-100%); }
+}
+
 /* Menu hamburguer */
 .hamburger {
     font-size: 18px;
@@ -119,7 +146,7 @@ body {
     height: 100%;
     background: var(--sidebar-bg);
     transition: left 0.3s ease;
-    padding-top: 60px;
+    padding-top: 100px;
     overflow-y: auto;
 }
 
@@ -235,7 +262,7 @@ body {
 .corpodireito {
     background-color: var(--procedure-bg);
     width: 84%;
-    padding: 70px 25px 25px;
+    padding: 100px 25px 25px;
     margin: 0 auto;
     min-height: 100vh;
     box-shadow: 0 0 15px var(--procedure-shadow);
@@ -338,7 +365,7 @@ img {
 @media (max-width: 768px) {
     .corpodireito {
         width: 95%;
-        padding: 65px 15px 15px;
+        padding: 95px 15px 15px;
     }
 
     .paragrafoshome {
