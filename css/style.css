@@ -95,8 +95,8 @@ body {
 /* Banner Carousel */
 .banner-carousel {
     width: 100%;
-    background-color: #ff00ff;
-    color: #00ffff;
+    background-color: #8b0000; /* Dark Red */
+    color: #ffffff; /* White letters */
     overflow: hidden;
     position: fixed;
     top: 50px;
@@ -508,4 +508,65 @@ button[type="submit"]:hover {
 .log-excluido {
     background-color: #ff0000;
     color: #fff;
+}
+
+/* Rádio Player Styles */
+.radio-container {
+    position: fixed;
+    bottom: 60px;
+    right: 20px;
+    width: 320px;
+    height: 450px;
+    background: #c0c0c0;
+    border: 3px outset #fff;
+    z-index: 2000;
+    display: flex;
+    flex-direction: column;
+}
+
+.radio-container.hidden {
+    display: none;
+}
+
+.radio-header {
+    background: #000080;
+    color: white;
+    padding: 5px 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+    border-bottom: 2px solid #000;
+}
+
+.radio-header button {
+    background: #c0c0c0;
+    border: 1px outset #fff;
+    cursor: pointer;
+    font-weight: bold;
+    padding: 0 5px;
+}
+
+.radio-container iframe {
+    flex-grow: 1;
+    width: 100%;
+    border: 2px inset #fff;
+}
+
+.radio-toggle-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #c0c0c0;
+    color: #000;
+    border: 3px outset #fff;
+    padding: 8px 15px;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 2001;
+    font-size: 14px;
+}
+
+.radio-toggle-btn:active {
+    border-style: inset;
 }
