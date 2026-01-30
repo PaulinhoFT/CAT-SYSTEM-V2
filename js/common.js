@@ -59,4 +59,45 @@ document.addEventListener('DOMContentLoaded', () => {
             toggleRadioBtn.classList.remove('hidden');
         });
     }
+
+    // --- Lógica para o Modal de Boas-vindas ---
+    if (!sessionStorage.getItem('welcomeModalShown')) {
+        const modalHTML = `
+            <div id="welcome-modal" class="modal-overlay">
+                <div class="modal-container">
+                    <div class="modal-titlebar">
+                        <span>Meta 2026</span>
+                        <button id="close-modal" class="modal-close">X</button>
+                    </div>
+                    <div class="modal-content">
+                        <img src="img/meta.jpg" alt="Meta 2026">
+                    </div>
+                </div>
+            </div>
+        `;
+        document.body.insertAdjacentHTML('beforeend', modalHTML);
+
+        const modal = document.getElementById('welcome-modal');
+        const closeModalBtn = document.getElementById('close-modal');
+
+        const closeModal = () => {
+            if (modal) {
+                modal.classList.add('hidden');
+                sessionStorage.setItem('welcomeModalShown', 'true');
+            }
+        };
+
+        if (closeModalBtn) {
+            closeModalBtn.addEventListener('click', closeModal);
+        }
+
+        // Fechar ao clicar fora do modal
+        if (modal) {
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    closeModal();
+                }
+            });
+        }
+    }
 });
