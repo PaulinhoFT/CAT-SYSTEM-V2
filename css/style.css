@@ -118,7 +118,7 @@ body {
 .banner-text {
     display: flex;
     white-space: nowrap;
-    animation: scroll-left 1s linear infinite;
+    animation: scroll-left 100s linear infinite;
 }
 
 .banner-text span {
