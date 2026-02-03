@@ -19,8 +19,17 @@ class ProcedureManager(tk.Tk):
         self.selected_procedure_id = None
         self.procedures_cache = []
 
+        self.create_menu()
         self.create_widgets()
         self.load_procedures()
+
+    def create_menu(self):
+        menubar = tk.Menu(self)
+        self.config(menu=menubar)
+
+        auth_menu = tk.Menu(menubar, tearoff=0)
+        menubar.add_cascade(label="Authentication", menu=auth_menu)
+        auth_menu.add_command(label="Create Admin User", command=self.open_create_user_dialog)
 
     def create_widgets(self):
         main_frame = tk.Frame(self)
@@ -160,6 +169,35 @@ class ProcedureManager(tk.Tk):
         self.category_entry.delete(0, tk.END)
         self.content_text.delete('1.0', tk.END)
         self.procedures_list.selection_clear(0, tk.END)
+
+    def open_create_user_dialog(self):
+        dialog = tk.Toplevel(self)
+        dialog.title("Create Admin User")
+        dialog.geometry("300x200")
+        dialog.resizable(False, False)
+
+        tk.Label(dialog, text="Email:").pack(pady=(10, 0))
+        email_entry = tk.Entry(dialog, width=30)
+        email_entry.pack(pady=5)
+
+        tk.Label(dialog, text="Password:").pack(pady=(10, 0))
+        pass_entry = tk.Entry(dialog, width=30, show="*")
+        pass_entry.pack(pady=5)
+
+        def create():
+            email = email_entry.get()
+            password = pass_entry.get()
+            if not email or not password:
+                messagebox.showwarning("Warning", "Both fields are required.", parent=dialog)
+                return
+
+            if self.client.create_user(email, password):
+                messagebox.showinfo("Success", "User created successfully!", parent=dialog)
+                dialog.destroy()
+            else:
+                messagebox.showerror("Error", "Failed to create user. Check terminal for details.", parent=dialog)
+
+        tk.Button(dialog, text="Create User", command=create).pack(pady=20)
 
 if __name__ == "__main__":
     app = ProcedureManager()

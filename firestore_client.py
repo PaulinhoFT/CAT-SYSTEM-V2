@@ -1,5 +1,5 @@
 import firebase_admin
-from firebase_admin import credentials, firestore
+from firebase_admin import credentials, firestore, auth
 import os
 
 class FirestoreClient:
@@ -91,6 +91,19 @@ class FirestoreClient:
             return True
         except Exception as e:
             print(f"Error deleting procedure: {e}")
+            return False
+
+    def create_user(self, email, password):
+        """Creates a new user in Firebase Authentication."""
+        try:
+            user = auth.create_user(
+                email=email,
+                password=password
+            )
+            print(f'Successfully created new user: {user.uid}')
+            return True
+        except Exception as e:
+            print(f"Error creating user: {e}")
             return False
 
 # Example of how to use the client

@@ -29,6 +29,11 @@ def main():
     delete_parser = subparsers.add_parser('delete', help='Delete a procedure.')
     delete_parser.add_argument('--id', required=True, help='The ID of the procedure to delete.')
 
+    # --- Create User Command ---
+    user_parser = subparsers.add_parser('create-user', help='Create a new admin user.')
+    user_parser.add_argument('--email', required=True, help='User email.')
+    user_parser.add_argument('--password', required=True, help='User password.')
+
     args = parser.parse_args()
 
     if args.command == 'list':
@@ -54,6 +59,9 @@ def main():
 
     elif args.command == 'delete':
         client.delete_procedure(args.id)
+
+    elif args.command == 'create-user':
+        client.create_user(args.email, args.password)
 
     else:
         parser.print_help()
