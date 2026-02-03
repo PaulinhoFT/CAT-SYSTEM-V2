@@ -113,21 +113,26 @@ document.addEventListener('DOMContentLoaded', () => {
             <div id="login-modal" class="modal-overlay hidden">
                 <div class="modal-container">
                     <div class="modal-titlebar">
-                        <span>Login Administrativo</span>
+                        <span>Painel Administrativo</span>
                         <button class="modal-close" id="close-login">&times;</button>
                     </div>
                     <div class="modal-content">
+                        <div class="login-header">
+                            <span style="font-size: 3rem;">🔐</span>
+                            <h2>Bem-vindo</h2>
+                            <p>Identifique-se para gerenciar procedimentos</p>
+                        </div>
                         <form id="login-form">
                             <div class="form-group">
-                                <label for="login-email">Email</label>
-                                <input type="email" id="login-email" required>
+                                <label for="login-email">E-mail</label>
+                                <input type="email" id="login-email" placeholder="seu@email.com" required>
                             </div>
                             <div class="form-group">
                                 <label for="login-password">Senha</label>
-                                <input type="password" id="login-password" required>
+                                <input type="password" id="login-password" placeholder="••••••••" required>
                             </div>
-                            <button type="submit" id="btn-do-login">Entrar</button>
-                            <p id="login-error" class="red hidden" style="margin-top: 10px; text-align: center;"></p>
+                            <button type="submit" id="btn-do-login">Acessar Painel</button>
+                            <p id="login-error" class="red hidden" style="margin-top: 15px; text-align: center; font-size: 0.85rem; padding: 10px; background: rgba(239, 68, 68, 0.1); border-radius: 8px;"></p>
                         </form>
                     </div>
                 </div>
@@ -167,7 +172,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (submitBtn) {
                 submitBtn.disabled = true;
-                submitBtn.textContent = "Entrando...";
+                submitBtn.textContent = "Acessando...";
             }
 
             if (loginError) loginError.classList.add('hidden');
@@ -190,7 +195,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 .finally(() => {
                     if (submitBtn) {
                         submitBtn.disabled = false;
-                        submitBtn.textContent = "Entrar";
+                        submitBtn.textContent = "Acessar Painel";
                     }
                 });
         });

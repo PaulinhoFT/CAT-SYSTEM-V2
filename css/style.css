@@ -737,3 +737,85 @@ button[type="submit"]:active {
     border-radius: 8px;
     margin: 0;
 }
+
+/* Specific styles for Login Modal */
+#login-modal .modal-container {
+    max-width: 400px;
+    border: 1px solid var(--sidebar-border);
+}
+
+#login-modal .modal-titlebar {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
+    color: white;
+    border-bottom: none;
+    padding: 25px 20px;
+}
+
+#login-modal .modal-close {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+}
+
+#login-modal .modal-close:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+#login-modal .modal-content {
+    padding: 30px;
+}
+
+.login-header {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.login-header i {
+    font-size: 3rem;
+    color: var(--primary-color);
+    margin-bottom: 10px;
+    display: block;
+}
+
+.login-header h2 {
+    font-size: 1.5rem;
+    color: var(--title-color);
+    font-weight: 700;
+}
+
+.login-header p {
+    font-size: 0.9rem;
+    color: var(--sidebar-text);
+    margin-top: 5px;
+}
+
+#login-modal .form-group input {
+    background-color: var(--bg-primary);
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+    padding: 14px;
+}
+
+#login-modal .form-group input:focus {
+    background-color: var(--procedure-bg);
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+}
+
+#btn-do-login {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+    margin-top: 10px;
+    padding: 14px;
+    font-size: 1rem;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+#btn-do-login:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(37, 99, 235, 0.4);
+}
+
+#btn-do-login:active {
+    transform: translateY(0);
+}
