@@ -104,4 +104,69 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
     }
+
+    // --- Lógica de Autenticação ---
+    const loginBtn = document.getElementById('login-btn');
+    const logoutBtn = document.getElementById('logout-btn');
+    const loginModal = document.getElementById('login-modal');
+    const closeLoginBtn = document.getElementById('close-login');
+    const loginForm = document.getElementById('login-form');
+    const addProcedureLink = document.getElementById('add-procedure-link');
+    const loginError = document.getElementById('login-error');
+
+    if (loginBtn && loginModal) {
+        loginBtn.addEventListener('click', () => {
+            loginModal.classList.remove('hidden');
+        });
+    }
+
+    if (closeLoginBtn && loginModal) {
+        closeLoginBtn.addEventListener('click', () => {
+            loginModal.classList.add('hidden');
+            if (loginError) loginError.classList.add('hidden');
+        });
+    }
+
+    if (loginForm) {
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+
+            auth.signInWithEmailAndPassword(email, password)
+                .then(() => {
+                    loginModal.classList.add('hidden');
+                    loginForm.reset();
+                })
+                .catch((error) => {
+                    if (loginError) {
+                        loginError.textContent = "Erro: " + error.message;
+                        loginError.classList.remove('hidden');
+                    }
+                });
+        });
+    }
+
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', () => {
+            auth.signOut();
+        });
+    }
+
+    // Monitorar estado de autenticação
+    if (typeof auth !== 'undefined') {
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                if (loginBtn) loginBtn.classList.add('hidden');
+                if (logoutBtn) logoutBtn.classList.remove('hidden');
+                if (addProcedureLink) addProcedureLink.classList.remove('hidden');
+                document.body.classList.add('is-admin');
+            } else {
+                if (loginBtn) loginBtn.classList.remove('hidden');
+                if (logoutBtn) logoutBtn.classList.add('hidden');
+                if (addProcedureLink) addProcedureLink.classList.add('hidden');
+                document.body.classList.remove('is-admin');
+            }
+        });
+    }
 });
