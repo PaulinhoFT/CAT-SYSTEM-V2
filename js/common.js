@@ -61,7 +61,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- Lógica para o Modal de Boas-vindas ---
-    if (!sessionStorage.getItem('welcomeModalShown')) {
+    const isAdminPage = window.location.pathname.includes('admin.html');
+    if (!sessionStorage.getItem('welcomeModalShown') && !isAdminPage) {
         const modalHTML = `
             <div id="welcome-modal" class="modal-overlay">
                 <div class="modal-container">
