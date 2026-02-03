@@ -82,8 +82,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const closeModal = () => {
             if (modal) {
-                modal.classList.add('hidden');
-                sessionStorage.setItem('welcomeModalShown', 'true');
+                modal.style.opacity = '0';
+                modal.style.pointerEvents = 'none';
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                    sessionStorage.setItem('welcomeModalShown', 'true');
+                }, 300);
             }
         };
 
