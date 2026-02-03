@@ -104,7 +104,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const title = titleInput.value;
         const content = quill.root.innerHTML;
         const category = categoryInput.value;
-
+        
         const submitBtn = form.querySelector('button[type="submit"]');
         const originalBtnText = submitBtn.textContent;
         submitBtn.disabled = true;

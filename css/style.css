@@ -197,7 +197,6 @@ body {
     width: 280px;
     height: 100%;
     background: var(--sidebar-bg);
-    padding-top: 100px;
     overflow-y: auto;
     box-shadow: 2px 0 10px rgba(0,0,0,0.1);
     z-index: 1050;
@@ -208,13 +207,19 @@ body {
     left: 0;
 }
 
-/* Estilos da barra de pesquisa */
-#search-container {
-    padding: 15px 20px;
+.sidebar-header {
     position: sticky;
     top: 0;
     background: var(--sidebar-bg);
-    z-index: 10;
+    z-index: 20;
+    padding-top: 100px;
+    border-bottom: 1px solid var(--sidebar-border);
+}
+
+/* Estilos da barra de pesquisa */
+#search-container {
+    padding: 15px 20px;
+    background: var(--sidebar-bg);
 }
 
 #search-input {
@@ -240,7 +245,6 @@ body {
     font-weight: 700;
     text-align: left;
     padding: 15px 20px;
-    border-bottom: 1px solid var(--sidebar-border);
 }
 
 /* Lista lateral */

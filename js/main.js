@@ -75,7 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (target.classList.contains('procedure-link')) {
             // Exibe o procedimento
             const id = target.dataset.id;
-
+            
             // Efeito de fade out
             procedureContent.style.opacity = '0';
             procedureContent.style.transform = 'translateY(10px)';
@@ -95,7 +95,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         // Efeito de fade in
                         procedureContent.style.opacity = '1';
                         procedureContent.style.transform = 'translateY(0)';
-
+                        
                         // Scroll suave para o topo do conteúdo em mobile
                         if (window.innerWidth <= 768) {
                             window.scrollTo({ top: 0, behavior: 'smooth' });
