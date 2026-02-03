@@ -105,6 +105,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const content = quill.root.innerHTML;
         const category = categoryInput.value;
 
+        const submitBtn = form.querySelector('button[type="submit"]');
+        const originalBtnText = submitBtn.textContent;
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Salvando...';
+
         if (procedureId) {
             // Atualiza o procedimento existente
             db.collection('procedures').doc(procedureId).update({
@@ -119,6 +124,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 window.location.href = 'index.html';
             }).catch(error => {
                 console.error("Erro ao atualizar procedimento: ", error);
+                submitBtn.disabled = false;
+                submitBtn.textContent = originalBtnText;
             });
         } else {
             // Adiciona um novo procedimento
@@ -133,8 +140,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 alert('Procedimento salvo com sucesso!');
                 form.reset();
                 quill.root.innerHTML = '';
+                submitBtn.disabled = false;
+                submitBtn.textContent = originalBtnText;
             }).catch(error => {
                 console.error("Erro ao salvar procedimento: ", error);
+                submitBtn.disabled = false;
+                submitBtn.textContent = originalBtnText;
             });
         }
     });
