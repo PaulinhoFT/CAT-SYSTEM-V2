@@ -260,14 +260,6 @@ body {
     opacity: 0;
 }
 
-body.is-admin .procedure-actions {
-    display: flex;
-}
-
-body.is-admin .barra li:hover .procedure-actions {
-    opacity: 1;
-}
-
 .edit-btn, .delete-btn {
     background: transparent;
     border: none;
