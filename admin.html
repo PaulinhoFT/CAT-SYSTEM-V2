@@ -1,143 +1,181 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Painel Administrativo - TrixNet</title>
+    <title>Dashboard Admin - TrixNet</title>
+    
+    <!-- Google Fonts - Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <link rel="stylesheet" href="css/style.css">
     <link rel="shortcut icon" href="img/Logo-TRIXNET.png" type="image/x-icon">
-    <style>
-        .admin-controls {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-        }
-        .btn-new {
-            background-color: var(--primary-color);
-            color: white;
-            padding: 10px 20px;
-            border-radius: var(--border-radius);
-            text-decoration: none;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .btn-new:hover {
-            background-color: var(--primary-hover);
-        }
-        .admin-table {
-            width: 100%;
-            border-collapse: collapse;
-            background: var(--procedure-bg);
-            border-radius: var(--border-radius);
-            overflow: hidden;
-            box-shadow: var(--procedure-shadow);
-        }
-        .admin-table th, .admin-table td {
-            padding: 15px;
-            text-align: left;
-            border-bottom: 1px solid var(--sidebar-border);
-        }
-        .admin-table thead th {
-            background-color: var(--search-bg);
-            color: var(--text-primary);
-            text-transform: uppercase;
-            font-size: 12px;
-            letter-spacing: 0.05em;
-        }
-        .action-btns {
-            display: flex;
-            gap: 10px;
-        }
-        .btn-edit, .btn-delete {
-            padding: 6px 12px;
-            border-radius: 6px;
-            border: none;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 14px;
-        }
-        .btn-edit {
-            background-color: rgba(37, 99, 235, 0.1);
-            color: var(--primary-color);
-        }
-        .btn-edit:hover {
-            background-color: var(--primary-color);
-            color: white;
-        }
-        .btn-delete {
-            background-color: rgba(239, 68, 68, 0.1);
-            color: var(--danger-color);
-        }
-        .btn-delete:hover {
-            background-color: var(--danger-color);
-            color: white;
-        }
-        .section-title {
-            margin: 40px 0 20px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid var(--primary-color);
-            color: var(--title-color);
-        }
-    </style>
+    
 </head>
-<body>
-    <div class="navbar">
-        <ul>
-            <li>
-                <a href="index.html">Voltar para a Home</a>
-                <button id="logout-btn" class="hidden">Sair</button>
-                <button id="theme-toggle">🌙</button>
-            </li>
-        </ul>
+<body class="admin-panel">
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="admin-sidebar" id="sidebar">
+            <div class="sidebar-brand">
+                <img src="img/Logo-TRIXNET.png" alt="TrixNet">
+                <span>Painel TrixNet</span>
+            </div>
+            
+            <div class="sidebar-profile">
+                <img src="img/meta.jpg" alt="Admin" class="profile-img" id="sidebar-user-img">
+                <div class="profile-info">
+                    <span>Bem-vindo,</span>
+                    <h4 id="sidebar-user-name">Carregando...</h4>
+                </div>
+            </div>
+            
+            <nav class="sidebar-menu">
+                <div class="menu-section">
+                    <h5>Geral</h5>
+                    <ul>
+                        <li><a href="admin.html" class="active"><i class="fa fa-home"></i> Dashboard</a></li>
+                        <li><a href="index.html"><i class="fa fa-desktop"></i> Ver Site</a></li>
+                    </ul>
+                </div>
+                
+                <div class="menu-section">
+                    <h5>Conteúdo</h5>
+                    <ul>
+                        <li><a href="add-procedure.html"><i class="fa fa-plus-circle"></i> Novo Procedimento</a></li>
+                        <li><a href="#procedures-card"><i class="fa fa-list"></i> Lista de Procedimentos</a></li>
+                        <li><a href="#logs-card"><i class="fa fa-history"></i> Log de Atividades</a></li>
+                    </ul>
+                </div>
+
+                <div class="menu-section">
+                    <h5>Configurações</h5>
+                    <ul>
+                        <li><a href="#" id="sidebar-theme-toggle"><i class="fa fa-moon"></i> Alternar Tema</a></li>
+                        <li><a href="#" id="sidebar-logout-btn"><i class="fa fa-sign-out-alt"></i> Sair</a></li>
+                    </ul>
+                </div>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <a href="#"><i class="fa fa-cog"></i></a>
+                <a href="#"><i class="fa fa-expand"></i></a>
+                <a href="#"><i class="fa fa-lock"></i></a>
+                <a href="#" id="footer-logout-btn"><i class="fa fa-power-off"></i></a>
+            </div>
+        </aside>
+        
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Top Nav -->
+            <header class="top-nav">
+                <div class="nav-left">
+                    <button class="toggle-menu-btn" id="toggle-sidebar">
+                        <i class="fa fa-bars"></i>
+                    </button>
+                    <div class="admin-search-wrapper" style="margin-left: 15px;">
+                        <input type="text" id="admin-search-input" placeholder="Pesquisar procedimentos..." style="padding: 8px 15px; border-radius: 20px; border: 1px solid #ccc; width: 250px; font-size: 0.85rem; outline: none;">
+                    </div>
+                </div>
+                
+                <div class="nav-right">
+                    <div class="nav-icons">
+                        <i class="fa fa-moon" id="theme-toggle" title="Alternar Tema" style="cursor: pointer;"></i>
+                        <i class="fa fa-envelope"><span class="badge">6</span></i>
+                        <i class="fa fa-bell"><span class="badge">3</span></i>
+                    </div>
+                    <div class="nav-user" id="top-nav-user">
+                        <img src="img/meta.jpg" alt="User" id="nav-user-img">
+                        <span id="nav-user-name">Admin</span>
+                        <i class="fa fa-angle-down"></i>
+                    </div>
+                </div>
+            </header>
+            
+            <!-- Content Body -->
+            <div class="content-body">
+                <!-- Metrics Bar -->
+                <div class="metrics-row">
+                    <div class="metric-tile">
+                        <span class="metric-title"><i class="fa fa-book"></i> Procedimentos</span>
+                        <span class="metric-value" id="metric-total-procedures">0</span>
+                        <span class="metric-stats"><span class="up"><i class="fa fa-arrow-up"></i> 4%</span> desde a última semana</span>
+                    </div>
+                    <div class="metric-tile">
+                        <span class="metric-title"><i class="fa fa-folder"></i> Categorias</span>
+                        <span class="metric-value" id="metric-total-categories">0</span>
+                        <span class="metric-stats"><span class="up"><i class="fa fa-arrow-up"></i> 3%</span> desde a última semana</span>
+                    </div>
+                    <div class="metric-tile">
+                        <span class="metric-title"><i class="fa fa-clock"></i> Log Hoje</span>
+                        <span class="metric-value" id="metric-logs-today">0</span>
+                        <span class="metric-stats"><span class="up"><i class="fa fa-arrow-up"></i> 34%</span> desde ontem</span>
+                    </div>
+                    <div class="metric-tile">
+                        <span class="metric-title"><i class="fa fa-user"></i> Admin Online</span>
+                        <span class="metric-value">1</span>
+                        <span class="metric-stats">Sessão ativa</span>
+                    </div>
+                </div>
+                
+                <!-- Dashboard Grid -->
+                <div class="dashboard-grid">
+                    <!-- Procedures Table Card -->
+                    <div class="dashboard-card card-lg" id="procedures-card">
+                        <div class="card-header">
+                            <h3>Procedimentos Recentes</h3>
+                            <div class="card-tools">
+                                <i class="fa fa-chevron-up"></i>
+                                <i class="fa fa-wrench"></i>
+                                <i class="fa fa-close"></i>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-wrapper" style="border: none;">
+                                <table class="admin-table-custom">
+                                    <thead>
+                                        <tr>
+                                            <th>Título</th>
+                                            <th>Categoria</th>
+                                            <th>Ações</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="procedures-admin-body">
+                                        <!-- Preenchido via JS -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Activity Log Card -->
+                    <div class="dashboard-card card-sm" id="logs-card">
+                        <div class="card-header">
+                            <h3>Atividades Recentes</h3>
+                            <div class="card-tools">
+                                <i class="fa fa-chevron-up"></i>
+                                <i class="fa fa-close"></i>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <ul class="activity-list" id="activity-log-list">
+                                <!-- Preenchido via JS -->
+                            </ul>
+                            <div style="margin-top: 20px; text-align: center;">
+                                <a href="#" id="view-all-logs" style="color: #1ABB9C; font-size: 0.8rem; text-decoration: none; font-weight: 600;">VER TODAS ATIVIDADES</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
     </div>
 
-    <div class="corpodireito">
-        <div class="titulo">
-            <h1>Painel Administrativo</h1>
-        </div>
-
-        <div class="admin-controls">
-            <h2 class="section-title" style="margin: 0; border: none;">Gerenciar Procedimentos</h2>
-            <a href="add-procedure.html" class="btn-new"><span>➕</span> Novo Procedimento</a>
-        </div>
-
-        <div class="table-wrapper">
-            <table class="admin-table" id="procedures-admin-table">
-                <thead>
-                    <tr>
-                        <th>Título</th>
-                        <th>Categoria</th>
-                        <th>Ações</th>
-                    </tr>
-                </thead>
-                <tbody id="procedures-admin-body">
-                    <!-- Preenchido via JS -->
-                </tbody>
-            </table>
-        </div>
-
-        <h2 class="section-title">Log de Atividades</h2>
-        <div class="table-wrapper">
-            <table id="log-table">
-                <thead>
-                    <tr>
-                        <th>Ação</th>
-                        <th>Título do Procedimento</th>
-                        <th>Categoria</th>
-                        <th>Data</th>
-                    </tr>
-                </thead>
-                <tbody id="log-table-body">
-                    <!-- As linhas do log serão inseridas aqui -->
-                </tbody>
-            </table>
-        </div>
-    </div>
-
-    <!-- Firebase -->
+    <!-- Firebase (usando as mesmas versões do resto do projeto) -->
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
@@ -146,5 +184,58 @@
     <script src="js/firebase-config.js"></script>
     <script src="js/common.js"></script>
     <script src="js/admin.js"></script>
+
+    <script>
+        // Sidebar Toggle Logic
+        document.getElementById('toggle-sidebar').addEventListener('click', function() {
+            const sidebar = document.getElementById('sidebar');
+            const currentMargin = window.getComputedStyle(sidebar).marginLeft;
+            
+            if (currentMargin === '0px') {
+                sidebar.style.marginLeft = '-260px';
+            } else {
+                sidebar.style.marginLeft = '0';
+            }
+        });
+
+        // Redirect to theme toggle logic in common.js if needed, 
+        // but here we can just trigger it
+        document.getElementById('sidebar-theme-toggle').addEventListener('click', function(e) {
+            e.preventDefault();
+            const themeBtn = document.getElementById('theme-toggle');
+            if (themeBtn) themeBtn.click();
+        });
+
+        // Sync theme toggle icon
+        document.addEventListener('DOMContentLoaded', () => {
+            const themeBtn = document.getElementById('theme-toggle');
+            if (themeBtn) {
+                const observer = new MutationObserver(() => {
+                    if (document.body.classList.contains('dark-mode')) {
+                        themeBtn.className = 'fa fa-sun';
+                    } else {
+                        themeBtn.className = 'fa fa-moon';
+                    }
+                });
+                observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+                
+                // Initial state
+                if (document.body.classList.contains('dark-mode')) {
+                    themeBtn.className = 'fa fa-sun';
+                }
+            }
+        });
+
+        // Logout logic
+        const logoutHandler = function(e) {
+            e.preventDefault();
+            firebase.auth().signOut().then(() => {
+                window.location.href = 'index.html';
+            });
+        };
+        
+        document.getElementById('sidebar-logout-btn').addEventListener('click', logoutHandler);
+        document.getElementById('footer-logout-btn').addEventListener('click', logoutHandler);
+    </script>
 </body>
 </html>

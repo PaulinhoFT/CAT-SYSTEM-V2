@@ -61,7 +61,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- Lógica para o Modal de Boas-vindas ---
-    if (!sessionStorage.getItem('welcomeModalShown')) {
+    const isAdminPage = window.location.pathname.includes('admin.html');
+    if (!sessionStorage.getItem('welcomeModalShown') && !isAdminPage) {
         const modalHTML = `
             <div id="welcome-modal" class="modal-overlay">
                 <div class="modal-container">
@@ -230,7 +231,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     addProcedureLink.classList.add('hidden');
                 }
                 document.body.classList.remove('is-admin');
-
+                
                 // Redirecionar se estiver em uma página administrativa e não estiver logado
                 if (isLoginPage && !window.location.pathname.includes('index.html')) {
                     window.location.href = 'index.html';
