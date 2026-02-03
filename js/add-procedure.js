@@ -1,11 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Verificação de Autenticação
-    auth.onAuthStateChanged((user) => {
-        if (!user) {
-            window.location.href = 'index.html';
-        }
-    });
-
     // Registra o módulo de redimensionamento de imagem
     if (window.ImageResize) {
         Quill.register('modules/imageResize', window.ImageResize.default);
@@ -96,15 +89,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    const logActivity = (action, title, category) => {
-        return db.collection('activity_logs').add({
-            action: action,
-            title: title,
-            category: category,
-            timestamp: firebase.firestore.FieldValue.serverTimestamp()
-        });
-    };
-
     form.addEventListener('submit', (e) => {
         e.preventDefault();
 
@@ -128,7 +112,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 return logActivity('Editado', title, category);
             }).then(() => {
                 alert('Procedimento atualizado com sucesso!');
-                window.location.href = 'index.html';
+                window.location.href = 'admin.html';
             }).catch(error => {
                 console.error("Erro ao atualizar procedimento: ", error);
                 submitBtn.disabled = false;
@@ -145,10 +129,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 return logActivity('Novo', title, category);
             }).then(() => {
                 alert('Procedimento salvo com sucesso!');
-                form.reset();
-                quill.root.innerHTML = '';
-                submitBtn.disabled = false;
-                submitBtn.textContent = originalBtnText;
+                window.location.href = 'admin.html';
             }).catch(error => {
                 console.error("Erro ao salvar procedimento: ", error);
                 submitBtn.disabled = false;

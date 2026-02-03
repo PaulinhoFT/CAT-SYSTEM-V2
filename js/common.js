@@ -182,6 +182,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     console.log("Login bem-sucedido:", userCredential.user.email);
                     loginModal.classList.add('hidden');
                     loginForm.reset();
+                    // Redirecionar para o painel administrativo após o login
+                    window.location.href = 'admin.html';
                 })
                 .catch((error) => {
                     console.error("Erro no login:", error.code, error.message);
@@ -210,17 +212,39 @@ document.addEventListener('DOMContentLoaded', () => {
     // Monitorar estado de autenticação
     if (typeof auth !== 'undefined') {
         auth.onAuthStateChanged((user) => {
+            const isLoginPage = window.location.pathname.includes('admin.html') || window.location.pathname.includes('add-procedure.html');
+
             if (user) {
                 if (loginBtn) loginBtn.classList.add('hidden');
                 if (logoutBtn) logoutBtn.classList.remove('hidden');
-                if (addProcedureLink) addProcedureLink.classList.remove('hidden');
+                if (addProcedureLink) {
+                    addProcedureLink.classList.remove('hidden');
+                    addProcedureLink.textContent = 'Painel Administrativo';
+                    addProcedureLink.href = 'admin.html';
+                }
                 document.body.classList.add('is-admin');
             } else {
                 if (loginBtn) loginBtn.classList.remove('hidden');
                 if (logoutBtn) logoutBtn.classList.add('hidden');
-                if (addProcedureLink) addProcedureLink.classList.add('hidden');
+                if (addProcedureLink) {
+                    addProcedureLink.classList.add('hidden');
+                }
                 document.body.classList.remove('is-admin');
+
+                // Redirecionar se estiver em uma página administrativa e não estiver logado
+                if (isLoginPage && !window.location.pathname.includes('index.html')) {
+                    window.location.href = 'index.html';
+                }
             }
         });
     }
 });
+
+const logActivity = (action, title, category) => {
+    return db.collection('activity_logs').add({
+        action: action,
+        title: title,
+        category: category,
+        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+    });
+};

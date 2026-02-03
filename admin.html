@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel Administrativo - TrixNet</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="shortcut icon" href="img/Logo-TRIXNET.png" type="image/x-icon">
+    <style>
+        .admin-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        .btn-new {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 10px 20px;
+            border-radius: var(--border-radius);
+            text-decoration: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn-new:hover {
+            background-color: var(--primary-hover);
+        }
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--procedure-bg);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--procedure-shadow);
+        }
+        .admin-table th, .admin-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--sidebar-border);
+        }
+        .admin-table thead th {
+            background-color: var(--search-bg);
+            color: var(--text-primary);
+            text-transform: uppercase;
+            font-size: 12px;
+            letter-spacing: 0.05em;
+        }
+        .action-btns {
+            display: flex;
+            gap: 10px;
+        }
+        .btn-edit, .btn-delete {
+            padding: 6px 12px;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        .btn-edit {
+            background-color: rgba(37, 99, 235, 0.1);
+            color: var(--primary-color);
+        }
+        .btn-edit:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        .btn-delete {
+            background-color: rgba(239, 68, 68, 0.1);
+            color: var(--danger-color);
+        }
+        .btn-delete:hover {
+            background-color: var(--danger-color);
+            color: white;
+        }
+        .section-title {
+            margin: 40px 0 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--primary-color);
+            color: var(--title-color);
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <ul>
+            <li>
+                <a href="index.html">Voltar para a Home</a>
+                <button id="logout-btn" class="hidden">Sair</button>
+                <button id="theme-toggle">🌙</button>
+            </li>
+        </ul>
+    </div>
+
+    <div class="corpodireito">
+        <div class="titulo">
+            <h1>Painel Administrativo</h1>
+        </div>
+
+        <div class="admin-controls">
+            <h2 class="section-title" style="margin: 0; border: none;">Gerenciar Procedimentos</h2>
+            <a href="add-procedure.html" class="btn-new"><span>➕</span> Novo Procedimento</a>
+        </div>
+
+        <div class="table-wrapper">
+            <table class="admin-table" id="procedures-admin-table">
+                <thead>
+                    <tr>
+                        <th>Título</th>
+                        <th>Categoria</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody id="procedures-admin-body">
+                    <!-- Preenchido via JS -->
+                </tbody>
+            </table>
+        </div>
+
+        <h2 class="section-title">Log de Atividades</h2>
+        <div class="table-wrapper">
+            <table id="log-table">
+                <thead>
+                    <tr>
+                        <th>Ação</th>
+                        <th>Título do Procedimento</th>
+                        <th>Categoria</th>
+                        <th>Data</th>
+                    </tr>
+                </thead>
+                <tbody id="log-table-body">
+                    <!-- As linhas do log serão inseridas aqui -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+
+    <!-- Seus scripts -->
+    <script src="js/firebase-config.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/admin.js"></script>
+</body>
+</html>

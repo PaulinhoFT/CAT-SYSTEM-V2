@@ -36,10 +36,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 const li = document.createElement('li');
                 li.innerHTML = `
                     <a href="#" class="procedure-link" data-id="${p.id}">${p.title}</a>
-                    <div class="procedure-actions">
-                        <button class="edit-btn" data-id="${p.id}">✏️</button>
-                        <button class="delete-btn" data-id="${p.id}">❌</button>
-                    </div>
                 `;
                 ul.appendChild(li);
             });
@@ -124,15 +120,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     });
-
-    const logActivity = (action, title, category) => {
-        return db.collection('activity_logs').add({
-            action: action,
-            title: title,
-            category: category,
-            timestamp: firebase.firestore.FieldValue.serverTimestamp()
-        });
-    };
 
     // Carrega o log de atividades
     const logTableBody = document.getElementById('log-table-body');
