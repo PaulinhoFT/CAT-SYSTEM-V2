@@ -106,6 +106,36 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- Lógica de Autenticação ---
+
+    // Injetar Modal de Login se não existir
+    if (!document.getElementById('login-modal')) {
+        const loginModalHTML = `
+            <div id="login-modal" class="modal-overlay hidden">
+                <div class="modal-container">
+                    <div class="modal-titlebar">
+                        <span>Login Administrativo</span>
+                        <button class="modal-close" id="close-login">&times;</button>
+                    </div>
+                    <div class="modal-content">
+                        <form id="login-form">
+                            <div class="form-group">
+                                <label for="login-email">Email</label>
+                                <input type="email" id="login-email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="login-password">Senha</label>
+                                <input type="password" id="login-password" required>
+                            </div>
+                            <button type="submit" id="btn-do-login">Entrar</button>
+                            <p id="login-error" class="red hidden" style="margin-top: 10px; text-align: center;"></p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        `;
+        document.body.insertAdjacentHTML('beforeend', loginModalHTML);
+    }
+
     const loginBtn = document.getElementById('login-btn');
     const logoutBtn = document.getElementById('logout-btn');
     const loginModal = document.getElementById('login-modal');
@@ -130,18 +160,37 @@ document.addEventListener('DOMContentLoaded', () => {
     if (loginForm) {
         loginForm.addEventListener('submit', (e) => {
             e.preventDefault();
+            console.log("Iniciando tentativa de login...");
             const email = document.getElementById('login-email').value;
             const password = document.getElementById('login-password').value;
+            const submitBtn = document.getElementById('btn-do-login');
+
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.textContent = "Entrando...";
+            }
+
+            if (loginError) loginError.classList.add('hidden');
 
             auth.signInWithEmailAndPassword(email, password)
-                .then(() => {
+                .then((userCredential) => {
+                    console.log("Login bem-sucedido:", userCredential.user.email);
                     loginModal.classList.add('hidden');
                     loginForm.reset();
                 })
                 .catch((error) => {
+                    console.error("Erro no login:", error.code, error.message);
                     if (loginError) {
                         loginError.textContent = "Erro: " + error.message;
                         loginError.classList.remove('hidden');
+                    } else {
+                        alert("Erro no login: " + error.message);
+                    }
+                })
+                .finally(() => {
+                    if (submitBtn) {
+                        submitBtn.disabled = false;
+                        submitBtn.textContent = "Entrar";
                     }
                 });
         });
