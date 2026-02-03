@@ -70,7 +70,7 @@ body {
     height: 60px;
     background-color: var(--navbar-bg);
     position: fixed;
-    top: 35px;
+    top: 0;
     display: flex;
     align-items: center;
     justify-content: flex-end;
@@ -125,37 +125,28 @@ body {
     background: rgba(255,255,255,0.1);
 }
 
-/* Banner Carousel */
-.banner-carousel {
-    width: 100%;
-    background: linear-gradient(90deg, #991b1b, #ef4444);
-    color: #ffffff;
-    overflow: hidden;
-    position: fixed;
-    top: 0;
-    height: 35px;
-    display: flex;
-    align-items: center;
-    z-index: 1001;
+#login-btn, #logout-btn {
+    background: var(--primary-color);
+    border: none;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 14px;
     font-weight: 600;
-    font-size: 12px;
-    letter-spacing: 0.05em;
+    margin-left: 15px;
 }
 
-.banner-text {
-    display: flex;
-    white-space: nowrap;
-    animation: scroll-left 60s linear infinite;
+#login-btn:hover, #logout-btn:hover {
+    background: var(--primary-hover);
 }
 
-.banner-text span {
-    padding-right: 60px;
-    text-transform: uppercase;
-}
-
-@keyframes scroll-left {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
+@media (max-width: 768px) {
+    .navbar a, #login-btn, #logout-btn {
+        display: none !important;
+    }
+    
+    /* Permite o botão de login aparecer se necessário ou manter oculto em mobile por simplicidade */
 }
 
 /* Menu hamburguer */
@@ -166,7 +157,7 @@ body {
     background: var(--hamburger-bg);
     color: var(--hamburger-text);
     position: fixed;
-    top: 45px;
+    top: 7px;
     left: 15px;
     z-index: 1100;
     border-radius: 50%;
@@ -212,7 +203,7 @@ body {
     top: 0;
     background: var(--sidebar-bg);
     z-index: 20;
-    padding-top: 100px;
+    padding-top: 70px;
     border-bottom: 1px solid var(--sidebar-border);
 }
 
@@ -263,13 +254,17 @@ body {
 }
 
 .procedure-actions {
-    display: flex;
+    display: none;
     gap: 8px;
     padding-right: 10px;
     opacity: 0;
 }
 
-.barra li:hover .procedure-actions {
+body.is-admin .procedure-actions {
+    display: flex;
+}
+
+body.is-admin .barra li:hover .procedure-actions {
     opacity: 1;
 }
 
@@ -335,7 +330,7 @@ body.dark-mode .barra li:hover {
     background-color: var(--procedure-bg);
     width: 90%;
     max-width: 1000px;
-    padding: 110px 40px 40px;
+    padding: 80px 40px 40px;
     margin: 40px auto;
     min-height: 80vh;
     border-radius: var(--border-radius);
@@ -437,7 +432,7 @@ img {
 @media (max-width: 768px) {
     .corpodireito {
         width: 95%;
-        padding: 100px 20px 20px;
+        padding: 70px 20px 20px;
         margin: 20px auto;
     }
 

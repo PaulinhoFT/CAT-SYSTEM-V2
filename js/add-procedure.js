@@ -1,4 +1,11 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Verificação de Autenticação
+    auth.onAuthStateChanged((user) => {
+        if (!user) {
+            window.location.href = 'index.html';
+        }
+    });
+
     // Registra o módulo de redimensionamento de imagem
     if (window.ImageResize) {
         Quill.register('modules/imageResize', window.ImageResize.default);

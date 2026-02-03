@@ -14,35 +14,12 @@
                 <a href="att.html" rel="noopener noreferrer">Abertura de ATT</a>
                 <a href="https://textformater-cat.netlify.app/" target="_blank" rel="noopener noreferrer">Formatador de texto</a>
                 <a href="calculadora.html" target="_blank" rel="noopener noreferrer">Calcu. de desconto</a>
-                <a href="add-procedure.html">Adicionar Procedimento</a>
+                <a href="add-procedure.html" id="add-procedure-link" class="hidden">Adicionar Procedimento</a>
+                <button id="login-btn">Entrar</button>
+                <button id="logout-btn" class="hidden">Sair</button>
                 <button id="theme-toggle">🌙</button>
             </li>
         </ul>
-    </div>
-
-    <div class="banner-carousel">
-        <div class="banner-text">
-            <span>não alterar nada que você não tenha criado</span>
-            <span>não alterar nada que você não tenha criado</span>
-            <span>não alterar nada que você não tenha criado</span>
-            <span>não alterar nada que você não tenha criado</span>
-            <span>não alterar nada que você não tenha criado</span>
-            <span>não alterar nada que você não tenha criado</span>
-            <span>não alterar nada que você não tenha criado</span>
-            <span>não alterar nada que você não tenha criado</span>
-            <span>não alterar nada que você não tenha criado</span>
-            <span>não alterar nada que você não tenha criado</span>
-            <span>não alterar nada que você não tenha criado</span>
-            <span>não alterar nada que você não tenha criado</span>
-            <span>não alterar nada que você não tenha criado</span>
-            <span>não alterar nada que você não tenha criado</span>
-            <span>não alterar nada que você não tenha criado</span>
-            <span>não alterar nada que você não tenha criado</span>
-            <span>não alterar nada que você não tenha criado</span>
-            <span>não alterar nada que você não tenha criado</span>
-            <span>não alterar nada que você não tenha criado</span>
-            <span>não alterar nada que você não tenha criado</span>
-        </div>
     </div>
 
     <div class="main">
@@ -91,8 +68,33 @@
         </div>
     </div>
 
+    <!-- Modal de Login -->
+    <div id="login-modal" class="modal-overlay hidden">
+        <div class="modal-container">
+            <div class="modal-titlebar">
+                <span>Login Administrativo</span>
+                <button class="modal-close" id="close-login">&times;</button>
+            </div>
+            <div class="modal-content">
+                <form id="login-form">
+                    <div class="form-group">
+                        <label for="login-email">Email</label>
+                        <input type="email" id="login-email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password">Senha</label>
+                        <input type="password" id="login-password" required>
+                    </div>
+                    <button type="submit" id="btn-do-login">Entrar</button>
+                    <p id="login-error" class="red hidden" style="margin-top: 10px; text-align: center;"></p>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
 
     <!-- Seus scripts -->
