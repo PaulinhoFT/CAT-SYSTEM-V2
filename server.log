@@ -1,0 +1,11 @@
+127.0.0.1 - - [04/Feb/2026 15:02:50] "GET /admin.html HTTP/1.1" 200 -
+127.0.0.1 - - [04/Feb/2026 15:02:50] "GET /css/style.css HTTP/1.1" 200 -
+127.0.0.1 - - [04/Feb/2026 15:02:50] "GET /img/Logo-TRIXNET.png HTTP/1.1" 200 -
+127.0.0.1 - - [04/Feb/2026 15:02:50] "GET /js/common.js HTTP/1.1" 200 -
+127.0.0.1 - - [04/Feb/2026 15:02:50] "GET /js/admin.js HTTP/1.1" 200 -
+127.0.0.1 - - [04/Feb/2026 15:02:52] "GET /admin-settings.html HTTP/1.1" 200 -
+127.0.0.1 - - [04/Feb/2026 15:02:52] "GET /css/style.css HTTP/1.1" 200 -
+127.0.0.1 - - [04/Feb/2026 15:02:52] "GET /img/Logo-TRIXNET.png HTTP/1.1" 200 -
+127.0.0.1 - - [04/Feb/2026 15:02:52] "GET /js/admin.js HTTP/1.1" 200 -
+127.0.0.1 - - [04/Feb/2026 15:02:52] "GET /js/common.js HTTP/1.1" 200 -
+127.0.0.1 - - [04/Feb/2026 15:02:52] "GET /img/meta.jpg HTTP/1.1" 200 -

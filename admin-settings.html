@@ -3,19 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Admin - TrixNet</title>
-    
+    <title>Configurações - TrixNet</title>
+
     <!-- Google Fonts - Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    
+
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+
     <link rel="stylesheet" href="css/style.css">
     <link rel="shortcut icon" href="img/Logo-TRIXNET.png" type="image/x-icon">
-    
+
 </head>
 <body class="admin-panel">
     <div class="dashboard-container">
@@ -25,50 +25,47 @@
                 <img src="img/Logo-TRIXNET.png" alt="TrixNet">
                 <span>Painel TrixNet</span>
             </div>
-            
+
             <div class="sidebar-profile">
                 <div class="profile-info">
                     <span>Bem-vindo,</span>
                     <h4 id="sidebar-user-name">Carregando...</h4>
                 </div>
             </div>
-            
+
             <nav class="sidebar-menu">
                 <div class="menu-section">
                     <h5>Geral</h5>
                     <ul>
-                        <li><a href="admin.html" class="active"><i class="fa fa-home"></i> Dashboard</a></li>
+                        <li><a href="admin.html"><i class="fa fa-home"></i> Dashboard</a></li>
                         <li><a href="index.html"><i class="fa fa-desktop"></i> Ver Site</a></li>
                     </ul>
                 </div>
-                
+
                 <div class="menu-section">
                     <h5>Conteúdo</h5>
                     <ul>
                         <li><a href="add-procedure.html"><i class="fa fa-plus-circle"></i> Novo Procedimento</a></li>
-                        <li><a href="#procedures-card"><i class="fa fa-list"></i> Lista de Procedimentos</a></li>
-                        <li><a href="#logs-card"><i class="fa fa-history"></i> Log de Atividades</a></li>
+                        <li><a href="admin.html#procedures-card"><i class="fa fa-list"></i> Lista de Procedimentos</a></li>
+                        <li><a href="admin.html#logs-card"><i class="fa fa-history"></i> Log de Atividades</a></li>
                     </ul>
                 </div>
 
                 <div class="menu-section">
                     <h5>Configurações</h5>
                     <ul>
-                        <li><a href="admin-settings.html"><i class="fa fa-cog"></i> Configurações</a></li>
+                        <li><a href="admin-settings.html" class="active"><i class="fa fa-cog"></i> Configurações</a></li>
                         <li><a href="#" class="theme-toggle-trigger"><i class="fa fa-moon"></i> Alternar Tema</a></li>
                         <li><a href="#" id="sidebar-logout-btn"><i class="fa fa-sign-out-alt"></i> Sair</a></li>
                     </ul>
                 </div>
             </nav>
-            
+
             <div class="sidebar-footer" style="display: none;">
-                <a href="#"><i class="fa fa-cog"></i></a>
-                <a href="#"><i class="fa fa-expand"></i></a>
-                <a href="#"><i class="fa fa-lock"></i></a>
                 <a href="#" id="footer-logout-btn"><i class="fa fa-power-off"></i></a>
             </div>
         </aside>
-        
+
         <!-- Main Content -->
         <main class="main-content">
             <!-- Top Nav -->
@@ -81,80 +78,69 @@
                         <input type="text" id="admin-search-input" placeholder="Pesquisar procedimentos...">
                     </div>
                 </div>
-                
+
                 <div class="nav-right">
                     <!-- Botões removidos conforme solicitado -->
                 </div>
             </header>
-            
+
             <!-- Content Body -->
             <div class="content-body">
-                <!-- Metrics Bar -->
-                <div class="metrics-row">
-                    <div class="metric-tile">
-                        <span class="metric-title"><i class="fa fa-book"></i> Procedimentos</span>
-                        <span class="metric-value" id="metric-total-procedures">0</span>
-                        <span class="metric-stats"><span class="up"><i class="fa fa-arrow-up"></i> 4%</span> desde a última semana</span>
-                    </div>
-                    <div class="metric-tile">
-                        <span class="metric-title"><i class="fa fa-folder"></i> Categorias</span>
-                        <span class="metric-value" id="metric-total-categories">0</span>
-                        <span class="metric-stats"><span class="up"><i class="fa fa-arrow-up"></i> 3%</span> desde a última semana</span>
-                    </div>
-                    <div class="metric-tile">
-                        <span class="metric-title"><i class="fa fa-clock"></i> Log Hoje</span>
-                        <span class="metric-value" id="metric-logs-today">0</span>
-                        <span class="metric-stats"><span class="up"><i class="fa fa-arrow-up"></i> 34%</span> desde ontem</span>
-                    </div>
-                </div>
-                
-                <!-- Dashboard Grid -->
-                <div class="dashboard-grid">
-                    <!-- Procedures Table Card -->
-                    <div class="dashboard-card card-lg" id="procedures-card">
-                        <div class="card-header">
-                            <h3>Procedimentos Recentes</h3>
-                            <div class="card-tools">
-                                <i class="fa fa-chevron-up" title="Minimizar/Maximizar"></i>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <div class="table-wrapper" style="border: none;">
-                                <table class="admin-table-custom">
-                                    <thead>
-                                        <tr>
-                                            <th>Título</th>
-                                            <th>Categoria</th>
-                                            <th>Ações</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="procedures-admin-body">
-                                        <!-- Preenchido via JS -->
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Activity Log Card -->
-                    <div class="dashboard-card card-sm" id="logs-card">
-                        <div class="card-header">
-                            <h3>Atividades Recentes</h3>
-                            <div class="card-tools">
-                                <i class="fa fa-chevron-up" title="Minimizar/Maximizar"></i>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <ul class="activity-list" id="activity-log-list">
-                                <!-- Preenchido via JS -->
-                            </ul>
-                            <div style="margin-top: 20px; text-align: center;">
-                                <a href="#" id="view-all-logs" style="color: #1ABB9C; font-size: 0.8rem; text-decoration: none; font-weight: 600;">VER TODAS ATIVIDADES</a>
-                            </div>
-                        </div>
-                    </div>
+                <div class="page-title" style="margin-bottom: 30px;">
+                    <h2 style="color: #73879C; font-weight: 700;">Configurações da Conta</h2>
                 </div>
 
+                <!-- Settings Card Section -->
+                <div class="dashboard-grid">
+                    <div class="dashboard-card card-lg" id="settings-card">
+                        <div class="card-header">
+                            <h3>Perfil e Segurança</h3>
+                            <div class="card-tools">
+                                <i class="fa fa-chevron-up" title="Minimizar/Maximizar"></i>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="settings-container" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px;">
+                                <div class="settings-section">
+                                    <h4 style="margin-bottom: 15px; color: #73879C; font-size: 0.9rem; text-transform: uppercase;">Atualizar Perfil</h4>
+                                    <form id="update-profile-form">
+                                        <div style="margin-bottom: 10px;">
+                                            <label style="display: block; font-size: 0.8rem; margin-bottom: 5px;">Nome de Exibição</label>
+                                            <input type="text" id="new-display-name" placeholder="Novo nome" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+                                        </div>
+                                        <button type="submit" class="btn-action-sm btn-edit-sm">Salvar Nome</button>
+                                    </form>
+                                </div>
+
+                                <div class="settings-section">
+                                    <h4 style="margin-bottom: 15px; color: #73879C; font-size: 0.9rem; text-transform: uppercase;">Alterar Senha</h4>
+                                    <form id="change-password-form">
+                                        <div style="margin-bottom: 10px;">
+                                            <label style="display: block; font-size: 0.8rem; margin-bottom: 5px;">Nova Senha</label>
+                                            <input type="password" id="new-password" placeholder="••••••••" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+                                        </div>
+                                        <button type="submit" class="btn-action-sm btn-edit-sm">Atualizar Senha</button>
+                                    </form>
+                                </div>
+
+                                <div class="settings-section">
+                                    <h4 style="margin-bottom: 15px; color: #73879C; font-size: 0.9rem; text-transform: uppercase;">Criar Administrador</h4>
+                                    <form id="create-user-form">
+                                        <div style="margin-bottom: 10px;">
+                                            <label style="display: block; font-size: 0.8rem; margin-bottom: 5px;">E-mail</label>
+                                            <input type="email" id="new-user-email" placeholder="email@trixnet.com.br" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+                                        </div>
+                                        <div style="margin-bottom: 10px;">
+                                            <label style="display: block; font-size: 0.8rem; margin-bottom: 5px;">Senha</label>
+                                            <input type="password" id="new-user-password" placeholder="••••••••" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+                                        </div>
+                                        <button type="submit" class="btn-action-sm" style="background-color: #3498DB; color: white;">Criar Usuário</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </main>
     </div>
@@ -174,7 +160,7 @@
         document.getElementById('toggle-sidebar').addEventListener('click', function() {
             const sidebar = document.getElementById('sidebar');
             const currentMargin = window.getComputedStyle(sidebar).marginLeft;
-            
+
             if (currentMargin === '0px') {
                 sidebar.style.marginLeft = '-260px';
             } else {
@@ -189,9 +175,11 @@
                 window.location.href = 'index.html';
             });
         };
-        
+
         document.getElementById('sidebar-logout-btn').addEventListener('click', logoutHandler);
-        document.getElementById('footer-logout-btn').addEventListener('click', logoutHandler);
+        if (document.getElementById('footer-logout-btn')) {
+            document.getElementById('footer-logout-btn').addEventListener('click', logoutHandler);
+        }
     </script>
 </body>
 </html>

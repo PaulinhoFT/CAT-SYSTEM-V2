@@ -1,26 +1,39 @@
 document.addEventListener('DOMContentLoaded', () => {
     // --- Lógica para o modo claro/escuro ---
-    const themeToggle = document.getElementById('theme-toggle');
-    if (themeToggle) {
-        const currentTheme = localStorage.getItem('theme');
-
-        if (currentTheme === 'dark') {
-            document.body.classList.add('dark-mode');
-            themeToggle.textContent = '☀️';
-        }
-
-        themeToggle.addEventListener('click', () => {
-            document.body.classList.toggle('dark-mode');
-            let theme = 'light';
-            if (document.body.classList.contains('dark-mode')) {
-                theme = 'dark';
-                themeToggle.textContent = '☀️';
-            } else {
-                themeToggle.textContent = '🌙';
-            }
-            localStorage.setItem('theme', theme);
-        });
+    const currentTheme = localStorage.getItem('theme');
+    if (currentTheme === 'dark') {
+        document.body.classList.add('dark-mode');
     }
+
+    const updateThemeButtons = () => {
+        const isDark = document.body.classList.contains('dark-mode');
+        const themeToggles = document.querySelectorAll('#theme-toggle, .theme-toggle-trigger');
+        themeToggles.forEach(btn => {
+            if (btn.tagName === 'A' || btn.tagName === 'BUTTON') {
+                if (isDark) {
+                    btn.innerHTML = btn.innerHTML.includes('<i') ? btn.innerHTML.replace('fa-moon', 'fa-sun') : '☀️';
+                } else {
+                    btn.innerHTML = btn.innerHTML.includes('<i') ? btn.innerHTML.replace('fa-sun', 'fa-moon') : '🌙';
+                }
+            }
+        });
+    };
+
+    updateThemeButtons();
+
+    window.toggleTheme = () => {
+        document.body.classList.toggle('dark-mode');
+        const theme = document.body.classList.contains('dark-mode') ? 'dark' : 'light';
+        localStorage.setItem('theme', theme);
+        updateThemeButtons();
+    };
+
+    document.addEventListener('click', (e) => {
+        if (e.target.closest('#theme-toggle') || e.target.closest('.theme-toggle-trigger')) {
+            e.preventDefault();
+            window.toggleTheme();
+        }
+    });
 
     // --- Lógica para o Rádio Player ---
 
@@ -61,7 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- Lógica para o Modal de Boas-vindas ---
-    const isAdminPage = window.location.pathname.includes('admin.html');
+    const isAdminPage = window.location.pathname.includes('admin.html') || window.location.pathname.includes('admin-settings.html');
     if (!sessionStorage.getItem('welcomeModalShown') && !isAdminPage) {
         const modalHTML = `
             <div id="welcome-modal" class="modal-overlay">
@@ -213,7 +226,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // Monitorar estado de autenticação
     if (typeof auth !== 'undefined') {
         auth.onAuthStateChanged((user) => {
-            const isLoginPage = window.location.pathname.includes('admin.html') || window.location.pathname.includes('add-procedure.html');
+            const isLoginPage = window.location.pathname.includes('admin.html') ||
+                                window.location.pathname.includes('admin-settings.html') ||
+                                window.location.pathname.includes('add-procedure.html');
 
             if (user) {
                 if (loginBtn) loginBtn.classList.add('hidden');

@@ -977,6 +977,12 @@ body.dark-mode .top-nav {
     border-color: #334155;
 }
 
+.nav-left {
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
 .toggle-menu-btn {
     background: none;
     border: none;
@@ -1174,6 +1180,23 @@ body.dark-mode .admin-table-custom th {
     border-bottom: 1px solid #F1F1F1;
     font-size: 0.9rem;
     color: #5A738E;
+}
+
+.admin-search-wrapper {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    margin-left: 15px;
+}
+
+#admin-search-input {
+    padding: 8px 15px;
+    border-radius: 20px;
+    border: 1px solid #ccc;
+    width: 250px;
+    font-size: 0.85rem;
+    outline: none;
+    margin: 0;
 }
 
 body.dark-mode .admin-table-custom td {
