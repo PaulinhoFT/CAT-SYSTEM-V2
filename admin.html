@@ -27,7 +27,6 @@
             </div>
             
             <div class="sidebar-profile">
-                <img src="img/meta.jpg" alt="Admin" class="profile-img" id="sidebar-user-img">
                 <div class="profile-info">
                     <span>Bem-vindo,</span>
                     <h4 id="sidebar-user-name">Carregando...</h4>
@@ -61,7 +60,7 @@
                 </div>
             </nav>
             
-            <div class="sidebar-footer">
+            <div class="sidebar-footer" style="display: none;">
                 <a href="#"><i class="fa fa-cog"></i></a>
                 <a href="#"><i class="fa fa-expand"></i></a>
                 <a href="#"><i class="fa fa-lock"></i></a>
@@ -77,22 +76,13 @@
                     <button class="toggle-menu-btn" id="toggle-sidebar">
                         <i class="fa fa-bars"></i>
                     </button>
-                    <div class="admin-search-wrapper" style="margin-left: 15px;">
-                        <input type="text" id="admin-search-input" placeholder="Pesquisar procedimentos..." style="padding: 8px 15px; border-radius: 20px; border: 1px solid #ccc; width: 250px; font-size: 0.85rem; outline: none;">
+                    <div class="admin-search-wrapper" style="margin-left: 15px; display: flex; align-items: center; height: 100%;">
+                        <input type="text" id="admin-search-input" placeholder="Pesquisar procedimentos..." style="padding: 8px 15px; border-radius: 20px; border: 1px solid #ccc; width: 250px; font-size: 0.85rem; outline: none; margin: 0;">
                     </div>
                 </div>
                 
                 <div class="nav-right">
-                    <div class="nav-icons">
-                        <i class="fa fa-moon" id="theme-toggle" title="Alternar Tema" style="cursor: pointer;"></i>
-                        <i class="fa fa-envelope"><span class="badge">6</span></i>
-                        <i class="fa fa-bell"><span class="badge">3</span></i>
-                    </div>
-                    <div class="nav-user" id="top-nav-user">
-                        <img src="img/meta.jpg" alt="User" id="nav-user-img">
-                        <span id="nav-user-name">Admin</span>
-                        <i class="fa fa-angle-down"></i>
-                    </div>
+                    <!-- Botões removidos conforme solicitado -->
                 </div>
             </header>
             
@@ -115,11 +105,6 @@
                         <span class="metric-value" id="metric-logs-today">0</span>
                         <span class="metric-stats"><span class="up"><i class="fa fa-arrow-up"></i> 34%</span> desde ontem</span>
                     </div>
-                    <div class="metric-tile">
-                        <span class="metric-title"><i class="fa fa-user"></i> Admin Online</span>
-                        <span class="metric-value">1</span>
-                        <span class="metric-stats">Sessão ativa</span>
-                    </div>
                 </div>
                 
                 <!-- Dashboard Grid -->
@@ -129,9 +114,7 @@
                         <div class="card-header">
                             <h3>Procedimentos Recentes</h3>
                             <div class="card-tools">
-                                <i class="fa fa-chevron-up"></i>
-                                <i class="fa fa-wrench"></i>
-                                <i class="fa fa-close"></i>
+                                <i class="fa fa-chevron-up" title="Minimizar/Maximizar"></i>
                             </div>
                         </div>
                         <div class="card-body">
@@ -157,8 +140,7 @@
                         <div class="card-header">
                             <h3>Atividades Recentes</h3>
                             <div class="card-tools">
-                                <i class="fa fa-chevron-up"></i>
-                                <i class="fa fa-close"></i>
+                                <i class="fa fa-chevron-up" title="Minimizar/Maximizar"></i>
                             </div>
                         </div>
                         <div class="card-body">
@@ -167,6 +149,58 @@
                             </ul>
                             <div style="margin-top: 20px; text-align: center;">
                                 <a href="#" id="view-all-logs" style="color: #1ABB9C; font-size: 0.8rem; text-decoration: none; font-weight: 600;">VER TODAS ATIVIDADES</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Settings Card Section -->
+                <div class="dashboard-grid" style="margin-top: 20px;">
+                    <div class="dashboard-card card-lg" id="settings-card">
+                        <div class="card-header">
+                            <h3>Configurações da Conta</h3>
+                            <div class="card-tools">
+                                <i class="fa fa-chevron-up" title="Minimizar/Maximizar"></i>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="settings-container" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px;">
+                                <div class="settings-section">
+                                    <h4 style="margin-bottom: 15px; color: #73879C; font-size: 0.9rem; text-transform: uppercase;">Atualizar Perfil</h4>
+                                    <form id="update-profile-form">
+                                        <div style="margin-bottom: 10px;">
+                                            <label style="display: block; font-size: 0.8rem; margin-bottom: 5px;">Nome de Exibição</label>
+                                            <input type="text" id="new-display-name" placeholder="Novo nome" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+                                        </div>
+                                        <button type="submit" class="btn-action-sm btn-edit-sm">Salvar Nome</button>
+                                    </form>
+                                </div>
+
+                                <div class="settings-section">
+                                    <h4 style="margin-bottom: 15px; color: #73879C; font-size: 0.9rem; text-transform: uppercase;">Alterar Senha</h4>
+                                    <form id="change-password-form">
+                                        <div style="margin-bottom: 10px;">
+                                            <label style="display: block; font-size: 0.8rem; margin-bottom: 5px;">Nova Senha</label>
+                                            <input type="password" id="new-password" placeholder="••••••••" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+                                        </div>
+                                        <button type="submit" class="btn-action-sm btn-edit-sm">Atualizar Senha</button>
+                                    </form>
+                                </div>
+
+                                <div class="settings-section">
+                                    <h4 style="margin-bottom: 15px; color: #73879C; font-size: 0.9rem; text-transform: uppercase;">Criar Administrador</h4>
+                                    <form id="create-user-form">
+                                        <div style="margin-bottom: 10px;">
+                                            <label style="display: block; font-size: 0.8rem; margin-bottom: 5px;">E-mail</label>
+                                            <input type="email" id="new-user-email" placeholder="email@trixnet.com.br" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+                                        </div>
+                                        <div style="margin-bottom: 10px;">
+                                            <label style="display: block; font-size: 0.8rem; margin-bottom: 5px;">Senha</label>
+                                            <input type="password" id="new-user-password" placeholder="••••••••" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+                                        </div>
+                                        <button type="submit" class="btn-action-sm" style="background-color: #3498DB; color: white;">Criar Usuário</button>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>
