@@ -155,10 +155,104 @@ document.addEventListener('DOMContentLoaded', () => {
         auth.onAuthStateChanged(user => {
             if (user) {
                 const userNameElems = [document.getElementById('sidebar-user-name'), document.getElementById('nav-user-name')];
+                const nameToShow = user.displayName || user.email.split('@')[0];
                 userNameElems.forEach(el => {
-                    if (el) el.textContent = user.email.split('@')[0];
+                    if (el) el.textContent = nameToShow;
                 });
             }
+        });
+    }
+
+    // Card Toggle Logic (Minimizar/Maximizar)
+    document.querySelectorAll('.card-tools .fa-chevron-up').forEach(icon => {
+        icon.addEventListener('click', function() {
+            const card = this.closest('.dashboard-card');
+            const cardBody = card.querySelector('.card-body');
+            if (cardBody.style.display === 'none') {
+                cardBody.style.display = 'block';
+                this.style.transform = 'rotate(0deg)';
+            } else {
+                cardBody.style.display = 'none';
+                this.style.transform = 'rotate(180deg)';
+            }
+        });
+    });
+
+    // --- Configurações da Conta ---
+
+    // Atualizar Perfil (Nome)
+    const updateProfileForm = document.getElementById('update-profile-form');
+    if (updateProfileForm) {
+        updateProfileForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const newName = document.getElementById('new-display-name').value;
+            if (!newName) return;
+
+            const user = firebase.auth().currentUser;
+            user.updateProfile({
+                displayName: newName
+            }).then(() => {
+                alert('Nome atualizado com sucesso!');
+                const sidebarName = document.getElementById('sidebar-user-name');
+                if (sidebarName) sidebarName.textContent = newName;
+                updateProfileForm.reset();
+            }).catch(error => {
+                console.error("Erro ao atualizar nome:", error);
+                alert("Erro: " + error.message);
+            });
+        });
+    }
+
+    // Alterar Senha
+    const changePasswordForm = document.getElementById('change-password-form');
+    if (changePasswordForm) {
+        changePasswordForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const newPassword = document.getElementById('new-password').value;
+            if (!newPassword) return;
+
+            const user = firebase.auth().currentUser;
+            user.updatePassword(newPassword).then(() => {
+                alert('Senha atualizada com sucesso!');
+                changePasswordForm.reset();
+            }).catch(error => {
+                console.error("Erro ao atualizar senha:", error);
+                alert("Erro: " + error.message + "\n(Pode ser necessário sair e entrar novamente para realizar esta ação por segurança)");
+            });
+        });
+    }
+
+    // Criar Novo Administrador
+    const createUserForm = document.getElementById('create-user-form');
+    if (createUserForm) {
+        createUserForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('new-user-email').value;
+            const password = document.getElementById('new-user-password').value;
+
+            if (!email || !password) {
+                alert("Por favor, preencha e-mail e senha.");
+                return;
+            }
+
+            if (password.length < 6) {
+                alert("A senha deve ter pelo menos 6 caracteres.");
+                return;
+            }
+
+            // Para criar usuário sem deslogar o atual, usamos uma instância secundária
+            const secondaryApp = firebase.initializeApp(firebaseConfig, "SecondaryInstance_" + Date.now());
+            secondaryApp.auth().createUserWithEmailAndPassword(email, password)
+                .then(() => {
+                    alert('Novo administrador criado com sucesso!');
+                    createUserForm.reset();
+                    return secondaryApp.delete();
+                })
+                .catch(error => {
+                    console.error("Erro ao criar usuário:", error);
+                    alert("Erro: " + error.message);
+                    secondaryApp.delete();
+                });
         });
     }
 });

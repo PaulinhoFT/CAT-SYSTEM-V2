@@ -977,6 +977,12 @@ body.dark-mode .top-nav {
     border-color: #334155;
 }
 
+.nav-left {
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
 .toggle-menu-btn {
     background: none;
     border: none;
@@ -1176,6 +1182,23 @@ body.dark-mode .admin-table-custom th {
     color: #5A738E;
 }
 
+.admin-search-wrapper {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    margin-left: 15px;
+}
+
+#admin-search-input {
+    padding: 8px 15px;
+    border-radius: 20px;
+    border: 1px solid #ccc;
+    width: 250px;
+    font-size: 0.85rem;
+    outline: none;
+    margin: 0;
+}
+
 body.dark-mode .admin-table-custom td {
     border-color: #334155;
     color: #cbd5e1;
@@ -1253,10 +1276,36 @@ body.dark-mode .activity-content h4 {
 
 .card-tools i {
     cursor: pointer;
+    transition: transform 0.3s ease, color 0.3s ease;
 }
 
 .card-tools i:hover {
     color: #5A738E;
+}
+
+/* Settings Styles */
+.settings-section form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.settings-section input:focus {
+    border-color: #1ABB9C !important;
+    box-shadow: 0 0 0 3px rgba(26, 187, 156, 0.1);
+    outline: none;
+}
+
+.settings-section button {
+    align-self: flex-start;
+    border: none;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.settings-section button:hover {
+    filter: brightness(1.1);
+    transform: translateY(-1px);
 }
 
 /* Loader */
