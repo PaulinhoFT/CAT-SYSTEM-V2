@@ -4,18 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Configurações - TrixNet</title>
-
+    
     <!-- Google Fonts - Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-
+    
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
+    
     <link rel="stylesheet" href="css/style.css">
     <link rel="shortcut icon" href="img/Logo-TRIXNET.png" type="image/x-icon">
-
+    
 </head>
 <body class="admin-panel">
     <div class="dashboard-container">
@@ -25,14 +25,14 @@
                 <img src="img/Logo-TRIXNET.png" alt="TrixNet">
                 <span>Painel TrixNet</span>
             </div>
-
+            
             <div class="sidebar-profile">
                 <div class="profile-info">
                     <span>Bem-vindo,</span>
                     <h4 id="sidebar-user-name">Carregando...</h4>
                 </div>
             </div>
-
+            
             <nav class="sidebar-menu">
                 <div class="menu-section">
                     <h5>Geral</h5>
@@ -41,13 +41,13 @@
                         <li><a href="index.html"><i class="fa fa-desktop"></i> Ver Site</a></li>
                     </ul>
                 </div>
-
+                
                 <div class="menu-section">
                     <h5>Conteúdo</h5>
                     <ul>
                         <li><a href="add-procedure.html"><i class="fa fa-plus-circle"></i> Novo Procedimento</a></li>
-                        <li><a href="admin.html#procedures-card"><i class="fa fa-list"></i> Lista de Procedimentos</a></li>
-                        <li><a href="admin.html#logs-card"><i class="fa fa-history"></i> Log de Atividades</a></li>
+                        <li><a href="admin-procedures.html"><i class="fa fa-list"></i> Lista de Procedimentos</a></li>
+                        <li><a href="admin-logs.html"><i class="fa fa-history"></i> Log de Atividades</a></li>
                     </ul>
                 </div>
 
@@ -60,12 +60,12 @@
                     </ul>
                 </div>
             </nav>
-
+            
             <div class="sidebar-footer" style="display: none;">
                 <a href="#" id="footer-logout-btn"><i class="fa fa-power-off"></i></a>
             </div>
         </aside>
-
+        
         <!-- Main Content -->
         <main class="main-content">
             <!-- Top Nav -->
@@ -78,12 +78,12 @@
                         <input type="text" id="admin-search-input" placeholder="Pesquisar procedimentos...">
                     </div>
                 </div>
-
+                
                 <div class="nav-right">
                     <!-- Botões removidos conforme solicitado -->
                 </div>
             </header>
-
+            
             <!-- Content Body -->
             <div class="content-body">
                 <div class="page-title" style="margin-bottom: 30px;">
@@ -111,7 +111,7 @@
                                         <button type="submit" class="btn-action-sm btn-edit-sm">Salvar Nome</button>
                                     </form>
                                 </div>
-
+                                
                                 <div class="settings-section">
                                     <h4 style="margin-bottom: 15px; color: #73879C; font-size: 0.9rem; text-transform: uppercase;">Alterar Senha</h4>
                                     <form id="change-password-form">
@@ -160,7 +160,7 @@
         document.getElementById('toggle-sidebar').addEventListener('click', function() {
             const sidebar = document.getElementById('sidebar');
             const currentMargin = window.getComputedStyle(sidebar).marginLeft;
-
+            
             if (currentMargin === '0px') {
                 sidebar.style.marginLeft = '-260px';
             } else {
@@ -175,7 +175,7 @@
                 window.location.href = 'index.html';
             });
         };
-
+        
         document.getElementById('sidebar-logout-btn').addEventListener('click', logoutHandler);
         if (document.getElementById('footer-logout-btn')) {
             document.getElementById('footer-logout-btn').addEventListener('click', logoutHandler);

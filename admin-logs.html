@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Admin - TrixNet</title>
+    <title>Log de Atividades - TrixNet</title>
     
     <!-- Google Fonts - Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,7 +15,6 @@
     
     <link rel="stylesheet" href="css/style.css">
     <link rel="shortcut icon" href="img/Logo-TRIXNET.png" type="image/x-icon">
-    
 </head>
 <body class="admin-panel">
     <div class="dashboard-container">
@@ -37,7 +36,7 @@
                 <div class="menu-section">
                     <h5>Geral</h5>
                     <ul>
-                        <li><a href="admin.html" class="active"><i class="fa fa-home"></i> Dashboard</a></li>
+                        <li><a href="admin.html"><i class="fa fa-home"></i> Dashboard</a></li>
                         <li><a href="index.html"><i class="fa fa-desktop"></i> Ver Site</a></li>
                     </ul>
                 </div>
@@ -47,7 +46,7 @@
                     <ul>
                         <li><a href="add-procedure.html"><i class="fa fa-plus-circle"></i> Novo Procedimento</a></li>
                         <li><a href="admin-procedures.html"><i class="fa fa-list"></i> Lista de Procedimentos</a></li>
-                        <li><a href="admin-logs.html"><i class="fa fa-history"></i> Log de Atividades</a></li>
+                        <li><a href="admin-logs.html" class="active"><i class="fa fa-history"></i> Log de Atividades</a></li>
                     </ul>
                 </div>
 
@@ -60,13 +59,6 @@
                     </ul>
                 </div>
             </nav>
-            
-            <div class="sidebar-footer" style="display: none;">
-                <a href="#"><i class="fa fa-cog"></i></a>
-                <a href="#"><i class="fa fa-expand"></i></a>
-                <a href="#"><i class="fa fa-lock"></i></a>
-                <a href="#" id="footer-logout-btn"><i class="fa fa-power-off"></i></a>
-            </div>
         </aside>
         
         <!-- Main Content -->
@@ -78,42 +70,22 @@
                         <i class="fa fa-bars"></i>
                     </button>
                     <div class="admin-search-wrapper">
-                        <input type="text" id="admin-search-input" placeholder="Pesquisar procedimentos...">
+                        <input type="text" id="admin-search-input" placeholder="Pesquisar atividades...">
                     </div>
                 </div>
-                
-                <div class="nav-right">
-                    <!-- Botões removidos conforme solicitado -->
-                </div>
+                <div class="nav-right"></div>
             </header>
             
             <!-- Content Body -->
             <div class="content-body">
-                <!-- Metrics Bar -->
-                <div class="metrics-row">
-                    <div class="metric-tile">
-                        <span class="metric-title"><i class="fa fa-book"></i> Procedimentos</span>
-                        <span class="metric-value" id="metric-total-procedures">0</span>
-                        <span class="metric-stats"><span class="up"><i class="fa fa-arrow-up"></i> 4%</span> desde a última semana</span>
-                    </div>
-                    <div class="metric-tile">
-                        <span class="metric-title"><i class="fa fa-folder"></i> Categorias</span>
-                        <span class="metric-value" id="metric-total-categories">0</span>
-                        <span class="metric-stats"><span class="up"><i class="fa fa-arrow-up"></i> 3%</span> desde a última semana</span>
-                    </div>
-                    <div class="metric-tile">
-                        <span class="metric-title"><i class="fa fa-clock"></i> Log Hoje</span>
-                        <span class="metric-value" id="metric-logs-today">0</span>
-                        <span class="metric-stats"><span class="up"><i class="fa fa-arrow-up"></i> 34%</span> desde ontem</span>
-                    </div>
+                <div class="page-title" style="margin-bottom: 30px;">
+                    <h2 style="color: #73879C; font-weight: 700;">Log de Atividades Completo</h2>
                 </div>
-                
-                <!-- Dashboard Grid -->
+
                 <div class="dashboard-grid">
-                    <!-- Procedures Table Card -->
-                    <div class="dashboard-card card-lg" id="procedures-card">
+                    <div class="dashboard-card card-lg">
                         <div class="card-header">
-                            <h3>Procedimentos Recentes</h3>
+                            <h3>Histórico de Ações</h3>
                             <div class="card-tools">
                                 <i class="fa fa-chevron-up" title="Minimizar/Maximizar"></i>
                             </div>
@@ -123,48 +95,29 @@
                                 <table class="admin-table-custom">
                                     <thead>
                                         <tr>
+                                            <th>Ação</th>
                                             <th>Título</th>
                                             <th>Categoria</th>
-                                            <th>Ações</th>
+                                            <th>Data/Hora</th>
                                         </tr>
                                     </thead>
-                                    <tbody id="procedures-admin-body">
+                                    <tbody id="full-logs-body">
                                         <!-- Preenchido via JS -->
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
-                    
-                    <!-- Activity Log Card -->
-                    <div class="dashboard-card card-sm" id="logs-card">
-                        <div class="card-header">
-                            <h3>Atividades Recentes</h3>
-                            <div class="card-tools">
-                                <i class="fa fa-chevron-up" title="Minimizar/Maximizar"></i>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <ul class="activity-list" id="activity-log-list">
-                                <!-- Preenchido via JS -->
-                            </ul>
-                            <div style="margin-top: 20px; text-align: center;">
-                                <a href="#" id="view-all-logs" style="color: #1ABB9C; font-size: 0.8rem; text-decoration: none; font-weight: 600;">VER TODAS ATIVIDADES</a>
-                            </div>
-                        </div>
-                    </div>
                 </div>
-
             </div>
         </main>
     </div>
 
-    <!-- Firebase (usando as mesmas versões do resto do projeto) -->
+    <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
 
-    <!-- Seus scripts -->
     <script src="js/firebase-config.js"></script>
     <script src="js/common.js"></script>
     <script src="js/admin.js"></script>
@@ -174,7 +127,6 @@
         document.getElementById('toggle-sidebar').addEventListener('click', function() {
             const sidebar = document.getElementById('sidebar');
             const currentMargin = window.getComputedStyle(sidebar).marginLeft;
-            
             if (currentMargin === '0px') {
                 sidebar.style.marginLeft = '-260px';
             } else {
@@ -183,15 +135,12 @@
         });
 
         // Logout logic
-        const logoutHandler = function(e) {
+        document.getElementById('sidebar-logout-btn').addEventListener('click', function(e) {
             e.preventDefault();
             firebase.auth().signOut().then(() => {
                 window.location.href = 'index.html';
             });
-        };
-        
-        document.getElementById('sidebar-logout-btn').addEventListener('click', logoutHandler);
-        document.getElementById('footer-logout-btn').addEventListener('click', logoutHandler);
+        });
     </script>
 </body>
 </html>

@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const proceduresAdminBody = document.getElementById('procedures-admin-body');
     const activityLogList = document.getElementById('activity-log-list');
+    const fullLogsBody = document.getElementById('full-logs-body');
     
     // Metrics Elements
     const metricTotalProcedures = document.getElementById('metric-total-procedures');
@@ -14,7 +15,16 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Carregar Procedimentos
-    db.collection('procedures').orderBy('title').onSnapshot(snapshot => {
+    const isDashboard = window.location.pathname.includes('admin.html') && !window.location.pathname.includes('admin-');
+    let proceduresQuery = db.collection('procedures').orderBy('title');
+    
+    if (isDashboard) {
+        // No dashboard, podemos mostrar os 10 mais recentes ou manter todos se preferir.
+        // O usuário pediu "Procedimentos Recentes" no dashboard.
+        proceduresQuery = db.collection('procedures').orderBy('createdAt', 'desc').limit(10);
+    }
+
+    proceduresQuery.onSnapshot(snapshot => {
         if (proceduresAdminBody) {
             proceduresAdminBody.innerHTML = '';
             let categories = new Set();
@@ -48,9 +58,9 @@ document.addEventListener('DOMContentLoaded', () => {
         console.error("Erro ao carregar procedimentos:", error);
     });
 
-    // Carregar Logs de Atividade
-    db.collection('activity_logs').orderBy('timestamp', 'desc').limit(10).onSnapshot(snapshot => {
-        if (activityLogList) {
+    // Carregar Logs de Atividade (Resumo para o Dashboard)
+    if (activityLogList) {
+        db.collection('activity_logs').orderBy('timestamp', 'desc').limit(10).onSnapshot(snapshot => {
             activityLogList.innerHTML = '';
             
             let todayCount = 0;
@@ -96,27 +106,51 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             if (metricLogsToday) metricLogsToday.textContent = todayCount;
-        }
-    }, error => {
-        console.error("Erro ao carregar logs:", error);
-    });
+        }, error => {
+            console.error("Erro ao carregar logs:", error);
+        });
+    }
+
+    // Carregar Logs de Atividade Completos (Para admin-logs.html)
+    if (fullLogsBody) {
+        db.collection('activity_logs').orderBy('timestamp', 'desc').onSnapshot(snapshot => {
+            fullLogsBody.innerHTML = '';
+            snapshot.forEach(doc => {
+                const log = doc.data();
+                const timestamp = log.timestamp ? log.timestamp.toDate() : null;
+                const timeStr = timestamp ? timestamp.toLocaleString('pt-BR') : 'Agora mesmo';
+
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td><strong>${log.action}</strong></td>
+                    <td>${log.title}</td>
+                    <td><span class="yellow" style="font-size: 0.7rem;">${log.category || 'N/A'}</span></td>
+                    <td>${timeStr}</td>
+                `;
+                fullLogsBody.appendChild(tr);
+            });
+        }, error => {
+            console.error("Erro ao carregar logs completos:", error);
+        });
+    }
 
     // Filtro de Pesquisa na Tabela
-    if (searchInput && proceduresAdminBody) {
+    if (searchInput) {
         searchInput.addEventListener('input', (e) => {
             const searchTerm = e.target.value.toLowerCase();
-            const rows = proceduresAdminBody.querySelectorAll('tr');
+            const targetBody = proceduresAdminBody || fullLogsBody;
             
-            rows.forEach(row => {
-                const title = row.querySelector('td:first-child').textContent.toLowerCase();
-                const category = row.querySelector('td:nth-child(2)').textContent.toLowerCase();
-                
-                if (title.includes(searchTerm) || category.includes(searchTerm)) {
-                    row.style.display = '';
-                } else {
-                    row.style.display = 'none';
-                }
-            });
+            if (targetBody) {
+                const rows = targetBody.querySelectorAll('tr');
+                rows.forEach(row => {
+                    const text = row.textContent.toLowerCase();
+                    if (text.includes(searchTerm)) {
+                        row.style.display = '';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+            }
         });
     }
 
@@ -178,6 +212,15 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // Corrigir botão "Ver todas atividades"
+    const viewAllLogsBtn = document.getElementById('view-all-logs');
+    if (viewAllLogsBtn) {
+        viewAllLogsBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            window.location.href = 'admin-logs.html';
+        });
+    }
+
     // --- Configurações da Conta ---
 
     // Atualizar Perfil (Nome)
@@ -187,7 +230,7 @@ document.addEventListener('DOMContentLoaded', () => {
             e.preventDefault();
             const newName = document.getElementById('new-display-name').value;
             if (!newName) return;
-
+            
             const user = firebase.auth().currentUser;
             user.updateProfile({
                 displayName: newName
@@ -229,7 +272,7 @@ document.addEventListener('DOMContentLoaded', () => {
             e.preventDefault();
             const email = document.getElementById('new-user-email').value;
             const password = document.getElementById('new-user-password').value;
-
+            
             if (!email || !password) {
                 alert("Por favor, preencha e-mail e senha.");
                 return;
