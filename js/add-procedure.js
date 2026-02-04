@@ -112,7 +112,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 return logActivity('Editado', title, category);
             }).then(() => {
                 alert('Procedimento atualizado com sucesso!');
-                window.location.href = 'admin.html';
+                window.location.href = 'admin-procedures.html';
             }).catch(error => {
                 console.error("Erro ao atualizar procedimento: ", error);
                 submitBtn.disabled = false;
@@ -129,7 +129,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 return logActivity('Novo', title, category);
             }).then(() => {
                 alert('Procedimento salvo com sucesso!');
-                window.location.href = 'admin.html';
+                window.location.href = 'admin-procedures.html';
             }).catch(error => {
                 console.error("Erro ao salvar procedimento: ", error);
                 submitBtn.disabled = false;

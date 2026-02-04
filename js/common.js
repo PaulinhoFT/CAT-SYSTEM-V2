@@ -74,7 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- Lógica para o Modal de Boas-vindas ---
-    const isAdminPage = window.location.pathname.includes('admin.html') || window.location.pathname.includes('admin-settings.html');
+    const isAdminPage = window.location.pathname.includes('admin') || window.location.pathname.includes('add-procedure.html');
     if (!sessionStorage.getItem('welcomeModalShown') && !isAdminPage) {
         const modalHTML = `
             <div id="welcome-modal" class="modal-overlay">
@@ -226,8 +226,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Monitorar estado de autenticação
     if (typeof auth !== 'undefined') {
         auth.onAuthStateChanged((user) => {
-            const isLoginPage = window.location.pathname.includes('admin.html') ||
-                                window.location.pathname.includes('admin-settings.html') ||
+            const isLoginPage = window.location.pathname.includes('admin') ||
                                 window.location.pathname.includes('add-procedure.html');
 
             if (user) {

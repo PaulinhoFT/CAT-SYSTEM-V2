@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gerenciar Procedimento - TrixNet</title>
+    <title>Log de Atividades - TrixNet</title>
 
     <!-- Google Fonts - Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,8 +14,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <link rel="stylesheet" href="css/style.css">
-    <!-- Incluir o CSS do Quill -->
-    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
     <link rel="shortcut icon" href="img/Logo-TRIXNET.png" type="image/x-icon">
 </head>
 <body class="admin-panel">
@@ -46,9 +44,9 @@
                 <div class="menu-section">
                     <h5>Conteúdo</h5>
                     <ul>
-                        <li><a href="add-procedure.html" class="active"><i class="fa fa-plus-circle"></i> Novo Procedimento</a></li>
+                        <li><a href="add-procedure.html"><i class="fa fa-plus-circle"></i> Novo Procedimento</a></li>
                         <li><a href="admin-procedures.html"><i class="fa fa-list"></i> Lista de Procedimentos</a></li>
-                        <li><a href="admin-logs.html"><i class="fa fa-history"></i> Log de Atividades</a></li>
+                        <li><a href="admin-logs.html" class="active"><i class="fa fa-history"></i> Log de Atividades</a></li>
                     </ul>
                 </div>
 
@@ -71,8 +69,8 @@
                     <button class="toggle-menu-btn" id="toggle-sidebar">
                         <i class="fa fa-bars"></i>
                     </button>
-                    <div class="admin-search-wrapper" style="visibility: hidden;">
-                        <input type="text" placeholder="Pesquisar...">
+                    <div class="admin-search-wrapper">
+                        <input type="text" id="admin-search-input" placeholder="Pesquisar atividades...">
                     </div>
                 </div>
                 <div class="nav-right"></div>
@@ -81,49 +79,32 @@
             <!-- Content Body -->
             <div class="content-body">
                 <div class="page-title" style="margin-bottom: 30px;">
-                    <h2 id="page-title" style="color: #73879C; font-weight: 700;">Adicionar Novo Procedimento</h2>
+                    <h2 style="color: #73879C; font-weight: 700;">Log de Atividades Completo</h2>
                 </div>
 
                 <div class="dashboard-grid">
                     <div class="dashboard-card card-lg">
                         <div class="card-header">
-                            <h3>Formulário do Procedimento</h3>
+                            <h3>Histórico de Ações</h3>
+                            <div class="card-tools">
+                                <i class="fa fa-chevron-up" title="Minimizar/Maximizar"></i>
+                            </div>
                         </div>
                         <div class="card-body">
-                            <form id="procedure-form">
-                                <div class="form-group" style="margin-bottom: 20px;">
-                                    <label for="title" style="display: block; margin-bottom: 5px; font-weight: 600;">Título do Procedimento</label>
-                                    <input type="text" id="title" required style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px;">
-                                </div>
-                                <div class="form-group" style="margin-bottom: 20px;">
-                                    <label for="category" style="display: block; margin-bottom: 5px; font-weight: 600;">Categoria</label>
-                                    <select id="category" required style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px;">
-                                        <option value="" disabled selected>Selecione uma categoria</option>
-                                        <option value="Suporte">Suporte</option>
-                                        <option value="Financeiro">Financeiro</option>
-                                        <option value="Contratos">Contratos</option>
-                                        <option value="SVA">SVA</option>
-                                        <option value="Informativo">Informativo</option>
-                                    </select>
-                                </div>
-                                <div class="form-group" style="margin-bottom: 20px;">
-                                    <label for="editor" style="display: block; margin-bottom: 5px; font-weight: 600;">Conteúdo do Procedimento</label>
-                                    <div id="editor" style="height: 400px; background-color: white;"></div>
-                                </div>
-                                <button type="submit" class="btn-action-sm btn-edit-sm" style="padding: 12px 24px; font-size: 1rem;">Salvar Procedimento</button>
-                            </form>
-                        </div>
-                    </div>
-
-                    <div class="dashboard-card card-sm">
-                        <div class="card-header">
-                            <h3>Guia do Editor</h3>
-                        </div>
-                        <div class="card-body">
-                            <div class="manual">
-                                <p style="margin-bottom: 10px;"><strong>Negrito:</strong> Use o botão "B" na barra de ferramentas.</p>
-                                <p style="margin-bottom: 10px;"><strong>Cores:</strong> Use o seletor de cores.</p>
-                                <p style="margin-bottom: 10px;"><strong>Imagens:</strong> Clique no ícone de imagem para upload. Arraste as alças para redimensionar.</p>
+                            <div class="table-wrapper" style="border: none;">
+                                <table class="admin-table-custom">
+                                    <thead>
+                                        <tr>
+                                            <th>Ação</th>
+                                            <th>Título</th>
+                                            <th>Categoria</th>
+                                            <th>Data/Hora</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="full-logs-body">
+                                        <!-- Preenchido via JS -->
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
@@ -136,15 +117,10 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
-
-    <!-- Incluir o JavaScript do Quill -->
-    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/quill-image-resize-module@3.0.0/image-resize.min.js"></script>
 
     <script src="js/firebase-config.js"></script>
     <script src="js/common.js"></script>
-    <script src="js/add-procedure.js"></script>
+    <script src="js/admin.js"></script>
 
     <script>
         // Sidebar Toggle Logic
