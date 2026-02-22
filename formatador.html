@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formatador de Registro - TrixNet</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="shortcut icon" href="img/Logo-TRIXNET.png" type="image/x-icon">
+</head>
+<body>
+    <div class="navbar">
+        <ul>
+            <li>
+                <a href="index.html">Página Inicial</a>
+                <a href="att.html">Abertura de ATT</a>
+                <a href="formatador.html">Formatador de texto</a>
+                <a href="add-procedure.html" id="add-procedure-link" class="hidden">Painel Administrativo</a>
+                <button id="login-btn">Entrar</button>
+                <button id="logout-btn" class="hidden">Sair</button>
+                <button id="theme-toggle">🌙</button>
+            </li>
+        </ul>
+    </div>
+
+    <div class="main">
+        <div class="corpodireito">
+            <div class="titulo">
+                <div class="voltar"><a href="index.html"> Voltar </a></div>
+                <h1>Formatador de Registro</h1>
+            </div>
+
+            <div class="formatter-container">
+                <div>
+                    <h3>Texto para formatar:</h3>
+                    <textarea id="input-text" rows="8" placeholder="Digite ou cole o texto aqui..."></textarea>
+                </div>
+
+                <div class="formatter-actions">
+                    <button class="btn-format" onclick="formatText()">Formatar</button>
+                    <button class="btn-copy" onclick="copyText()">Copiar Formatado</button>
+                </div>
+
+                <div id="copy-status" class="copy-success">Copiado com sucesso!</div>
+
+                <div>
+                    <h3>Resultado:</h3>
+                    <textarea id="output-text" rows="10" readonly placeholder="O texto formatado aparecerá aqui..."></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="js/firebase-config.js"></script>
+    <script src="js/common.js"></script>
+
+    <script>
+        function formatText() {
+            const input = document.getElementById('input-text').value;
+            if (!input.trim()) return;
+
+            const now = new Date();
+            const hora = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0');
+            const data = now.getDate().toString().padStart(2, '0') + '/' + (now.getMonth() + 1).toString().padStart(2, '0') + '/' + now.getFullYear();
+            const nome = "PAULO FELIX";
+
+            const separator = "___________________________________________________________";
+            const formatted = `${hora} - ${data} - ${nome}\n${input}\n${separator}`;
+
+            document.getElementById('output-text').value = formatted;
+        }
+
+        function copyText() {
+            const output = document.getElementById('output-text');
+            if (!output.value) return;
+
+            output.select();
+            output.setSelectionRange(0, 99999); // Para dispositivos móveis
+
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(output.value).then(() => {
+                    showCopyStatus();
+                }).catch(err => {
+                    console.error('Erro ao copiar: ', err);
+                    fallbackCopyText(output.value);
+                });
+            } else {
+                fallbackCopyText(output.value);
+            }
+        }
+
+        function fallbackCopyText(text) {
+            const textArea = document.createElement("textarea");
+            textArea.value = text;
+            document.body.appendChild(textArea);
+            textArea.select();
+            try {
+                document.execCommand('copy');
+                showCopyStatus();
+            } catch (err) {
+                console.error('Erro ao copiar (fallback): ', err);
+            }
+            document.body.removeChild(textArea);
+        }
+
+        function showCopyStatus() {
+            const status = document.getElementById('copy-status');
+            status.style.display = 'block';
+            setTimeout(() => {
+                status.style.display = 'none';
+            }, 2000);
+        }
+    </script>
+</body>
+</html>
