@@ -14,7 +14,7 @@
                 <a href="index.html">Página Inicial</a>
                 <a href="att.html">Abertura de ATT</a>
                 <a href="pre-registros.html">Pré Registros</a>
-                <a href="formatador.html">Formatador de texto</a>
+                <a href="formatador.html">Formatador de Registro</a>
                 <a href="admin.html" id="add-procedure-link" class="hidden">Painel Administrativo</a>
                 <button id="login-btn">Entrar</button>
                 <button id="logout-btn" class="hidden">Sair</button>
@@ -32,6 +32,15 @@
 
             <div class="formatter-container">
                 <div>
+                    <h3>Colaborador:</h3>
+                    <select id="collaborator-select" style="width: 100%; padding: 10px; margin-bottom: 20px; border-radius: var(--border-radius); border: 1px solid var(--search-border); background-color: var(--bg-primary); color: var(--text-primary); font-size: 16px;">
+                        <option value="PAULO FELIX">PAULO FELIX</option>
+                        <option value="MATHEUS AUGUSTO">MATHEUS AUGUSTO</option>
+                        <option value="DANILLO">DANILLO</option>
+                        <option value="MATHEUS REIS">MATHEUS REIS</option>
+                        <option value="LEOTSON">LEOTSON</option>
+                    </select>
+
                     <h3>Texto para formatar:</h3>
                     <textarea id="input-text" rows="8" placeholder="Digite ou cole o texto aqui..."></textarea>
                 </div>
@@ -66,7 +75,7 @@
             const now = new Date();
             const hora = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0');
             const data = now.getDate().toString().padStart(2, '0') + '/' + (now.getMonth() + 1).toString().padStart(2, '0') + '/' + now.getFullYear();
-            const nome = "PAULO FELIX";
+            const nome = document.getElementById('collaborator-select').value;
 
             const separator = "___________________________________________________________";
             const formatted = `${hora} - ${data} - ${nome}\n${input}\n${separator}`;
