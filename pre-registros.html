@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pré Registros - TrixNet</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="shortcut icon" href="img/Logo-TRIXNET.png" type="image/x-icon">
+</head>
+<body>
+    <div class="navbar">
+        <ul>
+            <li>
+                <a href="index.html">Página Inicial</a>
+                <a href="att.html">Abertura de ATT</a>
+                <a href="pre-registros.html">Pré Registros</a>
+                <a href="formatador.html">Formatador de texto</a>
+                <a href="admin.html" id="add-procedure-link" class="hidden">Painel Administrativo</a>
+                <button id="login-btn">Entrar</button>
+                <button id="logout-btn" class="hidden">Sair</button>
+                <button id="theme-toggle">🌙</button>
+            </li>
+        </ul>
+    </div>
+
+    <div class="main">
+        <div class="corpodireito">
+            <div class="titulo">
+                <div class="voltar"><a href="index.html"> Voltar </a></div>
+                <h1>Pré Registros Prontos</h1>
+                <p>Clique nos botões abaixo para copiar o registro correspondente.</p>
+            </div>
+
+            <div id="copy-status" class="copy-success" style="margin-bottom: 20px; display: none;">Copiado com sucesso!</div>
+
+            <div class="pre-registros-grid">
+                <button class="pre-registro-btn" onclick="copyPreRegistro(1)">Botão 1 - Lentidão com att de firmware</button>
+                <button class="pre-registro-btn" onclick="copyPreRegistro(2)">Botão 2 - Lentidão com reinicio de equipamento</button>
+                <button class="pre-registro-btn" onclick="copyPreRegistro(3)">Botão 3 - Conflito de rede interna</button>
+                <button class="pre-registro-btn" onclick="copyPreRegistro(4)">Botão 4 - Assinante sem internet (Tudo OK)</button>
+                <button class="pre-registro-btn" onclick="copyPreRegistro(5)">Botão 5 - Teste de velocidade solucionado</button>
+                <button class="pre-registro-btn" onclick="copyPreRegistro(6)">Botão 6 - Serviço não homologado (TVBOX/IPTV)</button>
+                <button class="pre-registro-btn" onclick="copyPreRegistro(7)">Botão 7 - Troca da senha Wi-Fi</button>
+                <button class="pre-registro-btn" onclick="copyPreRegistro(8)">Botão 8 - Não autentica solucionado interno</button>
+                <button class="pre-registro-btn" onclick="copyPreRegistro(9)">Botão 9 - Inatividade (Não falou nada)</button>
+                <button class="pre-registro-btn" onclick="copyPreRegistro(10)">Botão 10 - Envio de boleto</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="js/firebase-config.js"></script>
+    <script src="js/common.js"></script>
+
+    <script>
+        const preRegistros = {
+            1: `LENTIDÃO. \n \nVALIDADO QUE NÃO CONSTA DIVERGENCIA NA REDE DO ASSINANTE \nATIVADO TOPOLOGIA. \nATIVADO UPNP \nDNS 1: 168.121.96.141 \nDNS 2: 168.121.96.142 \nSNTP: 168.121.96.25 \n \nASSINANTE RELATA MELHORA APÓS ATUALIZAÇÃO DA FIRMWARE DA ONU.`,
+            2: `LENTIDÃO. \n \nVALIDADO QUE NÃO CONSTA DIVERGENCIA NA REDE DO ASSINANTE \nATIVADO TOPOLOGIA. \nATIVADO UPNP \nDNS 1: 168.121.96.141 \nDNS 2: 168.121.96.142 \nSNTP: 168.121.96.25\n\nASSINANTE RELATA MELHORA APÓS REINICIO DA ONU.`,
+            3: `VALIDADO QUE ASSINANTE ESTAVA COM CONFLITO DE REDE INTERNA.\nORIENTADO SOBRE O CONFLITO.\nTESTADO PONTO PRINCIPAL, TUDO OK.`,
+            4: `VERIFICADO QUE NÃO POSSUI NENHUMA DIVERGENCIA NA REDE DO ASSINANTE.\nTESTADO E TUDO OK.`,
+            5: `ASSINANTE RELATA NÃO RECEBER OS MEGAS. \nORIENTADO SOBRE AS REDES WI-FI E SOBRE O TESTE DE VELOCIDADE. \nTUDO OK.`,
+            6: `VALIDADO QUE ASSINANTE POSSUI TVBOX/IPTV NÃO HOMOLOGADO.\nVALIDADO A CONEXÃO DE INTERNET TUDO OK.`,
+            7: `SENHA ANTIGA:  \nSENHA NOVA: \nCONTATO:`,
+            8: `VALIDADO QUE REDE DO ASSINANTE NÃO ESTAVA AUTENTICADA.\nREALIZADO PROCEDIMENTOS COM ASSINANTE, ONDE SUBIU A CONEXÃO.\nTESTADO E TUDO OK.`,
+            9: `ASSINANTE ENTROU EM CONTATO, POREM NÃO RELATOU NADA.\nATENDIMENTO FINALIZADO COM INATIVIDADE.`,
+            10: `ENVIADO BOLETO PARA ASSINANTE, CONFORME SOLICITADO.`
+        };
+
+        function copyPreRegistro(id) {
+            const text = preRegistros[id];
+            if (!text) return;
+
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text).then(() => {
+                    showCopyStatus();
+                }).catch(err => {
+                    console.error('Erro ao copiar: ', err);
+                    fallbackCopyText(text);
+                });
+            } else {
+                fallbackCopyText(text);
+            }
+        }
+
+        function fallbackCopyText(text) {
+            const textArea = document.createElement("textarea");
+            textArea.value = text;
+            document.body.appendChild(textArea);
+            textArea.select();
+            try {
+                document.execCommand('copy');
+                showCopyStatus();
+            } catch (err) {
+                console.error('Erro ao copiar (fallback): ', err);
+            }
+            document.body.removeChild(textArea);
+        }
+
+        function showCopyStatus() {
+            const status = document.getElementById('copy-status');
+            status.style.display = 'block';
+            setTimeout(() => {
+                status.style.display = 'none';
+            }, 2000);
+        }
+    </script>
+</body>
+</html>
