@@ -139,6 +139,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Inicializar
     fetchOutages();
-    // Atualizar a cada 5 minutos
-    setInterval(fetchOutages, 5 * 60 * 1000);
+    // Atualizar a cada 1 minuto para tempo real
+    setInterval(fetchOutages, 1 * 60 * 1000);
 });
