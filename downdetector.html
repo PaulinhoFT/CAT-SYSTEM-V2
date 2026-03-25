@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CAT - Abertura de atendimento para equipe de campo</title>
+    <title>DownDetector - TrixNet</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="shortcut icon" href="img/Logo-TRIXNET.png" type="image/x-icon">
 </head>
 <body>
     <div class="navbar">
@@ -19,80 +20,25 @@
                 <button id="login-btn">Entrar</button>
                 <button id="logout-btn" class="hidden">Sair</button>
                 <button id="theme-toggle">🌙</button>
-
             </li>
         </ul>
     </div>
 
-
-
     <div class="main">
-
         <div class="corpodireito">
-
             <div class="titulo">
                 <div class="voltar"><a href="index.html"> Voltar </a></div>
-                <h1>Abertura de atendimento para equipe de campo - CAT | TrixNet</h1>
-
-            <div class="sntp">
-            <h3>Abertura de LOS</h3>
-            <textarea rows="10" cols="100">
-CAIXA: 
-
-EMENDA: 
-
-PPPOE: 
-
-CONTATO: 
-
-PONTO DE REF.: </textarea>
-            <h3>Abertura de Atendimento Tecnico - Setor tecnico</h3>
-            <textarea rows="10" cols="100">
-CAIXA: 
-
-RECLAMAÇÃO: 
-
-EMENDA: 
-
-PPPOE: 
-
-CONTATO: 
-
-PONTO DE REF.: </textarea>
-            <h3>Abertura de atendimento Tecnico - Fast</h3>
-            <textarea rows="10" cols="100">
-CAIXA: 
-
-RECLAMAÇÃO: 
-
-PROCEDIMENTOS REALIZADOS: 
-
-ORIENTAÇÃO: 
-
-PPPOE: 
-
-CONTATO: 
-
-PONTO DE REF.: </textarea>
-            <h3>Abertura de Sinal baixo</h3>
-            <textarea rows="10" cols="100">
-CAIXA: 
-
-RECLAMAÇÃO: 
-
-PROCEDIMENTOS REALIZADOS: EQUIPAMENTO COM SINAL BAIXO
-SINAL DA ONU: 
-MELHOR SINAL DA CAIXA: 
-
-EMENDA:  
-
-PPPOE: 
-
-CONTATO: 
-
-PONTO DE REF.: </textarea>
+                <h1>Status de Serviços (DownDetector)</h1>
             </div>
-        
+
+            <p>Monitoramento em tempo real dos principais serviços e sistemas no Brasil.</p>
+
+            <div id="downdetector-container" class="downdetector-grid">
+                <div class="loading-message">Carregando dados do DownDetector...</div>
+            </div>
+
+            <div id="api-error" class="error-message hidden">
+                Não foi possível carregar os dados. Verifique a configuração da API.
             </div>
         </div>
     </div>
@@ -103,5 +49,6 @@ PONTO DE REF.: </textarea>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
     <script src="js/firebase-config.js"></script>
     <script src="js/common.js"></script>
+    <script src="js/downdetector.js"></script>
 </body>
 </html>

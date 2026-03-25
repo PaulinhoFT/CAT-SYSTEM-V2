@@ -1419,3 +1419,90 @@ body.dark-mode .activity-content h4 {
 .pre-registro-btn:active {
     transform: translateY(-1px);
 }
+
+/* DownDetector Styles */
+.downdetector-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.downdetector-card {
+    background-color: var(--procedure-bg);
+    border: 1px solid var(--sidebar-border);
+    border-radius: var(--border-radius);
+    padding: 20px;
+    box-shadow: var(--procedure-shadow);
+    transition: transform 0.3s ease;
+}
+
+.downdetector-card:hover {
+    transform: translateY(-5px);
+}
+
+.card-header-dd {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.card-header-dd h3 {
+    margin: 0;
+    font-size: 1.2rem;
+    color: var(--primary-color);
+}
+
+.status-badge {
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.status-critical {
+    background-color: #fee2e2;
+    color: #991b1b;
+}
+
+.status-warning {
+    background-color: #fef9c3;
+    color: #854d0e;
+}
+
+.card-body-dd p {
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+    color: var(--text-primary);
+}
+
+.card-body-dd small {
+    color: #BAB8B8;
+    font-size: 0.8rem;
+}
+
+.loading-message, .no-outages, .error-message, .api-notice {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 40px;
+    background-color: var(--bg-primary);
+    border-radius: var(--border-radius);
+    border: 1px dashed var(--sidebar-border);
+    color: var(--text-primary);
+}
+
+.api-notice {
+    background-color: rgba(37, 99, 235, 0.05);
+    border: 1px solid var(--primary-color);
+    color: var(--primary-color);
+    margin-bottom: 20px;
+}
+
+.error-message {
+    background-color: #fee2e2;
+    color: #991b1b;
+    border-style: solid;
+    border-color: #fca5a5;
+}
