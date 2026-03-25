@@ -34,108 +34,65 @@ document.addEventListener('DOMContentLoaded', () => {
     ];
 
     async function fetchOutages() {
-        if (!API_CLIENT_SECRET) {
-            showDemoData();
-            return;
-        }
-
         try {
-            // Exemplo de chamada para a API v2 (ajustar conforme documentação real se disponível)
-            // Geralmente requer autenticação Bearer
-            const response = await fetch('https://downdetectorapi.com/v2/incidents?country_iso=BR&limit=20', {
-                headers: {
-                    'Authorization': `Bearer ${API_CLIENT_SECRET}`
-                }
-            });
+            // Agora buscamos direto do Firestore (alimentado pelo scraper Python)
+            const snapshot = await db.collection('service_outages')
+                                     .orderBy('updated', 'desc')
+                                     .limit(20)
+                                     .get();
 
-            if (!response.ok) throw new Error('Falha na API');
+            const outages = [];
+            snapshot.forEach(doc => outages.push(doc.data()));
 
-            const data = await response.json();
-            renderOutages(data.incidents || []);
-            checkAndNotify(data.incidents || []);
+            if (outages.length === 0) {
+                // Se o Firestore estiver vazio, mostra que o scraper ainda não rodou
+                downdetectorContainer.innerHTML = `
+                    <div class="api-notice">
+                        <i class="fa fa-info-circle"></i>
+                        Aguardando dados do Scraper. Execute 'python3 downdetector_scraper.py' no servidor.
+                    </div>
+                `;
+                return;
+            }
+
+            renderOutages(outages);
         } catch (error) {
-            console.error('Erro ao buscar dados:', error);
+            console.error('Erro ao buscar dados do Firestore:', error);
             apiError.classList.remove('hidden');
             downdetectorContainer.innerHTML = '';
         }
     }
 
-    function renderOutages(incidents) {
+    function renderOutages(outages) {
         downdetectorContainer.innerHTML = '';
 
-        if (incidents.length === 0) {
+        if (outages.length === 0) {
             downdetectorContainer.innerHTML = '<div class="no-outages">Todos os sistemas operando normalmente.</div>';
             return;
         }
 
-        incidents.forEach(incident => {
+        outages.forEach(outage => {
             const card = document.createElement('div');
             card.className = 'downdetector-card';
 
-            const statusClass = incident.user_impact >= 2 ? 'status-critical' : 'status-warning';
-            const statusText = incident.user_impact >= 2 ? 'Muitos Relatos' : 'Alguns Relatos';
+            const statusClass = outage.impact >= 2 ? 'status-critical' : 'status-warning';
+            const statusText = outage.impact >= 2 ? 'Muitos Relatos' : 'Alguns Relatos';
+            const lastUpdated = outage.updated ? new Date(outage.updated * 1000).toLocaleTimeString() : 'N/A';
 
             card.innerHTML = `
                 <div class="card-header-dd">
-                    <h3>${incident.company_name || 'Serviço'}</h3>
+                    <h3>${outage.name || 'Serviço'}</h3>
                     <span class="status-badge ${statusClass}">${statusText}</span>
                 </div>
                 <div class="card-body-dd">
-                    <p>Relatos recentes indicam possíveis problemas.</p>
-                    <small>Última atualização: ${new Date().toLocaleTimeString()}</small>
+                    <p>${outage.status || 'Relatos recentes indicam possíveis problemas.'}</p>
+                    <small>Última atualização: ${lastUpdated}</small>
                 </div>
             `;
             downdetectorContainer.appendChild(card);
         });
     }
 
-    // Função de demonstração ou fallback quando não há API Key
-    function showDemoData() {
-        downdetectorContainer.innerHTML = `
-            <div class="api-notice">
-                <i class="fa fa-info-circle"></i>
-                API Key (Client Secret) não configurada. Exibindo dados de exemplo.
-            </div>
-        `;
-
-        const demoIncidents = [
-            { company_name: 'WhatsApp', user_impact: 2 },
-            { company_name: 'Instagram', user_impact: 1 },
-            { company_name: 'Claro', user_impact: 2 },
-            { company_name: 'Nubank', user_impact: 1 }
-        ];
-
-        renderOutages(demoIncidents);
-        checkAndNotify(demoIncidents);
-    }
-
-    const notifiedOutages = new Set();
-
-    function checkAndNotify(incidents) {
-        incidents.forEach(incident => {
-            if (incident.user_impact >= 2 && !notifiedOutages.has(incident.company_name)) {
-                sendNtfyNotification(incident.company_name);
-                notifiedOutages.add(incident.company_name);
-            }
-        });
-    }
-
-    async function sendNtfyNotification(companyName) {
-        try {
-            await fetch(`https://ntfy.sh/${NTFY_TOPIC}`, {
-                method: 'POST',
-                body: `Alerta: Muitas reclamações detectadas para ${companyName} no DownDetector!`,
-                headers: {
-                    'Title': 'Sistema Fora!',
-                    'Priority': 'high',
-                    'Tags': 'warning,disappointed'
-                }
-            });
-            console.log(`Notificação enviada para ${companyName}`);
-        } catch (error) {
-            console.error('Erro ao enviar notificação ntfy:', error);
-        }
-    }
 
     // Inicializar
     fetchOutages();
