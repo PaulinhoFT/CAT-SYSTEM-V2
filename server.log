@@ -1,0 +1,9 @@
+127.0.0.1 - - [25/Mar/2026 20:50:11] "GET /index.html HTTP/1.1" 200 -
+127.0.0.1 - - [25/Mar/2026 20:50:11] "GET /css/style.css HTTP/1.1" 200 -
+127.0.0.1 - - [25/Mar/2026 20:50:11] "GET /js/main.js HTTP/1.1" 200 -
+127.0.0.1 - - [25/Mar/2026 20:50:11] "GET /js/firebase-config.js HTTP/1.1" 200 -
+127.0.0.1 - - [25/Mar/2026 20:50:11] "GET /js/common.js HTTP/1.1" 200 -
+127.0.0.1 - - [25/Mar/2026 20:50:11] "GET /img/meta.jpg HTTP/1.1" 200 -
+127.0.0.1 - - [25/Mar/2026 20:50:13] "GET /redeswifi.html HTTP/1.1" 200 -
+127.0.0.1 - - [25/Mar/2026 20:50:14] "GET /downdetector.html HTTP/1.1" 200 -
+127.0.0.1 - - [25/Mar/2026 20:50:14] "GET /js/downdetector.js HTTP/1.1" 200 -

@@ -1,4 +1,28 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // --- Injeção do Navbar ---
+    const navbars = document.querySelectorAll('.navbar');
+    if (navbars.length > 0) {
+        const navbarHTML = `
+            <ul>
+                <li>
+                    <a href="index.html">Página Inicial</a>
+                    <a href="att.html">Abertura de ATT</a>
+                    <a href="downdetector.html">DownDetector</a>
+                    <a href="pre-registros.html">Pré Registros</a>
+                    <a href="formatador.html" target="_blank" rel="noopener noreferrer">Formatador de Registro</a>
+                    <a href="calculadora.html" target="_blank" rel="noopener noreferrer">Calcu. de desconto</a>
+                    <a href="admin.html" id="add-procedure-link" class="hidden">Painel Administrativo</a>
+                    <button id="login-btn">Entrar</button>
+                    <button id="logout-btn" class="hidden">Sair</button>
+                    <button id="theme-toggle">🌙</button>
+                </li>
+            </ul>
+        `;
+        navbars.forEach(nav => {
+            nav.innerHTML = navbarHTML;
+        });
+    }
+
     // --- Lógica para o modo claro/escuro ---
     const currentTheme = localStorage.getItem('theme');
     if (currentTheme === 'dark') {
@@ -155,34 +179,48 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.insertAdjacentHTML('beforeend', loginModalHTML);
     }
 
-    const loginBtn = document.getElementById('login-btn');
-    const logoutBtn = document.getElementById('logout-btn');
-    const loginModal = document.getElementById('login-modal');
-    const closeLoginBtn = document.getElementById('close-login');
-    const loginForm = document.getElementById('login-form');
-    const addProcedureLink = document.getElementById('add-procedure-link');
-    const loginError = document.getElementById('login-error');
+    const setupLoginEvents = () => {
+        const loginBtn = document.getElementById('login-btn');
+        const logoutBtn = document.getElementById('logout-btn');
+        const loginModal = document.getElementById('login-modal');
+        const closeLoginBtn = document.getElementById('close-login');
+        const loginForm = document.getElementById('login-form');
+        const loginError = document.getElementById('login-error');
 
-    if (loginBtn && loginModal) {
-        loginBtn.addEventListener('click', () => {
-            loginModal.classList.remove('hidden');
-        });
-    }
+        if (loginBtn && loginModal) {
+            loginBtn.addEventListener('click', () => {
+                loginModal.classList.remove('hidden');
+            });
+        }
 
-    if (closeLoginBtn && loginModal) {
-        closeLoginBtn.addEventListener('click', () => {
-            loginModal.classList.add('hidden');
-            if (loginError) loginError.classList.add('hidden');
-        });
-    }
+        if (closeLoginBtn && loginModal) {
+            closeLoginBtn.addEventListener('click', () => {
+                loginModal.classList.add('hidden');
+                if (loginError) loginError.classList.add('hidden');
+            });
+        }
 
-    if (loginForm) {
-        loginForm.addEventListener('submit', (e) => {
+        if (logoutBtn) {
+            logoutBtn.addEventListener('click', () => {
+                auth.signOut();
+            });
+        }
+
+        if (loginForm) {
+            loginForm.removeEventListener('submit', loginHandler);
+            loginForm.addEventListener('submit', loginHandler);
+        }
+    };
+
+    const loginHandler = (e) => {
             e.preventDefault();
             console.log("Iniciando tentativa de login...");
             const email = document.getElementById('login-email').value;
             const password = document.getElementById('login-password').value;
             const submitBtn = document.getElementById('btn-do-login');
+            const loginError = document.getElementById('login-error');
+            const loginModal = document.getElementById('login-modal');
+            const loginForm = document.getElementById('login-form');
 
             if (submitBtn) {
                 submitBtn.disabled = true;
@@ -194,8 +232,8 @@ document.addEventListener('DOMContentLoaded', () => {
             auth.signInWithEmailAndPassword(email, password)
                 .then((userCredential) => {
                     console.log("Login bem-sucedido:", userCredential.user.email);
-                    loginModal.classList.add('hidden');
-                    loginForm.reset();
+                    if (loginModal) loginModal.classList.add('hidden');
+                    if (loginForm) loginForm.reset();
                     // Redirecionar para o painel administrativo após o login
                     window.location.href = 'admin.html';
                 })
@@ -214,18 +252,16 @@ document.addEventListener('DOMContentLoaded', () => {
                         submitBtn.textContent = "Acessar Painel";
                     }
                 });
-        });
-    }
+    };
 
-    if (logoutBtn) {
-        logoutBtn.addEventListener('click', () => {
-            auth.signOut();
-        });
-    }
+    setupLoginEvents();
 
     // Monitorar estado de autenticação
     if (typeof auth !== 'undefined') {
         auth.onAuthStateChanged((user) => {
+            const loginBtn = document.getElementById('login-btn');
+            const logoutBtn = document.getElementById('logout-btn');
+            const addProcedureLink = document.getElementById('add-procedure-link');
             const isLoginPage = window.location.pathname.includes('admin') || 
                                 window.location.pathname.includes('add-procedure.html');
 
