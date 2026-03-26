@@ -4,9 +4,14 @@ document.addEventListener('DOMContentLoaded', () => {
         Quill.register('modules/imageResize', window.ImageResize.default);
     }
 
-    // Função para o upload de imagem
+    // Configurações do Cloudinary
+    // Importante: Use um "Unsigned Upload Preset" no console do Cloudinary para segurança.
+    const CLOUDINARY_CLOUD_NAME = 'danhylmyi';
+    const CLOUDINARY_UPLOAD_PRESET = 'trixnet_procedures'; // Altere para o seu preset não assinado
+
+    // Função para o upload de imagem usando Cloudinary
     function imageHandler() {
-        const quillInstance = this.quill; // Armazena a instância do Quill
+        const quillInstance = this.quill;
 
         const input = document.createElement('input');
         input.setAttribute('type', 'file');
@@ -16,27 +21,38 @@ document.addEventListener('DOMContentLoaded', () => {
         input.onchange = async () => {
             const file = input.files[0];
             if (file) {
-                const storageRef = storage.ref();
-                const imageName = `${Date.now()}-${file.name}`;
-                const imageRef = storageRef.child(`images/${imageName}`);
-
                 const range = quillInstance.getSelection(true);
                 try {
                     // Mostra um feedback de carregamento
-                    quillInstance.insertText(range.index, ' [Uploading image...] ', 'user');
+                    quillInstance.insertText(range.index, ' [Enviando imagem para Cloudinary...] ', 'user');
 
-                    const snapshot = await imageRef.put(file);
-                    const url = await snapshot.ref.getDownloadURL();
+                    // Preparar os dados para o Cloudinary (Upload não assinado)
+                    const formData = new FormData();
+                    formData.append('file', file);
+                    formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+
+                    // Enviar para o Cloudinary via Fetch API
+                    const response = await fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`, {
+                        method: 'POST',
+                        body: formData
+                    });
+
+                    if (!response.ok) {
+                        throw new Error('Erro ao enviar para o Cloudinary. Verifique as configurações.');
+                    }
+
+                    const data = await response.json();
+                    const url = data.secure_url;
 
                     // Remove o texto de carregamento e insere a imagem
-                    quillInstance.deleteText(range.index, ' [Uploading image...] '.length);
+                    quillInstance.deleteText(range.index, ' [Enviando imagem para Cloudinary...] '.length);
                     quillInstance.insertEmbed(range.index, 'image', url);
                     quillInstance.setSelection(range.index + 1, Quill.sources.SILENT);
 
                 } catch (error) {
                     console.error("Erro ao fazer upload da imagem: ", error);
-                    alert("Falha no upload da imagem. Verifique o console para mais detalhes (F12).");
-                    quillInstance.deleteText(range.index, ' [Uploading image...] '.length);
+                    alert("Falha no upload da imagem para o Cloudinary. Verifique se o Cloud Name e o Upload Preset estão configurados corretamente no arquivo add-procedure.js.");
+                    quillInstance.deleteText(range.index, ' [Enviando imagem para Cloudinary...] '.length);
                 }
             }
         };
