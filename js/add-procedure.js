@@ -4,9 +4,10 @@ document.addEventListener('DOMContentLoaded', () => {
         Quill.register('modules/imageResize', window.ImageResize.default);
     }
 
-    // Configurações do Cloudinary (Substitua pelos seus dados do console do Cloudinary)
-    const CLOUDINARY_CLOUD_NAME = 'SEU_CLOUD_NAME';
-    const CLOUDINARY_UPLOAD_PRESET = 'SEU_UPLOAD_PRESET';
+    // Configurações do Cloudinary
+    // Importante: Use um "Unsigned Upload Preset" no console do Cloudinary para segurança.
+    const CLOUDINARY_CLOUD_NAME = 'danhylmyi';
+    const CLOUDINARY_UPLOAD_PRESET = 'trixnet_procedures'; // Altere para o seu preset não assinado
 
     // Função para o upload de imagem usando Cloudinary
     function imageHandler() {
