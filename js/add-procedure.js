@@ -81,6 +81,51 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // Lida com o evento de colar para capturar imagens e enviar para o Cloudinary
+    quill.root.addEventListener('paste', async (e) => {
+        const clipboardData = e.clipboardData || window.clipboardData;
+        const items = clipboardData.items;
+
+        for (let i = 0; i < items.length; i++) {
+            if (items[i].type.indexOf('image') !== -1) {
+                const file = items[i].getAsFile();
+                if (file) {
+                    e.preventDefault(); // Impede a colagem padrão como base64
+
+                    const range = quill.getSelection(true);
+                    try {
+                        // Feedback de carregamento
+                        quill.insertText(range.index, ' [Enviando imagem colada para Cloudinary...] ', 'user');
+
+                        const formData = new FormData();
+                        formData.append('file', file);
+                        formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+
+                        const response = await fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`, {
+                            method: 'POST',
+                            body: formData
+                        });
+
+                        if (!response.ok) throw new Error('Falha no upload do Cloudinary');
+
+                        const data = await response.json();
+                        const url = data.secure_url;
+
+                        // Remove feedback e insere a URL do Cloudinary
+                        quill.deleteText(range.index, ' [Enviando imagem colada para Cloudinary...] '.length);
+                        quill.insertEmbed(range.index, 'image', url);
+                        quill.setSelection(range.index + 1, Quill.sources.SILENT);
+
+                    } catch (error) {
+                        console.error("Erro no upload da imagem colada: ", error);
+                        alert("Falha ao salvar imagem colada no Cloudinary.");
+                        quill.deleteText(range.index, ' [Enviando imagem colada para Cloudinary...] '.length);
+                    }
+                }
+            }
+        }
+    });
+
     const form = document.getElementById('procedure-form');
     const pageTitle = document.getElementById('page-title');
     const titleInput = document.getElementById('title');
