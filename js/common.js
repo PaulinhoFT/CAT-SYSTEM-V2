@@ -7,7 +7,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 <li>
                     <a href="index.html">Página Inicial</a>
                     <a href="att.html">Abertura de ATT</a>
-                    <a href="downdetector.html">DownDetector</a>
                     <a href="pre-registros.html">Pré Registros</a>
                     <a href="formatador.html" target="_blank" rel="noopener noreferrer">Formatador de Registro</a>
                     <a href="calculadora.html" target="_blank" rel="noopener noreferrer">Calcu. de desconto</a>
