@@ -85,7 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                 <h1>${procedure.title}</h1>
                             </div>
                             <div class="conteudo">
-                                ${procedure.content}
+                                ${cleanDarkInlineColors(procedure.content)}
                             </div>
                         `;
                         // Efeito de fade in
@@ -144,5 +144,45 @@ document.addEventListener('DOMContentLoaded', () => {
                 logTableBody.appendChild(tr);
             });
         });
+    }
+
+    // Limpa cores escuras inline (como preto, cinza escuro, rgb(0,0,0)) para que herdem a cor do tema dinamicamente
+    function cleanDarkInlineColors(htmlContent) {
+        if (!htmlContent) return '';
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = htmlContent;
+
+        const elementsWithStyle = tempDiv.querySelectorAll('[style]');
+        elementsWithStyle.forEach(el => {
+            const color = el.style.color;
+            if (color) {
+                const standardColor = color.trim().toLowerCase();
+                if (
+                    standardColor === 'black' || 
+                    standardColor === 'darkgray' || 
+                    standardColor === 'darkgrey' || 
+                    standardColor === '#000' || 
+                    standardColor === '#000000' || 
+                    standardColor === '#333' || 
+                    standardColor === '#333333' ||
+                    standardColor === '#1e293b' ||
+                    standardColor === '#0f172a'
+                ) {
+                    el.style.color = '';
+                } else if (standardColor.startsWith('rgb')) {
+                    const matches = standardColor.match(/\d+/g);
+                    if (matches && matches.length >= 3) {
+                        const r = parseInt(matches[0]);
+                        const g = parseInt(matches[1]);
+                        const b = parseInt(matches[2]);
+                        // Se for uma cor muito escura (R, G, B abaixo de 110)
+                        if (r < 110 && g < 110 && b < 110) {
+                            el.style.color = '';
+                        }
+                    }
+                }
+            }
+        });
+        return tempDiv.innerHTML;
     }
 });
