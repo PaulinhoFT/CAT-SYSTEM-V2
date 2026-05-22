@@ -1,48 +1,48 @@
 :root {
-    --primary-color: #2563eb;
-    --primary-hover: #1d4ed8;
-    --bg-primary: #f8fafc;
-    --text-primary: #1e293b;
-    --navbar-bg: #1e293b;
+    --primary-color: #6366f1;       /* Indigo Moderno */
+    --primary-hover: #4f46e5;
+    --bg-primary: #f8fafc;          /* Slate 50 */
+    --text-primary: #0f172a;        /* Slate 900 */
+    --navbar-bg: #0f172a;
     --navbar-text: #f8fafc;
-    --navbar-text-hover: #38bdf8;
+    --navbar-text-hover: #818cf8;   /* Light Indigo */
     --sidebar-bg: #ffffff;
     --sidebar-text: #334155;
-    --sidebar-text-hover: #2563eb;
+    --sidebar-text-hover: #6366f1;
     --sidebar-border: #e2e8f0;
     --procedure-bg: #ffffff;
-    --procedure-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    --procedure-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
     --hamburger-bg: #ffffff;
-    --hamburger-text: #1e293b;
+    --hamburger-text: #0f172a;
     --search-bg: #f1f5f9;
-    --search-text: #1e293b;
+    --search-text: #0f172a;
     --search-border: #cbd5e1;
-    --highlight-color: #2563eb;
+    --highlight-color: #6366f1;
     --danger-color: #ef4444;
     --title-color: #0f172a;
     --accent-color: #f59e0b;
-    --border-radius: 10px;
-    --transition-speed: 0.3s;
+    --border-radius: 12px;          /* Cantos mais suaves e modernos */
+    --transition-speed: 0.25s;      /* Transições ligeiramente mais rápidas */
 }
 
 body.dark-mode {
-    --bg-primary: #0f172a;
-    --text-primary: #f8fafc;
-    --navbar-bg: #020617;
+    --bg-primary: #0b0f19;          /* Azul escuro profundo premium */
+    --text-primary: #f1f5f9;
+    --navbar-bg: #030712;
     --navbar-text: #f8fafc;
-    --navbar-text-hover: #38bdf8;
-    --sidebar-bg: #1e293b;
+    --navbar-text-hover: #818cf8;
+    --sidebar-bg: #111827;          /* Cinza escuro premium */
     --sidebar-text: #e2e8f0;
-    --sidebar-text-hover: #38bdf8;
-    --sidebar-border: #334155;
-    --procedure-bg: #1e293b;
-    --procedure-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.5);
-    --hamburger-bg: #1e293b;
+    --sidebar-text-hover: #818cf8;
+    --sidebar-border: #1f2937;
+    --procedure-bg: #1f2937;
+    --procedure-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+    --hamburger-bg: #1f2937;
     --hamburger-text: #f8fafc;
-    --search-bg: #0f172a;
+    --search-bg: #111827;
     --search-text: #f8fafc;
-    --search-border: #475569;
-    --title-color: #f8fafc;
+    --search-border: #374151;
+    --title-color: #f1f5f9;
 }
 
 /* Reset e base */
@@ -68,7 +68,9 @@ body {
 .navbar {
     width: 100%;
     height: 60px;
-    background-color: var(--navbar-bg);
+    background-color: rgba(15, 23, 42, 0.85); /* Translúcido padrão */
+    backdrop-filter: blur(12px);              /* Efeito vidro fosco */
+    -webkit-backdrop-filter: blur(12px);
     position: fixed;
     top: 0;
     display: flex;
@@ -76,8 +78,13 @@ body {
     justify-content: flex-end;
     padding: 0 30px;
     z-index: 1000;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    border-bottom: none;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+body.dark-mode .navbar {
+    background-color: rgba(3, 7, 18, 0.85);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
 }
 
 .navbar ul {
@@ -335,13 +342,16 @@ body.dark-mode .barra li:hover {
     margin-bottom: 30px;
     font-weight: 800;
     font-size: 2.2rem;
+    letter-spacing: -0.03em; /* Mais compacto e elegante */
+    line-height: 1.2;
 }
 
 .corpodireito p,
 .corpodireito h4 {
     color: var(--text-primary);
-    line-height: 1.6;
-    margin-bottom: 15px;
+    line-height: 1.7; /* Mais legível */
+    margin-bottom: 18px;
+    font-size: 15.5px;
 }
 
 /* Destaques iniciais */
@@ -359,8 +369,14 @@ body.dark-mode .barra li:hover {
     width: 280px;
     text-align: center;
     border-radius: var(--border-radius);
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.02);
     border: 1px solid var(--sidebar-border);
+    transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.25s ease, background-color var(--transition-speed);
+}
+
+.par1:hover, .par2:hover, .par3:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05);
 }
 
 .par1 h2, .par2 h2, .par3 h2 {
@@ -829,14 +845,15 @@ body.admin-panel {
 
 .admin-sidebar {
     width: 260px;
-    background-color: #2A3F54;
-    color: #ECF0F1;
+    background-color: #111827; /* Modern dark sidebar */
+    color: #f3f4f6;
     height: 100%;
     display: flex;
     flex-direction: column;
     flex-shrink: 0;
     z-index: 100;
     transition: all 0.3s ease;
+    border-right: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .sidebar-brand {
@@ -1056,17 +1073,24 @@ body.dark-mode .nav-icons {
 
 .metric-tile {
     background-color: white;
-    padding: 20px;
-    border-radius: 4px;
-    border: 1px solid #E6E9ED;
+    padding: 24px;
+    border-radius: 12px;           /* Cantos suaves premium */
+    border: 1px solid #e2e8f0;
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    gap: 8px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02), 0 2px 4px -1px rgba(0, 0, 0, 0.02);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.metric-tile:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
 }
 
 body.dark-mode .metric-tile {
-    background-color: #1e293b;
-    border-color: #334155;
+    background-color: #1f2937;
+    border-color: #374151;
 }
 
 .metric-title {
