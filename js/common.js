@@ -96,51 +96,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- Lógica para o Modal de Boas-vindas ---
-    const isAdminPage = window.location.pathname.includes('admin') || window.location.pathname.includes('add-procedure.html');
-    if (!sessionStorage.getItem('welcomeModalShown') && !isAdminPage) {
-        const modalHTML = `
-            <div id="welcome-modal" class="modal-overlay">
-                <div class="modal-container">
-                    <div class="modal-titlebar">
-                        <span>Meta 2026</span>
-                        <button id="close-modal" class="modal-close">X</button>
-                    </div>
-                    <div class="modal-content">
-                        <img src="img/meta.jpg" alt="Meta 2026">
-                    </div>
-                </div>
-            </div>
-        `;
-        document.body.insertAdjacentHTML('beforeend', modalHTML);
 
-        const modal = document.getElementById('welcome-modal');
-        const closeModalBtn = document.getElementById('close-modal');
-
-        const closeModal = () => {
-            if (modal) {
-                modal.style.opacity = '0';
-                modal.style.pointerEvents = 'none';
-                setTimeout(() => {
-                    modal.classList.add('hidden');
-                    sessionStorage.setItem('welcomeModalShown', 'true');
-                }, 300);
-            }
-        };
-
-        if (closeModalBtn) {
-            closeModalBtn.addEventListener('click', closeModal);
-        }
-
-        // Fechar ao clicar fora do modal
-        if (modal) {
-            modal.addEventListener('click', (e) => {
-                if (e.target === modal) {
-                    closeModal();
-                }
-            });
-        }
-    }
 
     // --- Lógica de Autenticação ---
 
