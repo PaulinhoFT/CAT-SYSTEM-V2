@@ -65,10 +65,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Lida com cliques na lista de procedimentos (visualizar, editar, excluir)
     proceduresList.addEventListener('click', (e) => {
-        e.preventDefault();
         const target = e.target;
 
         if (target.classList.contains('procedure-link')) {
+            e.preventDefault();
             // Exibe o procedimento
             const id = target.dataset.id;
             
@@ -101,10 +101,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
         } else if (target.classList.contains('edit-btn')) {
+            e.preventDefault();
             // Redireciona para a página de edição
             const id = target.dataset.id;
             window.location.href = `add-procedure.html?id=${id}`;
         } else if (target.classList.contains('delete-btn')) {
+            e.preventDefault();
             // Exclui o procedimento
             const id = target.dataset.id;
             const procedureToDelete = allProcedures.find(p => p.id === id);
