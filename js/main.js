@@ -67,6 +67,15 @@ document.addEventListener('DOMContentLoaded', () => {
     proceduresList.addEventListener('click', (e) => {
         const target = e.target;
 
+        // Verifica se clicou no resumo da categoria (summary) para animação de slide suave
+        const summaryTarget = target.closest('summary');
+        if (summaryTarget) {
+            e.preventDefault();
+            const details = summaryTarget.parentElement;
+            toggleDetailsSmoothly(details);
+            return;
+        }
+
         if (target.classList.contains('procedure-link')) {
             e.preventDefault();
             // Exibe o procedimento
@@ -184,5 +193,65 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
         return tempDiv.innerHTML;
+    }
+
+    // Realiza uma transição de slide suave (Slide Toggle Accordion) nos elementos <details> da barra lateral
+    function toggleDetailsSmoothly(details) {
+        const content = details.querySelector('ul'); // Elemento interno da lista que desliza
+        if (!content) return;
+
+        // Evita chamadas concorrentes durante a transição
+        if (details.dataset.animating === 'true') return;
+        details.dataset.animating = 'true';
+
+        content.style.overflow = 'hidden';
+
+        if (details.open) {
+            // Fechando: Define a transição de fechamento mais lenta e elegante (0.55 segundos com ease-in-out)
+            content.style.transition = 'height 0.55s cubic-bezier(0.4, 0, 0.2, 1)';
+            
+            // Define a altura atual medida e transiciona para 0
+            const startHeight = content.offsetHeight;
+            content.style.height = `${startHeight}px`;
+            
+            // Força reflow para aplicar o estilo antes de iniciar a transição
+            content.offsetHeight;
+            
+            content.style.height = '0px';
+
+            const onTransitionEnd = (e) => {
+                if (e.propertyName === 'height') {
+                    content.removeEventListener('transitionend', onTransitionEnd);
+                    details.open = false;
+                    content.style.height = '';
+                    content.style.overflow = '';
+                    content.style.transition = '';
+                    delete details.dataset.animating;
+                }
+            };
+            content.addEventListener('transitionend', onTransitionEnd);
+        } else {
+            // Abrindo: Abre o elemento detalhes, zera a altura e transiciona para a altura completa medida
+            details.open = true;
+            const targetHeight = content.offsetHeight;
+            
+            // Define a transição de abertura suave e responsiva (0.4 segundos com ease-in-out)
+            content.style.transition = 'height 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
+            content.style.height = '0px';
+            content.offsetHeight; // Força reflow
+            
+            content.style.height = `${targetHeight}px`;
+
+            const onTransitionEnd = (e) => {
+                if (e.propertyName === 'height') {
+                    content.removeEventListener('transitionend', onTransitionEnd);
+                    content.style.height = '';
+                    content.style.overflow = '';
+                    content.style.transition = '';
+                    delete details.dataset.animating;
+                }
+            };
+            content.addEventListener('transitionend', onTransitionEnd);
+        }
     }
 });
