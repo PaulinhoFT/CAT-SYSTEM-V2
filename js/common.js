@@ -184,6 +184,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (loginError) loginError.classList.add('hidden');
 
+            if (!auth) {
+                if (loginError) {
+                    loginError.textContent = 'Erro: Firebase Auth não carregou. Recarregue a página.';
+                    loginError.classList.remove('hidden');
+                }
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Acessar Painel';
+                }
+                return;
+            }
+
             auth.signInWithEmailAndPassword(email, password)
                 .then((userCredential) => {
                     console.log("Login bem-sucedido:", userCredential.user.email);
@@ -247,6 +259,10 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 const logActivity = (action, title, category) => {
+    if (!db) {
+        console.error('Firestore indisponível — log de atividade não registrado.');
+        return Promise.reject(new Error('Firestore indisponível'));
+    }
     return db.collection('activity_logs').add({
         action: action,
         title: title,

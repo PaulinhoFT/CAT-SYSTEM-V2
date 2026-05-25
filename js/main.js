@@ -3,13 +3,28 @@ document.addEventListener('DOMContentLoaded', () => {
     const procedureContent = document.getElementById('procedure-content');
     const searchInput = document.getElementById('search-input');
 
+    if (!db) {
+        console.error('Firestore indisponível — procedimentos e logs não serão carregados.');
+        if (proceduresList) {
+            proceduresList.innerHTML = '<li style="padding:20px;color:#ef4444;">Erro ao conectar ao Firebase. Recarregue a página ou verifique a conexão.</li>';
+        }
+        return;
+    }
+
     let allProcedures = []; // Armazena todos os procedimentos
+
+    const handleFirestoreError = (context, error) => {
+        console.error(`Erro ao carregar ${context}:`, error);
+        if (proceduresList && context === 'procedimentos') {
+            proceduresList.innerHTML = '<li style="padding:20px;color:#ef4444;">Não foi possível carregar os procedimentos. Verifique as regras do Firestore no console do Firebase.</li>';
+        }
+    };
 
     // Carrega e renderiza os procedimentos
     db.collection('procedures').orderBy('title').onSnapshot(snapshot => {
         allProcedures = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
         renderGroupedProcedures(allProcedures);
-    });
+    }, error => handleFirestoreError('procedimentos', error));
 
     function renderGroupedProcedures(procedures) {
         proceduresList.innerHTML = ''; // Limpa a lista
@@ -152,7 +167,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 `;
                 logTableBody.appendChild(tr);
             });
-        });
+        }, error => handleFirestoreError('log de atividades', error));
     }
 
     // Limpa cores escuras inline (como preto, cinza escuro, rgb(0,0,0)) para que herdem a cor do tema dinamicamente

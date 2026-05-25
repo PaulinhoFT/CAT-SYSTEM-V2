@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const metricLogsToday = document.getElementById('metric-logs-today');
     const searchInput = document.getElementById('admin-search-input');
 
-    if (typeof db === 'undefined') {
+    if (!db) {
         console.error('Firebase DB not initialized');
         return;
     }

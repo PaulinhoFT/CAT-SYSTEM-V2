@@ -57,6 +57,40 @@ body.dark-mode {
     transition: background-color var(--transition-speed), color var(--transition-speed), border-color var(--transition-speed);
 }
 
+/* Font Awesome: o reset acima sobrescreve a fonte dos ícones e exibe letras no lugar */
+.fa,
+.fa-solid,
+.fa-regular,
+.fa-brands,
+.fas,
+.far,
+.fab,
+[class^="fa-"],
+[class*=" fa-"] {
+    font-family: "Font Awesome 6 Free", "Font Awesome 6 Brands" !important;
+    font-style: normal;
+    font-variant: normal;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+}
+
+.fa-brands,
+.fab {
+    font-family: "Font Awesome 6 Brands" !important;
+    font-weight: 400;
+}
+
+.fa-solid,
+.fas,
+.fa {
+    font-weight: 900;
+}
+
+.fa-regular,
+.far {
+    font-weight: 400;
+}
+
 a, button, .hamburger, .par1, .par2, .par3, .modal-container, .radio-toggle-btn, .radio-widget, .procedure-actions, .category-group summary {
     transition: background-color var(--transition-speed), color var(--transition-speed), border-color var(--transition-speed), transform 0.2s, opacity 0.2s, box-shadow 0.2s;
 }

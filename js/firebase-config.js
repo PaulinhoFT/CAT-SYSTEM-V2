@@ -10,14 +10,25 @@ const firebaseConfig = {
 };
 
 // Inicializa o Firebase
-if (!firebase.apps.length) {
+if (typeof firebase === 'undefined') {
+    console.error('SDK do Firebase não foi carregado. Verifique os scripts antes de firebase-config.js.');
+} else if (!firebase.apps.length) {
     firebase.initializeApp(firebaseConfig);
 }
 
-const db = typeof firebase.firestore === 'function' ? firebase.firestore() : null;
-const storage = typeof firebase.storage === 'function' ? firebase.storage() : null;
-const auth = typeof firebase.auth === 'function' ? firebase.auth() : null;
+const db = typeof firebase !== 'undefined' && typeof firebase.firestore === 'function'
+    ? firebase.firestore()
+    : null;
+const storage = typeof firebase !== 'undefined' && typeof firebase.storage === 'function'
+    ? firebase.storage()
+    : null;
+const auth = typeof firebase !== 'undefined' && typeof firebase.auth === 'function'
+    ? firebase.auth()
+    : null;
 
+if (!db) {
+    console.error('Firebase Firestore não foi carregado. Inclua firebase-firestore.js antes de firebase-config.js.');
+}
 if (!auth) {
-    console.error("Firebase Auth não foi carregado corretamente.");
+    console.error('Firebase Auth não foi carregado. Inclua firebase-auth.js antes de firebase-config.js.');
 }
