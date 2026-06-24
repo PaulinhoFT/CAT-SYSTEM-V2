@@ -2,14 +2,15 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Injeção do Navbar ---
     const navbars = document.querySelectorAll('.navbar');
     if (navbars.length > 0) {
+        const isHome = window.location.pathname === '/' || window.location.pathname.endsWith('index.html');
         const navbarHTML = `
             <ul>
                 <li>
                     <a href="index.html">Página Inicial</a>
-                    <a href="att.html">Abertura de ATT</a>
-                    <a href="pre-registros.html">Pré Registros</a>
-                    <a href="formatador.html" target="_blank" rel="noopener noreferrer">Formatador de Registro</a>
-                    <a href="calculadora.html" target="_blank" rel="noopener noreferrer">Calcu. de desconto</a>
+                    ${isHome ? '' : '<a href="att.html">Abertura de ATT</a>'}
+                    ${isHome ? '' : '<a href="pre-registros.html">Pré Registros</a>'}
+                    ${isHome ? '' : '<a href="formatador.html" target="_blank" rel="noopener noreferrer">Formatador de Registro</a>'}
+                    ${isHome ? '' : '<a href="calculadora.html" target="_blank" rel="noopener noreferrer">Calcu. de desconto</a>'}
                     <a href="admin.html" id="add-procedure-link" class="hidden">Painel Administrativo</a>
                     <button id="login-btn">Entrar</button>
                     <button id="logout-btn" class="hidden">Sair</button>

@@ -24,7 +24,22 @@ document.addEventListener('DOMContentLoaded', () => {
     db.collection('procedures').orderBy('title').onSnapshot(snapshot => {
         allProcedures = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
         renderGroupedProcedures(allProcedures);
+
+        // Atualiza hero stats
+        const categories = new Set(allProcedures.map(p => p.category).filter(Boolean));
+        document.getElementById('statProcedures').textContent = allProcedures.length;
+        document.getElementById('statCategories').textContent = categories.size;
     }, error => handleFirestoreError('procedimentos', error));
+
+    // Atualiza contagem de atualizações do log
+    const logInterval = setInterval(() => {
+        const rows = document.querySelectorAll('#log-table-body tr');
+        const countEl = document.getElementById('statUpdates');
+        if (countEl && rows.length > 0) {
+            countEl.textContent = rows.length;
+            clearInterval(logInterval);
+        }
+    }, 500);
 
     function renderGroupedProcedures(procedures) {
         proceduresList.innerHTML = ''; // Limpa a lista

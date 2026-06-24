@@ -1,75 +1,107 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Procedimentos TrixNet</title>
-    <!-- Google Fonts - Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
     <link rel="stylesheet" href="css/style.css">
     <link rel="shortcut icon" href="img/Logo-TRIXNET.png" type="image/x-icon">
 </head>
 <body>
     <div class="navbar"></div>
 
-    <div class="main">
-        <input type="checkbox" id="menu-toggle">
-        <label for="menu-toggle" class="hamburger" title="Menu" aria-label="Abrir menu"><i class="fa-solid fa-bars" aria-hidden="true"></i></label>
+    <input type="checkbox" id="menu-toggle">
+    <label for="menu-toggle" class="hamburger" title="Menu" aria-label="Abrir menu">
+        <i class="fa-solid fa-bars" aria-hidden="true"></i>
+    </label>
 
-        <nav class="sidebar">
-            <div class="sidebar-header">
-                <h1 class="le">Procedimentos</h1>
-                <div id="search-container">
-                    <input type="text" id="search-input" placeholder="Pesquisar...">
-                </div>
+    <label for="menu-toggle" class="sidebar-backdrop" id="sidebarBackdrop"></label>
+
+    <nav class="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-brand-mini">
+                <img src="img/Logo-TRIXNET.png" alt="TrixNet" class="sidebar-logo">
+                <span>Procedimentos</span>
             </div>
-            <ul class="barra" id="procedures-list">
-                <!-- Os procedimentos serão carregados aqui pelo JavaScript -->
-            </ul>
-        </nav>
-    </div>
+            <div id="search-container">
+                <i class="fa-solid fa-search search-icon"></i>
+                <input type="text" id="search-input" placeholder="Buscar procedimento...">
+            </div>
+        </div>
+        <ul class="barra" id="procedures-list"></ul>
+    </nav>
 
     <div class="corpodireito" id="procedure-content">
-        <div class="titulo">
-            <h1>Central de Procedimentos da Area de Atendimento | TrixNet</h1>
+        <div class="hero-section">
+            <div class="hero-badge">Central de Conhecimento</div>
+            <h1 class="hero-title">Procedimentos <span class="hero-highlight">TrixNet</span></h1>
+            <p class="hero-subtitle">Protocolos, diretrizes e soluções para o setor de Atendimento — organizados e de rápido acesso.</p>
+            <div class="hero-stats" id="heroStats">
+                <div class="hero-stat-card">
+                    <div class="stat-icon"><i class="fa-solid fa-file-lines"></i></div>
+                    <div class="stat-number" id="statProcedures">0</div>
+                    <div class="stat-label">Procedimentos</div>
+                </div>
+                <div class="hero-stat-card">
+                    <div class="stat-icon"><i class="fa-solid fa-folder-tree"></i></div>
+                    <div class="stat-number" id="statCategories">0</div>
+                    <div class="stat-label">Categorias</div>
+                </div>
+                <div class="hero-stat-card">
+                    <div class="stat-icon"><i class="fa-solid fa-clock-rotate-left"></i></div>
+                    <div class="stat-number" id="statUpdates">0</div>
+                    <div class="stat-label">Atualizações</div>
+                </div>
+            </div>
         </div>
 
-        <p>Bem-vindo à Central de Procedimentos da Area de Atendimento da TrixNet! Aqui você encontra de forma organizada e acessível todos os protocolos, diretrizes e soluções utilizadas pelo nosso setor de Atendimento. Nosso objetivo é garantir um suporte eficiente e ágil, proporcionando aos nossos colaboradores os melhores procedimentos para atender nossos clientes com excelência.</p>
-
-        <h4>Seu acesso rápido e eficiente ao conhecimento da Area de Atendimento da TrixNet começa aqui! 🚀</h4>
+        <div class="quick-links" id="quickLinks">
+            <a href="att.html" class="quick-link-card">
+                <div class="ql-icon"><i class="fa-solid fa-pen-to-square"></i></div>
+                <span>Abertura de ATT</span>
+            </a>
+            <a href="pre-registros.html" class="quick-link-card">
+                <div class="ql-icon"><i class="fa-solid fa-list-check"></i></div>
+                <span>Pré-Registros</span>
+            </a>
+            <a href="formatador.html" class="quick-link-card">
+                <div class="ql-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+                <span>Formatador</span>
+            </a>
+            <a href="calculadora.html" class="quick-link-card">
+                <div class="ql-icon"><i class="fa-solid fa-calculator"></i></div>
+                <span>Calculadora</span>
+            </a>
+        </div>
 
         <div class="activity-log">
-            <h2>Atualização recente</h2>
+            <div class="section-header">
+                <h2><i class="fa-solid fa-clock-rotate-left"></i> Atualizações Recentes</h2>
+                <p>Últimas alterações na base de procedimentos</p>
+            </div>
             <div class="table-wrapper">
                 <table id="log-table">
                     <thead>
                         <tr>
                             <th>Ação</th>
-                            <th>Título do Procedimento</th>
+                            <th>Título</th>
                             <th>Categoria</th>
                             <th>Data</th>
                         </tr>
                     </thead>
-                    <tbody id="log-table-body">
-                        <!-- As linhas do log serão inseridas aqui -->
-                    </tbody>
+                    <tbody id="log-table-body"></tbody>
                 </table>
             </div>
         </div>
     </div>
 
-    <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
-
-    <!-- Seus scripts -->
     <script src="js/firebase-config.js"></script>
     <script src="js/common.js"></script>
     <script src="js/main.js"></script>
