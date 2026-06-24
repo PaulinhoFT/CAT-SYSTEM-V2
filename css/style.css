@@ -807,7 +807,7 @@ body.admin-panel {
 
 .admin-sidebar {
     width: 260px;
-    background-color: #111827; /* Modern dark sidebar */
+    background-color: #0e1a12;
     color: #f3f4f6;
     height: 100%;
     display: flex;
@@ -914,13 +914,13 @@ body.admin-panel {
 
 .sidebar-footer {
     padding: 15px;
-    background-color: #172D44;
+    background-color: #091a0e;
     display: flex;
     justify-content: space-around;
 }
 
 .sidebar-footer a {
-    color: #5A738E;
+    color: #5a7a6a;
     font-size: 1.1rem;
 }
 
@@ -937,7 +937,7 @@ body.admin-panel {
 }
 
 body.dark-mode .main-content {
-    background-color: #0f172a;
+    background-color: #0a140e;
 }
 
 .top-nav {
@@ -967,7 +967,7 @@ body.dark-mode .top-nav {
     border: none;
     font-size: 1.2rem;
     cursor: pointer;
-    color: #5A738E;
+    color: #5a7a6a;
 }
 
 body.dark-mode .toggle-menu-btn {
@@ -979,7 +979,7 @@ body.dark-mode .toggle-menu-btn {
     align-items: center;
     gap: 10px;
     cursor: pointer;
-    color: #5A738E;
+    color: #5a7a6a;
     font-weight: 500;
     font-size: 0.9rem;
 }
@@ -997,7 +997,7 @@ body.dark-mode .nav-user {
 .nav-icons {
     display: flex;
     gap: 20px;
-    color: #5A738E;
+    color: #5a7a6a;
 }
 
 body.dark-mode .nav-icons {
@@ -1057,7 +1057,7 @@ body.dark-mode .metric-tile {
 
 .metric-title {
     font-size: 0.8rem;
-    color: #73879C;
+    color: #6a8a7a;
     text-transform: uppercase;
     font-weight: 600;
 }
@@ -1074,7 +1074,7 @@ body.dark-mode .metric-title {
 
 .metric-stats {
     font-size: 0.8rem;
-    color: #73879C;
+    color: #6a8a7a;
 }
 
 .metric-stats .up { color: #1ABB9C; }
@@ -1114,7 +1114,7 @@ body.dark-mode .card-header {
 
 .card-header h3 {
     font-size: 1.1rem;
-    color: #73879C;
+    color: #6a8a7a;
     margin: 0;
 }
 
@@ -1150,7 +1150,7 @@ body.dark-mode .card-header h3 {
     text-align: left;
     padding: 12px 10px;
     border-bottom: 1px solid #E6E9ED;
-    color: #73879C;
+    color: #6a8a7a;
     font-size: 0.85rem;
     font-weight: 700;
     text-transform: uppercase;
@@ -1165,7 +1165,7 @@ body.dark-mode .admin-table-custom th {
     padding: 12px 10px;
     border-bottom: 1px solid #F1F1F1;
     font-size: 0.9rem;
-    color: #5A738E;
+    color: #5a7a6a;
 }
 
 .admin-search-wrapper {
@@ -1187,7 +1187,7 @@ body.dark-mode .admin-table-custom th {
 
 body.dark-mode .admin-table-custom td {
     border-color: #2a3a30;
-    color: #cbd5e1;
+    color: #9ab0a4;
 }
 
 .activity-list {
@@ -1213,7 +1213,7 @@ body.dark-mode .activity-item {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #73879C;
+    color: #6a8a7a;
     flex-shrink: 0;
 }
 
@@ -1224,7 +1224,7 @@ body.dark-mode .activity-icon {
 .activity-content h4 {
     font-size: 0.9rem;
     margin: 0 0 5px;
-    color: #5A738E;
+    color: #5a7a6a;
 }
 
 body.dark-mode .activity-content h4 {
@@ -1266,7 +1266,7 @@ body.dark-mode .activity-content h4 {
 }
 
 .card-tools i:hover {
-    color: #5A738E;
+    color: #5a7a6a;
 }
 
 /* Settings Styles */

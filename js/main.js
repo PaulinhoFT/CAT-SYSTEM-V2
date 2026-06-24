@@ -31,15 +31,14 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('statCategories').textContent = categories.size;
     }, error => handleFirestoreError('procedimentos', error));
 
-    // Atualiza contagem de atualizações do log
-    const logInterval = setInterval(() => {
-        const rows = document.querySelectorAll('#log-table-body tr');
+    // Atualiza contagem de atualizações do histórico
+    db.collection('activity_logs').get().then(snapshot => {
         const countEl = document.getElementById('statUpdates');
-        if (countEl && rows.length > 0) {
-            countEl.textContent = rows.length;
-            clearInterval(logInterval);
-        }
-    }, 500);
+        if (countEl) countEl.textContent = snapshot.size;
+    }).catch(() => {
+        const countEl = document.getElementById('statUpdates');
+        if (countEl) countEl.textContent = '0';
+    });
 
     function renderGroupedProcedures(procedures) {
         proceduresList.innerHTML = ''; // Limpa a lista
