@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const navbarHTML = `
             <ul>
                 <li>
-                    <a href="index.html">Página Inicial</a>
+                    ${isHome ? '' : '<a href="index.html">Página Inicial</a>'}
                     ${isHome ? '' : '<a href="att.html">Abertura de ATT</a>'}
                     ${isHome ? '' : '<a href="pre-registros.html">Pré Registros</a>'}
                     ${isHome ? '' : '<a href="formatador.html" target="_blank" rel="noopener noreferrer">Formatador de Registro</a>'}
