@@ -232,6 +232,12 @@ body {
     font-size: 15px; font-weight: 700;
     color: var(--text);
 }
+.sidebar-logo-icon {
+    font-size: 22px; color: var(--primary);
+}
+.sidebar-brand i {
+    font-size: 24px; color: var(--primary);
+}
 
 #search-container {
     position: relative;
