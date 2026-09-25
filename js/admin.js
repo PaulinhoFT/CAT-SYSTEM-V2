@@ -120,9 +120,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 const timestamp = log.timestamp ? log.timestamp.toDate() : null;
                 const timeStr = timestamp ? timestamp.toLocaleString('pt-BR') : 'Agora mesmo';
 
+                const actionClass = log.action ? log.action.toLowerCase().replace('í', 'i') : '';
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
-                    <td><strong>${log.action}</strong></td>
+                    <td><span class="spell-badge log-action log-${actionClass}">${log.action}</span></td>
                     <td>${log.title}</td>
                     <td><span class="yellow" style="font-size: 0.7rem;">${log.category || 'N/A'}</span></td>
                     <td>${timeStr}</td>

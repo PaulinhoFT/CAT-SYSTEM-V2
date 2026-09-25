@@ -3,11 +3,30 @@ document.addEventListener('DOMContentLoaded', () => {
     const procedureContent = document.getElementById('procedure-content');
     const searchInput = document.getElementById('search-input');
 
+    const hideSpellLoader = () => {
+        const loader = document.getElementById('spell-loader');
+        if (loader && !loader.classList.contains('hidden')) {
+            loader.classList.add('hidden');
+            setTimeout(() => {
+                if (loader.parentNode) loader.parentNode.removeChild(loader);
+            }, 450);
+
+            // Dispara a animação Blur Reveal do Spell UI nos textos da página após carregamento
+            if (typeof window.triggerSpellBlurReveal === 'function') {
+                window.triggerSpellBlurReveal();
+            }
+        }
+    };
+
+    // Segurança: se o Firestore demorar mais de 4 segundos, remove o loader
+    setTimeout(hideSpellLoader, 4000);
+
     if (!db) {
         console.error('Firestore indisponível — procedimentos e logs não serão carregados.');
         if (proceduresList) {
             proceduresList.innerHTML = '<li style="padding:20px;color:#ef4444;">Erro ao conectar ao Firebase. Recarregue a página ou verifique a conexão.</li>';
         }
+        hideSpellLoader();
         return;
     }
 
@@ -18,6 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (proceduresList && context === 'procedimentos') {
             proceduresList.innerHTML = '<li style="padding:20px;color:#ef4444;">Não foi possível carregar os procedimentos. Verifique as regras do Firestore no console do Firebase.</li>';
         }
+        hideSpellLoader();
     };
 
     // Carrega e renderiza os procedimentos
@@ -29,6 +49,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const categories = new Set(allProcedures.map(p => p.category).filter(Boolean));
         document.getElementById('statProcedures').textContent = allProcedures.length;
         document.getElementById('statCategories').textContent = categories.size;
+
+        hideSpellLoader();
     }, error => handleFirestoreError('procedimentos', error));
 
     // Atualiza contagem de atualizações do histórico
@@ -54,7 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
         for (const category in grouped) {
             const details = document.createElement('details');
             details.className = 'category-group';
-            details.open = true; // Mantém as categorias abertas por padrão
+            details.open = false; // Mantém as categorias fechadas/recolhidas por padrão
 
             const summary = document.createElement('summary');
             summary.textContent = category;
@@ -75,7 +97,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Filtra os procedimentos em tempo real
     searchInput.addEventListener('input', (e) => {
-        const searchTerm = e.target.value.toLowerCase();
+        const searchTerm = e.target.value.toLowerCase().trim();
         document.querySelectorAll('.category-group').forEach(group => {
             let hasVisibleProcedures = false;
             group.querySelectorAll('li').forEach(li => {
@@ -89,6 +111,12 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             // Oculta o título da categoria se não houver procedimentos visíveis
             group.style.display = hasVisibleProcedures ? '' : 'none';
+            // Se estiver buscando, abre a categoria para visualizar os resultados; se limpar, fecha
+            if (searchTerm.length > 0 && hasVisibleProcedures) {
+                group.open = true;
+            } else if (searchTerm.length === 0) {
+                group.open = false;
+            }
         });
     });
 
@@ -120,12 +148,15 @@ document.addEventListener('DOMContentLoaded', () => {
                     setTimeout(() => {
                         procedureContent.innerHTML = `
                             <div class="titulo">
-                                <h1>${procedure.title}</h1>
+                                <h1 class="spell-blur-reveal" data-blur-delay="0.05">${procedure.title}</h1>
                             </div>
                             <div class="conteudo">
                                 ${cleanDarkInlineColors(procedure.content)}
                             </div>
                         `;
+                        if (typeof window.triggerSpellBlurReveal === 'function') {
+                            window.triggerSpellBlurReveal(procedureContent);
+                        }
                         // Efeito de fade in
                         procedureContent.style.opacity = '1';
                         procedureContent.style.transform = 'translateY(0)';
@@ -174,7 +205,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const actionClass = log.action.toLowerCase().replace('í', 'i');
 
                 tr.innerHTML = `
-                    <td><span class="log-action log-${actionClass}">${log.action}</span></td>
+                    <td><span class="spell-badge log-action log-${actionClass}">${log.action}</span></td>
                     <td>${log.title}</td>
                     <td>${log.category || 'N/A'}</td>
                     <td>${date}</td>

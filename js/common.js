@@ -12,9 +12,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     ${isHome ? '' : '<a href="formatador.html" target="_blank" rel="noopener noreferrer">Formatador de Registro</a>'}
                     ${isHome ? '' : '<a href="calculadora.html" target="_blank" rel="noopener noreferrer">Calcu. de desconto</a>'}
                     <a href="admin.html" id="add-procedure-link" class="hidden">Painel Administrativo</a>
-                    <button id="login-btn">Entrar</button>
-                    <button id="logout-btn" class="hidden">Sair</button>
-                    <button id="theme-toggle">🌙</button>
+                    <button id="login-btn" class="spell-pop-btn">Entrar</button>
+                    <button id="logout-btn" class="hidden spell-pop-btn">Sair</button>
+                    <button id="theme-toggle" class="spell-pop-btn" title="Alternar tema"><i class="fa-solid fa-moon"></i></button>
                 </li>
             </ul>
         `;
@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- Lógica para o modo claro/escuro ---
+    // --- Lógica para o modo claro/escuro (Padrão: Cinza bem fraquinho #f3f4f6) ---
     const currentTheme = localStorage.getItem('theme');
     if (currentTheme === 'dark') {
         document.body.classList.add('dark-mode');
@@ -34,11 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const themeToggles = document.querySelectorAll('#theme-toggle, .theme-toggle-trigger');
         themeToggles.forEach(btn => {
             if (btn.tagName === 'A' || btn.tagName === 'BUTTON') {
-                if (isDark) {
-                    btn.innerHTML = btn.innerHTML.includes('<i') ? btn.innerHTML.replace('fa-moon', 'fa-sun') : '☀️';
-                } else {
-                    btn.innerHTML = btn.innerHTML.includes('<i') ? btn.innerHTML.replace('fa-sun', 'fa-moon') : '🌙';
-                }
+                btn.innerHTML = isDark ? '<i class="fa-solid fa-sun"></i>' : '<i class="fa-solid fa-moon"></i>';
             }
         });
     };
@@ -59,74 +55,41 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // --- Lógica para o Rádio Player ---
-
-    // Injetar HTML do Rádio se não existir
-    if (!document.getElementById('radio-player-container')) {
-        const radioHTML = `
-            <div id="radio-player-container" class="radio-widget hidden">
-                <div class="radio-titlebar">
-                    <span>Rádio Ubatuba</span>
-                    <button id="close-radio" class="radio-close">X</button>
-                </div>
-                <div class="radio-content">
-                    <iframe src="https://player.xcast.com.br/player-topo-html5-2/8444/1/3e1c63/941449/941449///"
-                            width="100%" height="100" frameborder="0"></iframe>
-                </div>
-            </div>
-            <button id="toggle-radio" class="radio-toggle-btn" title="Ouvir Rádio Ubatuba">Rádio 📻</button>
-        `;
-        document.body.insertAdjacentHTML('beforeend', radioHTML);
-    }
-
-    const radioContainer = document.getElementById('radio-player-container');
-    const toggleRadioBtn = document.getElementById('toggle-radio');
-    const closeRadioBtn = document.getElementById('close-radio');
-
-    if (toggleRadioBtn && radioContainer) {
-        toggleRadioBtn.addEventListener('click', () => {
-            radioContainer.classList.remove('hidden');
-            toggleRadioBtn.classList.add('hidden');
-        });
-    }
-
-    if (closeRadioBtn && radioContainer) {
-        closeRadioBtn.addEventListener('click', () => {
-            radioContainer.classList.add('hidden');
-            toggleRadioBtn.classList.remove('hidden');
-        });
-    }
-
-
-
     // --- Lógica de Autenticação ---
 
-    // Injetar Modal de Login se não existir
+    // Injetar Modal de Login se não existir (Spell UI Modal)
     if (!document.getElementById('login-modal')) {
         const loginModalHTML = `
             <div id="login-modal" class="modal-overlay hidden">
-                <div class="modal-container">
-                    <div class="modal-titlebar">
-                        <span>Painel Administrativo</span>
-                        <button class="modal-close" id="close-login">&times;</button>
-                    </div>
-                    <div class="modal-content">
-                        <div class="login-header">
-                            <span style="font-size: 3rem;">🔐</span>
-                            <h2>Bem-vindo</h2>
-                            <p>Identifique-se para gerenciar procedimentos</p>
+                <div class="modal-container spell-login-container">
+                    <button class="modal-close spell-modal-close" id="close-login" aria-label="Fechar" title="Fechar">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                    <div class="spell-login-content">
+                        <div class="spell-login-header">
+                            <h2 class="spell-login-title">Painel Administrativo</h2>
+                            <p class="spell-login-subtitle">Identifique-se para gerenciar os procedimentos</p>
                         </div>
-                        <form id="login-form">
-                            <div class="form-group">
-                                <label for="login-email">E-mail</label>
-                                <input type="email" id="login-email" placeholder="seu@email.com" required>
+                        <form id="login-form" class="spell-login-form">
+                            <div class="spell-form-group">
+                                <label for="login-email" class="spell-form-label">E-mail</label>
+                                <div class="spell-input-wrapper">
+                                    <i class="fa-regular fa-envelope spell-input-icon"></i>
+                                    <input type="email" id="login-email" class="spell-input" placeholder="seu@email.com" required autocomplete="username">
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="login-password">Senha</label>
-                                <input type="password" id="login-password" placeholder="••••••••" required>
+                            <div class="spell-form-group">
+                                <label for="login-password" class="spell-form-label">Senha</label>
+                                <div class="spell-input-wrapper">
+                                    <i class="fa-regular fa-lock spell-input-icon"></i>
+                                    <input type="password" id="login-password" class="spell-input" placeholder="••••••••" required autocomplete="current-password">
+                                </div>
                             </div>
-                            <button type="submit" id="btn-do-login">Acessar Painel</button>
-                            <p id="login-error" class="red hidden" style="margin-top: 15px; text-align: center; font-size: 0.85rem; padding: 10px; background: rgba(239, 68, 68, 0.1); border-radius: 8px;"></p>
+                            <button type="submit" id="btn-do-login" class="spell-pop-btn spell-login-submit">
+                                <span>Acessar Painel</span>
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </button>
+                            <p id="login-error" class="red hidden spell-login-error"></p>
                         </form>
                     </div>
                 </div>
@@ -180,7 +143,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (submitBtn) {
                 submitBtn.disabled = true;
-                submitBtn.textContent = "Acessando...";
+                submitBtn.innerHTML = '<span>Acessando...</span> <i class="fa-solid fa-spinner fa-spin"></i>';
             }
 
             if (loginError) loginError.classList.add('hidden');
@@ -192,7 +155,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
                 if (submitBtn) {
                     submitBtn.disabled = false;
-                    submitBtn.textContent = 'Acessar Painel';
+                    submitBtn.innerHTML = '<span>Acessar Painel</span> <i class="fa-solid fa-arrow-right"></i>';
                 }
                 return;
             }
@@ -217,7 +180,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 .finally(() => {
                     if (submitBtn) {
                         submitBtn.disabled = false;
-                        submitBtn.textContent = "Acessar Painel";
+                        submitBtn.innerHTML = '<span>Acessar Painel</span> <i class="fa-solid fa-arrow-right"></i>';
                     }
                 });
     };
@@ -238,7 +201,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (logoutBtn) logoutBtn.classList.remove('hidden');
                 if (addProcedureLink) {
                     addProcedureLink.classList.remove('hidden');
-                    addProcedureLink.textContent = 'Painel Administrativo';
+                    addProcedureLink.innerHTML = '<i class="fa-solid fa-gauge"></i> <span>Painel</span>';
                     addProcedureLink.href = 'admin.html';
                 }
                 document.body.classList.add('is-admin');

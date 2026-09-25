@@ -9,10 +9,32 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='45' fill='%2310b981'/><text x='50' y='68' text-anchor='middle' font-size='50' fill='white' font-family='Arial' font-weight='bold'>i</text></svg>">
+    <link rel="stylesheet" href="css/spell-ui.css">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='45' fill='%2327272a'/><text x='50' y='68' text-anchor='middle' font-size='50' fill='white' font-family='Arial' font-weight='bold'>i</text></svg>">
 </head>
 <body>
-    <div class="navbar"></div>
+    <!-- Spell UI Bars Spinner Loader -->
+    <div id="spell-loader" class="spell-loader-overlay">
+        <div class="spell-bars-spinner-wrapper">
+            <div class="spell-spinner">
+                <div class="spell-bar"></div>
+                <div class="spell-bar"></div>
+                <div class="spell-bar"></div>
+                <div class="spell-bar"></div>
+                <div class="spell-bar"></div>
+                <div class="spell-bar"></div>
+                <div class="spell-bar"></div>
+                <div class="spell-bar"></div>
+                <div class="spell-bar"></div>
+                <div class="spell-bar"></div>
+                <div class="spell-bar"></div>
+                <div class="spell-bar"></div>
+            </div>
+        </div>
+        <p class="spell-loader-text">Carregando...</p>
+    </div>
+
+    <canvas id="spell-light-rays" class="spell-canvas-bg"></canvas>
 
     <input type="checkbox" id="menu-toggle">
     <label for="menu-toggle" class="hamburger" title="Menu" aria-label="Abrir menu">
@@ -23,65 +45,66 @@
 
     <nav class="sidebar">
         <div class="sidebar-header">
-            <div class="sidebar-brand-mini">
-                <i class="fa-solid fa-globe sidebar-logo-icon"></i>
-                <span>Procedimentos</span>
-            </div>
             <div id="search-container">
                 <i class="fa-solid fa-search search-icon"></i>
                 <input type="text" id="search-input" placeholder="Buscar procedimento...">
+                <kbd class="spell-kbd" title="Pressione / para buscar">/</kbd>
             </div>
         </div>
         <ul class="barra" id="procedures-list"></ul>
+        <div class="sidebar-footer">
+            <a href="admin.html" id="add-procedure-link" class="hidden">Painel</a>
+            <button id="login-btn" class="spell-pop-btn">Entrar</button>
+            <button id="logout-btn" class="hidden spell-pop-btn">Sair</button>
+            <button id="theme-toggle" class="spell-pop-btn" title="Alternar tema"><i class="fa-solid fa-moon"></i></button>
+        </div>
     </nav>
 
     <div class="corpodireito" id="procedure-content">
         <div class="hero-section">
-            <div class="hero-badge">Central de Conhecimento</div>
-            <h1 class="hero-title">Procedimentos <span class="hero-highlight">Internet</span></h1>
-            <p class="hero-subtitle">Protocolos, diretrizes e soluções para o setor de Atendimento — organizados e de rápido acesso.</p>
+            <h1 class="hero-title spell-blur-reveal">Procedimentos <span class="hero-highlight">Internet</span></h1>
+            <p class="hero-subtitle spell-blur-reveal" style="animation-delay: 0.12s;">Protocolos, diretrizes e soluções para o setor de Atendimento — organizados e de rápido acesso.</p>
             <div class="hero-stats" id="heroStats">
-                <div class="hero-stat-card">
+                <div class="hero-stat-card spell-blur-reveal" data-blur-delay="0.32" data-blur-mode="element">
                     <div class="stat-icon"><i class="fa-solid fa-file-lines"></i></div>
                     <div class="stat-number" id="statProcedures">0</div>
                     <div class="stat-label">Procedimentos</div>
                 </div>
-                <div class="hero-stat-card">
+                <div class="hero-stat-card spell-blur-reveal" data-blur-delay="0.40" data-blur-mode="element">
                     <div class="stat-icon"><i class="fa-solid fa-folder-tree"></i></div>
                     <div class="stat-number" id="statCategories">0</div>
                     <div class="stat-label">Categorias</div>
                 </div>
-                <div class="hero-stat-card">
+                <div class="hero-stat-card spell-blur-reveal" data-blur-delay="0.48" data-blur-mode="element">
                     <div class="stat-icon"><i class="fa-solid fa-clock-rotate-left"></i></div>
                     <div class="stat-number" id="statUpdates">0</div>
                     <div class="stat-label">Atualizações</div>
                 </div>
             </div>
         </div>
-
         <div class="quick-links" id="quickLinks">
-            <a href="att.html" class="quick-link-card">
+            <a href="att.html" class="quick-link-card spell-blur-reveal" data-blur-delay="0.35" data-blur-mode="element">
                 <div class="ql-icon"><i class="fa-solid fa-pen-to-square"></i></div>
                 <span>Abertura de ATT</span>
             </a>
-            <a href="pre-registros.html" class="quick-link-card">
+            <a href="pre-registros.html" class="quick-link-card spell-blur-reveal" data-blur-delay="0.42" data-blur-mode="element">
                 <div class="ql-icon"><i class="fa-solid fa-list-check"></i></div>
                 <span>Pré-Registros</span>
             </a>
-            <a href="formatador.html" class="quick-link-card">
+            <a href="formatador.html" class="quick-link-card spell-blur-reveal" data-blur-delay="0.49" data-blur-mode="element">
                 <div class="ql-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
                 <span>Formatador</span>
             </a>
-            <a href="calculadora.html" class="quick-link-card">
+            <a href="calculadora.html" class="quick-link-card spell-blur-reveal" data-blur-delay="0.56" data-blur-mode="element">
                 <div class="ql-icon"><i class="fa-solid fa-calculator"></i></div>
                 <span>Calculadora</span>
             </a>
         </div>
 
-        <div class="activity-log">
+        <div class="activity-log spell-blur-reveal" data-blur-delay="0.52" data-blur-mode="element">
             <div class="section-header">
-                <h2><i class="fa-solid fa-clock-rotate-left"></i> Atualizações Recentes</h2>
-                <p>Últimas alterações na base de procedimentos</p>
+                <h2 class="spell-blur-reveal" data-blur-delay="0.55"><i class="fa-solid fa-clock-rotate-left"></i> Atualizações Recentes</h2>
+                <p class="spell-blur-reveal" data-blur-delay="0.65">Últimas alterações na base de procedimentos</p>
             </div>
             <div class="table-wrapper">
                 <table id="log-table">
@@ -105,6 +128,6 @@
     <script src="js/firebase-config.js"></script>
     <script src="js/common.js"></script>
     <script src="js/main.js"></script>
-    
+    <script src="js/spell-components.js"></script>
 </body>
 </html>

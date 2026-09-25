@@ -1,0 +1,594 @@
+/**
+ * Spell UI - Design Tokens & Component Styles
+ * Inspired by https://spell.sh/
+ * Clean Zinc Gray Palette & Refined Micro-interactions
+ */
+
+/* ==========================================================================
+   1. Canvas Ambient Background (Spell Light Rays)
+   ========================================================================== */
+.spell-canvas-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.65;
+    transition: opacity 0.5s ease;
+}
+
+body:not(.dark-mode) .spell-canvas-bg {
+    opacity: 0.45;
+}
+
+.corpodireito, .main {
+    position: relative;
+    z-index: 2;
+}
+
+/* ==========================================================================
+   2. Spell Kbd Search Component
+   ========================================================================== */
+#search-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.spell-kbd {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text-muted);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--card-border);
+    border-radius: 5px;
+    padding: 2px 7px;
+    line-height: 1.2;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    pointer-events: none;
+    user-select: none;
+    transition: all 0.2s ease;
+}
+
+body:not(.dark-mode) .spell-kbd {
+    background: #e4e4e7;
+    color: #52525b;
+    border-color: #d4d4d8;
+}
+
+.spell-focus-pulse {
+    border-color: var(--text) !important;
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.15) !important;
+}
+
+body:not(.dark-mode) .spell-focus-pulse {
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* ==========================================================================
+   3. Spell Typography (Blur Reveal)
+   ========================================================================== */
+.spell-blur-reveal {
+    opacity: 0;
+    filter: blur(12px);
+    transform: translateY(8px);
+    transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1),
+                filter 0.75s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: opacity, filter, transform;
+}
+
+.spell-blur-reveal.is-revealed {
+    opacity: 1;
+    filter: blur(0px);
+    transform: translateY(0);
+}
+
+.spell-shimmer-text,
+.hero-highlight {
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: spell-shimmer-wave 5s linear infinite;
+    display: inline-block;
+}
+
+/* Light mode: dark charcoal base with silver/gray wave */
+body:not(.dark-mode) .spell-shimmer-text,
+body:not(.dark-mode) .hero-highlight {
+    background: linear-gradient(
+        90deg,
+        #18181b 0%,
+        #71717a 35%,
+        #09090b 50%,
+        #71717a 65%,
+        #18181b 100%
+    );
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Dark mode (cores ao contrário): white base with silver/zinc wave */
+body.dark-mode .spell-shimmer-text,
+body.dark-mode .hero-highlight {
+    background: linear-gradient(
+        90deg,
+        #ffffff 0%,
+        #a1a1aa 35%,
+        #ffffff 50%,
+        #a1a1aa 65%,
+        #ffffff 100%
+    );
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+@keyframes spell-shimmer-wave {
+    0% {
+        background-position: 0% center;
+    }
+    100% {
+        background-position: 200% center;
+    }
+}
+
+/* Spell Pill Badge */
+.spell-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(12px);
+    padding: 5px 14px;
+    border-radius: 9999px;
+    font-size: 11.5px;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+    color: #e4e4e7;
+    margin-bottom: 18px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+body:not(.dark-mode) .spell-badge {
+    background: rgba(0, 0, 0, 0.04);
+    border-color: rgba(0, 0, 0, 0.1);
+    color: #27272a;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+.spell-badge-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #3b82f6; /* Spell Blue */
+    box-shadow: 0 0 10px #3b82f6;
+    animation: spell-ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+@keyframes spell-ping {
+    0%, 100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.5;
+        transform: scale(0.85);
+    }
+}
+
+/* ==========================================================================
+   4. Spell Tactile Pop-Button
+   ========================================================================== */
+.spell-pop-btn, #login-btn, #logout-btn, button[type="submit"] {
+    transition: transform 0.12s ease, filter 0.15s ease, background 0.2s ease !important;
+    cursor: pointer;
+    user-select: none;
+    will-change: transform;
+}
+
+.spell-pop-btn:hover, #login-btn:hover, #logout-btn:hover, button[type="submit"]:hover {
+    filter: brightness(1.1);
+}
+
+.spell-pop-btn:active, #login-btn:active, #logout-btn:active, button[type="submit"]:active {
+    transform: scale(0.97) translateY(1px) !important;
+    filter: brightness(0.95);
+}
+
+/* ==========================================================================
+   5. Spell UI Badge Component (Official spell.sh component)
+   rounded-sm font-medium text-xs leading-none inline-flex items-center
+   ========================================================================== */
+.spell-badge,
+.log-action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px; /* Spell UI rounded-sm */
+    padding: 3px 7px;
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    user-select: none;
+    border: 1px solid transparent;
+    transition: all 0.15s ease;
+}
+
+/* Yellow / Amber - EDITADO (Vibrante no modo claro e escuro) */
+.log-editado,
+.spell-badge-amber,
+.spell-badge-yellow {
+    background: rgba(245, 158, 11, 0.15) !important;
+    color: #b45309 !important;
+    border: 1px solid rgba(245, 158, 11, 0.45) !important;
+}
+
+body.dark-mode .log-editado,
+body.dark-mode .spell-badge-amber,
+body.dark-mode .spell-badge-yellow {
+    background: rgba(245, 158, 11, 0.18) !important;
+    color: #fbbf24 !important;
+    border: 1px solid rgba(245, 158, 11, 0.35) !important;
+}
+
+/* Red / Destructive - EXCLUÍDO (Vibrante no modo claro e escuro) */
+.log-excluido,
+.spell-badge-red,
+.spell-badge-destructive {
+    background: rgba(239, 68, 68, 0.15) !important;
+    color: #dc2626 !important;
+    border: 1px solid rgba(239, 68, 68, 0.45) !important;
+}
+
+body.dark-mode .log-excluido,
+body.dark-mode .spell-badge-red,
+body.dark-mode .spell-badge-destructive {
+    background: rgba(239, 68, 68, 0.18) !important;
+    color: #f87171 !important;
+    border: 1px solid rgba(239, 68, 68, 0.35) !important;
+}
+
+/* Blue / Green - NOVO / CRIADO (Vibrante no modo claro e escuro) */
+.log-novo,
+.log-criado,
+.spell-badge-blue {
+    background: rgba(59, 130, 246, 0.15) !important;
+    color: #2563eb !important;
+    border: 1px solid rgba(59, 130, 246, 0.45) !important;
+}
+
+body.dark-mode .log-novo,
+body.dark-mode .log-criado,
+body.dark-mode .spell-badge-blue {
+    background: rgba(59, 130, 246, 0.18) !important;
+    color: #60a5fa !important;
+    border: 1px solid rgba(59, 130, 246, 0.35) !important;
+}
+/* ==========================================================================
+   6. Spell UI Bars Spinner (Official spell.sh component)
+   ========================================================================== */
+.spell-loader-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    background: var(--bg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.4s ease;
+}
+
+.spell-loader-overlay.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.spell-bars-spinner-wrapper {
+    --spinner-size: 32px;
+    --spinner-color: var(--text);
+    height: var(--spinner-size, 32px);
+    width: var(--spinner-size, 32px);
+    position: relative;
+}
+
+.spell-spinner {
+    position: relative;
+    top: 50%;
+    left: 50%;
+    height: var(--spinner-size, 32px);
+    width: var(--spinner-size, 32px);
+}
+
+.spell-bar {
+    animation: spell-spin 1.2s linear infinite;
+    background: var(--spinner-color, var(--text));
+    border-radius: 6px;
+    height: 8%;
+    left: -10%;
+    position: absolute;
+    top: -3.9%;
+    width: 24%;
+}
+
+.spell-bar:nth-child(1) { animation-delay: -1.2s; transform: rotate(0.0001deg) translate(146%); }
+.spell-bar:nth-child(2) { animation-delay: -1.1s; transform: rotate(30deg) translate(146%); }
+.spell-bar:nth-child(3) { animation-delay: -1s; transform: rotate(60deg) translate(146%); }
+.spell-bar:nth-child(4) { animation-delay: -0.9s; transform: rotate(90deg) translate(146%); }
+.spell-bar:nth-child(5) { animation-delay: -0.8s; transform: rotate(120deg) translate(146%); }
+.spell-bar:nth-child(6) { animation-delay: -0.7s; transform: rotate(150deg) translate(146%); }
+.spell-bar:nth-child(7) { animation-delay: -0.6s; transform: rotate(180deg) translate(146%); }
+.spell-bar:nth-child(8) { animation-delay: -0.5s; transform: rotate(210deg) translate(146%); }
+.spell-bar:nth-child(9) { animation-delay: -0.4s; transform: rotate(240deg) translate(146%); }
+.spell-bar:nth-child(10) { animation-delay: -0.3s; transform: rotate(270deg) translate(146%); }
+.spell-bar:nth-child(11) { animation-delay: -0.2s; transform: rotate(300deg) translate(146%); }
+.spell-bar:nth-child(12) { animation-delay: -0.1s; transform: rotate(330deg) translate(146%); }
+
+@keyframes spell-spin {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0.15;
+    }
+}
+
+.spell-loader-text {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-muted);
+    letter-spacing: 0.2px;
+}
+
+/* ==========================================================================
+   8. Spell UI Blur Reveal Component (spell.sh)
+   ========================================================================== */
+.spell-blur-reveal {
+    opacity: 0;
+    filter: blur(10px);
+    transform: translateY(10px);
+    transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+                filter 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: opacity, filter, transform;
+}
+
+.spell-blur-reveal.is-revealed {
+    opacity: 1;
+    filter: blur(0px);
+    transform: translateY(0);
+}
+
+/* ==========================================================================
+   9. Spell UI Login Modal Component (spell.sh)
+   Unified minimalist card, clean typography, refined inputs and tactile buttons
+   ========================================================================== */
+#login-modal.modal-overlay {
+    background: rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    transition: opacity 0.25s ease;
+}
+
+#login-modal .spell-login-container {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 20px;
+    width: 90%;
+    max-width: 400px;
+    padding: 32px 28px 28px;
+    position: relative;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(0, 0, 0, 0.05);
+    animation: spell-modal-spring 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    overflow: visible;
+}
+
+body.dark-mode #login-modal .spell-login-container {
+    background: #18181b;
+    border-color: #27272a;
+    box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+@keyframes spell-modal-spring {
+    from {
+        opacity: 0;
+        transform: scale(0.95) translateY(6px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+/* Close button - sleek ghost */
+#login-modal .spell-modal-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: transparent;
+    border: 1px solid transparent;
+    color: var(--text-muted);
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+#login-modal .spell-modal-close:hover {
+    background: var(--bg);
+    border-color: var(--card-border);
+    color: var(--text);
+    transform: scale(1.05);
+}
+
+body.dark-mode #login-modal .spell-modal-close:hover {
+    background: #27272a;
+    border-color: #3f3f46;
+}
+
+/* Header */
+.spell-login-header {
+    text-align: center;
+    margin-top: 6px;
+    margin-bottom: 24px;
+}
+
+.spell-login-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: -0.02em;
+    margin: 0;
+}
+
+.spell-login-subtitle {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-top: 5px;
+    line-height: 1.45;
+}
+
+/* Form Groups */
+.spell-form-group {
+    margin-bottom: 16px;
+    text-align: left;
+}
+
+.spell-form-label {
+    display: block;
+    font-size: 12.5px;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 6px;
+    letter-spacing: -0.01em;
+}
+
+.spell-input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.spell-input-icon {
+    position: absolute;
+    left: 14px;
+    color: var(--text-muted);
+    font-size: 14px;
+    pointer-events: none;
+    transition: color 0.2s ease;
+}
+
+.spell-input-wrapper:focus-within .spell-input-icon {
+    color: var(--text);
+}
+
+.spell-input {
+    width: 100%;
+    padding: 10px 14px 10px 38px !important;
+    font-size: 13.5px !important;
+    background: var(--bg) !important;
+    border: 1px solid var(--card-border) !important;
+    border-radius: 10px !important;
+    color: var(--text) !important;
+    outline: none !important;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    font-family: inherit;
+    box-sizing: border-box;
+}
+
+.spell-input::placeholder {
+    color: var(--text-muted);
+    opacity: 0.65;
+}
+
+.spell-input:focus {
+    background: var(--card-bg) !important;
+    border-color: #71717a !important;
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.08) !important;
+}
+
+body.dark-mode .spell-input:focus {
+    border-color: #a1a1aa !important;
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.12) !important;
+}
+
+/* Submit Button */
+.spell-login-submit {
+    width: 100% !important;
+    height: 44px;
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border-radius: 10px !important;
+    font-size: 13.5px !important;
+    font-weight: 600 !important;
+    letter-spacing: -0.01em;
+    margin-top: 8px !important;
+    cursor: pointer;
+    border: 1px solid transparent !important;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+/* Light mode submit */
+body:not(.dark-mode) .spell-login-submit {
+    background: #18181b !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+body:not(.dark-mode) .spell-login-submit:hover {
+    background: #27272a !important;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
+    transform: translateY(-1px);
+}
+
+/* Dark mode submit */
+body.dark-mode .spell-login-submit {
+    background: #f4f4f5 !important;
+    color: #09090b !important;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+}
+
+body.dark-mode .spell-login-submit:hover {
+    background: #ffffff !important;
+    box-shadow: 0 6px 20px rgba(255, 255, 255, 0.15);
+    transform: translateY(-1px);
+}
+
+/* Error message */
+.spell-login-error {
+    margin-top: 14px;
+    font-size: 12.5px;
+    padding: 10px 14px;
+    border-radius: 8px;
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.25);
+    color: #ef4444;
+    text-align: center;
+    line-height: 1.4;
+}
+
