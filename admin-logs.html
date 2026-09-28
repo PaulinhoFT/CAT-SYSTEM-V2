@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Log de Atividades - Internet</title>
+    <title>Log de Atividades - CAT | Internet</title>
     
     <!-- Google Fonts - Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,20 +15,47 @@
     
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/spell-ui.css">
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='45' fill='%2310b981'/><text x='50' y='68' text-anchor='middle' font-size='50' fill='white' font-family='Arial' font-weight='bold'>i</text></svg>">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='45' fill='%2327272a'/><text x='50' y='68' text-anchor='middle' font-size='50' fill='white' font-family='Arial' font-weight='bold'>i</text></svg>">
 </head>
 <body class="admin-panel">
+    <!-- Spell UI Bars Spinner Loader -->
+    <div id="spell-loader" class="spell-loader-overlay">
+        <div class="spell-bars-spinner-wrapper">
+            <div class="spell-spinner">
+                <div class="spell-bar"></div>
+                <div class="spell-bar"></div>
+                <div class="spell-bar"></div>
+                <div class="spell-bar"></div>
+                <div class="spell-bar"></div>
+                <div class="spell-bar"></div>
+                <div class="spell-bar"></div>
+                <div class="spell-bar"></div>
+                <div class="spell-bar"></div>
+                <div class="spell-bar"></div>
+                <div class="spell-bar"></div>
+                <div class="spell-bar"></div>
+            </div>
+        </div>
+        <p class="spell-loader-text">Carregando histórico de atividades...</p>
+    </div>
+
+    <!-- Spell Light Rays Background -->
+    <canvas id="spell-light-rays" class="spell-canvas-bg"></canvas>
+
     <div class="dashboard-container">
         <!-- Sidebar -->
         <aside class="admin-sidebar" id="sidebar">
             <div class="sidebar-brand">
-                <i class="fa-solid fa-globe"></i>
+                <i class="fa-solid fa-layer-group"></i>
                 <span>Painel Internet</span>
             </div>
             
             <div class="sidebar-profile">
+                <div class="profile-avatar-spell">
+                    <i class="fa-solid fa-user-shield"></i>
+                </div>
                 <div class="profile-info">
-                    <span>Bem-vindo,</span>
+                    <span>Administrador</span>
                     <h4 id="sidebar-user-name">Carregando...</h4>
                 </div>
             </div>
@@ -37,29 +64,41 @@
                 <div class="menu-section">
                     <h5>Geral</h5>
                     <ul>
-                        <li><a href="admin.html"><i class="fa fa-home"></i> Dashboard</a></li>
-                        <li><a href="index.html"><i class="fa fa-desktop"></i> Ver Site</a></li>
+                        <li><a href="admin.html" class="spell-pop-btn"><i class="fa-solid fa-chart-pie"></i> <span>Dashboard</span></a></li>
                     </ul>
                 </div>
                 
                 <div class="menu-section">
                     <h5>Conteúdo</h5>
                     <ul>
-                        <li><a href="add-procedure.html"><i class="fa fa-plus-circle"></i> Novo Procedimento</a></li>
-                        <li><a href="admin-procedures.html"><i class="fa fa-list"></i> Lista de Procedimentos</a></li>
-                        <li><a href="admin-logs.html" class="active"><i class="fa fa-history"></i> Log de Atividades</a></li>
+                        <li><a href="add-procedure.html" class="spell-pop-btn"><i class="fa-solid fa-plus-circle"></i> <span>Novo Procedimento</span></a></li>
+                        <li><a href="admin-procedures.html" class="spell-pop-btn"><i class="fa-solid fa-list-check"></i> <span>Procedimentos</span></a></li>
+                        <li><a href="admin-logs.html" class="active spell-pop-btn"><i class="fa-solid fa-clock-rotate-left"></i> <span>Log de Atividades</span></a></li>
                     </ul>
                 </div>
 
                 <div class="menu-section">
-                    <h5>Configurações</h5>
+                    <h5>Ferramentas</h5>
                     <ul>
-                        <li><a href="admin-settings.html"><i class="fa fa-cog"></i> Configurações</a></li>
-                        <li><a href="#" class="theme-toggle-trigger"><i class="fa fa-moon"></i> Alternar Tema</a></li>
-                        <li><a href="#" id="sidebar-logout-btn"><i class="fa fa-sign-out-alt"></i> Sair</a></li>
+                        <li><a href="att.html" class="spell-pop-btn"><i class="fa-solid fa-pen-to-square"></i> <span>Abertura ATT</span></a></li>
+                        <li><a href="pre-registros.html" class="spell-pop-btn"><i class="fa-solid fa-clipboard-check"></i> <span>Pré-Registros</span></a></li>
+                        <li><a href="formatador.html" class="spell-pop-btn"><i class="fa-solid fa-wand-magic-sparkles"></i> <span>Formatador</span></a></li>
+                        <li><a href="calculadora.html" class="spell-pop-btn"><i class="fa-solid fa-calculator"></i> <span>Calculadora</span></a></li>
+                    </ul>
+                </div>
+
+                <div class="menu-section">
+                    <h5>Sistema</h5>
+                    <ul>
+                        <li><a href="admin-settings.html" class="spell-pop-btn"><i class="fa-solid fa-gear"></i> <span>Configurações</span></a></li>
+                        <li><a href="#" id="sidebar-logout-btn" class="spell-pop-btn" style="color: #ef4444;"><i class="fa-solid fa-right-from-bracket" style="color: #ef4444;"></i> <span>Sair</span></a></li>
                     </ul>
                 </div>
             </nav>
+            
+            <div class="sidebar-footer" style="display: none;">
+                <a href="#" id="footer-logout-btn"><i class="fa fa-power-off"></i></a>
+            </div>
         </aside>
         
         <!-- Main Content -->
@@ -67,39 +106,55 @@
             <!-- Top Nav -->
             <header class="top-nav">
                 <div class="nav-left">
-                    <button class="toggle-menu-btn" id="toggle-sidebar">
-                        <i class="fa fa-bars"></i>
+                    <button class="toggle-menu-btn spell-pop-btn" id="toggle-sidebar" title="Alternar menu lateral" aria-label="Menu lateral">
+                        <i class="fa-solid fa-bars"></i>
                     </button>
                     <div class="admin-search-wrapper">
+                        <i class="fa-solid fa-search admin-search-icon-spell"></i>
                         <input type="text" id="admin-search-input" placeholder="Pesquisar atividades...">
+                        <kbd class="spell-kbd" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%);">/</kbd>
                     </div>
                 </div>
-                <div class="nav-right"></div>
+                
+                <div class="nav-right">
+                    <!-- Botões removidos conforme solicitado -->
+                </div>
             </header>
             
             <!-- Content Body -->
             <div class="content-body">
-                <div class="page-title" style="margin-bottom: 30px;">
-                    <h2 style="color: #6a8a7a; font-weight: 700;">Log de Atividades Completo</h2>
+                <!-- Page Title -->
+                <div style="margin-bottom: 24px;">
+                    <h1 class="hero-title spell-blur-reveal" style="font-size: 1.85rem; margin-bottom: 6px;">
+                        Log de <span class="hero-highlight">Atividades</span>
+                    </h1>
+                    <p class="hero-subtitle spell-blur-reveal" style="font-size: 13.5px; margin-bottom: 0;">
+                        Histórico cronológico detalhado de criação, edição e exclusão de procedimentos na plataforma.
+                    </p>
                 </div>
 
-                <div class="dashboard-grid">
-                    <div class="dashboard-card card-lg">
+                <!-- Dashboard Grid -->
+                <div class="dashboard-grid" style="grid-template-columns: 1fr;">
+                    <!-- Logs Table Card -->
+                    <div class="dashboard-card card-lg spell-card spell-blur-reveal" id="logs-card" data-blur-delay="0.1">
                         <div class="card-header">
-                            <h3>Histórico de Ações</h3>
+                            <h3>
+                                <i class="fa-solid fa-clock-rotate-left" style="color: #10b981;"></i>
+                                <span>Histórico Completo de Ações</span>
+                            </h3>
                             <div class="card-tools">
                                 <i class="fa fa-chevron-up" title="Minimizar/Maximizar"></i>
                             </div>
                         </div>
-                        <div class="card-body">
+                        <div class="card-body" style="padding: 0;">
                             <div class="table-wrapper" style="border: none;">
                                 <table class="admin-table-custom">
                                     <thead>
                                         <tr>
-                                            <th>Ação</th>
+                                            <th style="width: 140px;">Ação</th>
                                             <th>Título</th>
-                                            <th>Categoria</th>
-                                            <th>Data/Hora</th>
+                                            <th style="width: 180px;">Categoria</th>
+                                            <th style="width: 190px;">Data / Hora</th>
                                         </tr>
                                     </thead>
                                     <tbody id="full-logs-body">
@@ -110,6 +165,7 @@
                         </div>
                     </div>
                 </div>
+
             </div>
         </main>
     </div>
@@ -119,15 +175,18 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
 
+    <!-- Scripts -->
     <script src="js/firebase-config.js"></script>
     <script src="js/common.js"></script>
     <script src="js/admin.js"></script>
+    <script src="js/spell-components.js"></script>
 
     <script>
         // Sidebar Toggle Logic
         document.getElementById('toggle-sidebar').addEventListener('click', function() {
             const sidebar = document.getElementById('sidebar');
             const currentMargin = window.getComputedStyle(sidebar).marginLeft;
+            
             if (currentMargin === '0px') {
                 sidebar.style.marginLeft = '-260px';
             } else {
@@ -136,12 +195,18 @@
         });
 
         // Logout logic
-        document.getElementById('sidebar-logout-btn').addEventListener('click', function(e) {
+        const logoutHandler = function(e) {
             e.preventDefault();
             firebase.auth().signOut().then(() => {
                 window.location.href = 'index.html';
             });
-        });
+        };
+        
+        const sidebarLogout = document.getElementById('sidebar-logout-btn');
+        if (sidebarLogout) sidebarLogout.addEventListener('click', logoutHandler);
+        
+        const footerLogout = document.getElementById('footer-logout-btn');
+        if (footerLogout) footerLogout.addEventListener('click', logoutHandler);
     </script>
 </body>
 </html>

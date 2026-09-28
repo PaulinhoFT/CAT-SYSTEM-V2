@@ -1,47 +1,172 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formatador de Registro - Internet</title>
+    <title>Formatador de Registro - CAT | Internet</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/spell-ui.css">
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='45' fill='%2310b981'/><text x='50' y='68' text-anchor='middle' font-size='50' fill='white' font-family='Arial' font-weight='bold'>i</text></svg>">
 </head>
 <body>
-    <div class="navbar"></div>
-
-    <div class="main">
-        <div class="corpodireito">
-            <div class="titulo">
-                <div class="voltar"><a href="index.html"> Voltar </a></div>
-                <h1>Formatador de Registro</h1>
+    <!-- Spell UI Bars Spinner Loader -->
+    <div id="spell-loader" class="spell-loader-overlay">
+        <div class="spell-bars-spinner-wrapper">
+            <div class="spell-spinner">
+                <div class="spell-bar"></div>
+                <div class="spell-bar"></div>
+                <div class="spell-bar"></div>
+                <div class="spell-bar"></div>
+                <div class="spell-bar"></div>
+                <div class="spell-bar"></div>
+                <div class="spell-bar"></div>
+                <div class="spell-bar"></div>
+                <div class="spell-bar"></div>
+                <div class="spell-bar"></div>
+                <div class="spell-bar"></div>
+                <div class="spell-bar"></div>
             </div>
+        </div>
+        <p class="spell-loader-text">Carregando formatador...</p>
+    </div>
 
-            <div class="formatter-container">
-                <div>
-                    <h3>Colaborador:</h3>
-                    <select id="collaborator-select" style="width: 100%; padding: 10px; margin-bottom: 20px; border-radius: var(--border-radius); border: 1px solid var(--search-border); background-color: var(--bg-primary); color: var(--text-primary); font-size: 16px;">
+    <!-- Spell Light Rays Background -->
+    <canvas id="spell-light-rays" class="spell-canvas-bg"></canvas>
+
+    <div class="corpodireito">
+        <!-- Subpage Navigation Bar -->
+        <header class="spell-subpage-nav spell-blur-reveal" data-blur-delay="0.02">
+            <div class="spell-nav-left">
+                <a href="index.html" class="spell-nav-btn spell-pop-btn">
+                    <i class="fa-solid fa-arrow-left"></i>
+                    <span>Voltar ao Início</span>
+                </a>
+            </div>
+            <div class="spell-nav-right">
+                <div class="spell-nav-tools-group">
+                    <a href="att.html" class="spell-nav-btn spell-pop-btn" title="Abertura de ATT">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                        <span>Abertura ATT</span>
+                    </a>
+                    <a href="pre-registros.html" class="spell-nav-btn spell-pop-btn" title="Pré-Registros">
+                        <i class="fa-solid fa-list-check"></i>
+                        <span>Pré-Registros</span>
+                    </a>
+                    <a href="calculadora.html" class="spell-nav-btn spell-pop-btn" title="Calculadora">
+                        <i class="fa-solid fa-calculator"></i>
+                        <span>Calculadora</span>
+                    </a>
+                </div>
+                <button id="theme-toggle" class="spell-nav-btn spell-pop-btn" title="Alternar tema">
+                    <i class="fa-solid fa-moon"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- Hero Section -->
+        <div class="hero-section spell-blur-reveal" data-blur-delay="0.08">
+            <h1 class="hero-title spell-blur-reveal" data-blur-delay="0.16">
+                Formatador de <span class="hero-highlight">Registro</span>
+            </h1>
+            <p class="hero-subtitle spell-blur-reveal" data-blur-delay="0.22">
+                Insira o relato do atendimento e gere automaticamente o carimbo de data, horário, colaborador responsável e linha divisória oficial.
+            </p>
+        </div>
+
+        <!-- Workbench Grid -->
+        <div class="spell-grid-2">
+            <!-- Left Card: Input & Config -->
+            <div class="spell-card spell-tilt-card spell-blur-reveal" data-blur-delay="0.26">
+                <div class="spell-card-header">
+                    <div class="spell-card-header-left">
+                        <div class="spell-card-icon" style="color: #3b82f6;">
+                            <i class="fa-solid fa-pen-nib"></i>
+                        </div>
+                        <div>
+                            <h3 class="spell-card-title">Dados do Atendimento</h3>
+                            <div class="spell-card-subtitle">Identificação e relato do cliente</div>
+                        </div>
+                    </div>
+                    <div class="spell-card-actions">
+                        <span class="spell-badge" id="live-clock-badge" style="font-family: ui-monospace, monospace; font-size: 11px;">
+                            <i class="fa-regular fa-clock"></i> <span id="live-time">--:--</span>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="spell-form-group">
+                    <label for="collaborator-select" class="spell-form-label">
+                        <i class="fa-regular fa-user" style="margin-right: 4px; color: var(--text-muted);"></i> Colaborador:
+                    </label>
+                    <select id="collaborator-select" class="spell-select">
                         <option value="PAULO FELIX">PAULO FELIX</option>
                         <option value="MATHEUS AUGUSTO">MATHEUS AUGUSTO</option>
                         <option value="DANILLO">DANILLO</option>
                         <option value="MATHEUS REIS">MATHEUS REIS</option>
                         <option value="LEOTSON">LEOTSON</option>
                     </select>
-
-                    <h3>Texto para formatar:</h3>
-                    <textarea id="input-text" rows="8" placeholder="Digite ou cole o texto aqui..."></textarea>
                 </div>
 
-                <div class="formatter-actions">
-                    <button class="btn-format" onclick="formatText()">Formatar</button>
-                    <button class="btn-copy" onclick="copyText()">Copiar Formatado</button>
+                <div class="spell-form-group">
+                    <label for="input-text" class="spell-form-label">
+                        <i class="fa-regular fa-message" style="margin-right: 4px; color: var(--text-muted);"></i> Texto para Formatar:
+                    </label>
+                    <textarea id="input-text" class="spell-textarea" rows="9" placeholder="Digite ou cole as informações e procedimentos do atendimento aqui..." spellcheck="false"></textarea>
                 </div>
 
-                <div id="copy-status" class="copy-success">Copiado com sucesso!</div>
+                <div style="display: flex; gap: 10px; margin-top: 14px;">
+                    <button class="spell-btn spell-btn-primary spell-pop-btn" style="flex: 2;" onclick="formatText()">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                        <span>Formatar Registro</span>
+                    </button>
+                    <button class="spell-btn spell-btn-secondary spell-pop-btn" style="flex: 1;" onclick="clearInput()" title="Limpar campo de entrada">
+                        <i class="fa-solid fa-rotate-left"></i>
+                        <span>Limpar</span>
+                    </button>
+                </div>
+            </div>
 
-                <div>
-                    <h3>Resultado:</h3>
-                    <textarea id="output-text" rows="10" readonly placeholder="O texto formatado aparecerá aqui..."></textarea>
+            <!-- Right Card: Formatted Output -->
+            <div class="spell-card spell-tilt-card spell-blur-reveal" data-blur-delay="0.32">
+                <div class="spell-card-header">
+                    <div class="spell-card-header-left">
+                        <div class="spell-card-icon" style="color: #10b981;">
+                            <i class="fa-solid fa-file-circle-check"></i>
+                        </div>
+                        <div>
+                            <h3 class="spell-card-title">Resultado Formatado</h3>
+                            <div class="spell-card-subtitle">Pronto para ser colado no sistema</div>
+                        </div>
+                    </div>
+                    <div class="spell-card-actions">
+                        <span class="spell-badge spell-badge-blue">PADRÃO CAT</span>
+                    </div>
+                </div>
+
+                <div class="spell-form-group">
+                    <label for="output-text" class="spell-form-label">
+                        <i class="fa-regular fa-clipboard" style="margin-right: 4px; color: var(--text-muted);"></i> Visualização do Registro:
+                    </label>
+                    <textarea id="output-text" class="spell-textarea" rows="12" readonly placeholder="O texto formatado aparecerá aqui..." spellcheck="false"></textarea>
+                </div>
+
+                <div id="copy-status" class="copy-success" style="margin-bottom: 12px; display: none;">Copiado com sucesso!</div>
+
+                <div style="display: flex; gap: 10px;">
+                    <button id="btn-copy-format" class="spell-btn spell-btn-primary spell-pop-btn" style="flex: 2;" onclick="copyText()">
+                        <i class="fa-regular fa-copy"></i>
+                        <span>Copiar Formatado</span>
+                    </button>
+                    <button class="spell-btn spell-btn-secondary spell-pop-btn" style="flex: 1;" onclick="clearOutput()">
+                        <i class="fa-solid fa-eraser"></i>
+                        <span>Limpar</span>
+                    </button>
                 </div>
             </div>
         </div>
@@ -53,11 +178,28 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
     <script src="js/firebase-config.js"></script>
     <script src="js/common.js"></script>
+    <script src="js/spell-components.js"></script>
 
     <script>
+        // Relógio em tempo real no cabeçalho do card
+        function updateLiveClock() {
+            const now = new Date();
+            const hora = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0');
+            const data = now.getDate().toString().padStart(2, '0') + '/' + (now.getMonth() + 1).toString().padStart(2, '0');
+            const el = document.getElementById('live-time');
+            if (el) el.textContent = `${hora} • ${data}`;
+        }
+        setInterval(updateLiveClock, 1000);
+        updateLiveClock();
+
         function formatText() {
             const input = document.getElementById('input-text').value;
-            if (!input.trim()) return;
+            if (!input.trim()) {
+                if (typeof window.showSpellToast === 'function') {
+                    window.showSpellToast('Digite algo para formatar!', 'fa-triangle-exclamation');
+                }
+                return;
+            }
 
             const now = new Date();
             const hora = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0');
@@ -68,19 +210,46 @@
             const formatted = `${hora} - ${data} - ${nome}\n${input}\n${separator}`;
 
             document.getElementById('output-text').value = formatted;
+
+            if (typeof window.showSpellToast === 'function') {
+                window.showSpellToast('Registro formatado com sucesso!', 'fa-wand-magic-sparkles');
+            }
         }
 
         function copyText() {
             const output = document.getElementById('output-text');
-            if (!output.value) return;
+            if (!output.value) {
+                if (typeof window.showSpellToast === 'function') {
+                    window.showSpellToast('Nenhum texto para copiar!', 'fa-circle-exclamation');
+                }
+                return;
+            }
 
             output.select();
-            output.setSelectionRange(0, 99999); // Para dispositivos móveis
+            output.setSelectionRange(0, 99999);
+
+            const copyBtn = document.getElementById('btn-copy-format');
+
+            const onSuccess = () => {
+                showCopyStatus();
+                if (typeof window.showSpellToast === 'function') {
+                    window.showSpellToast('Texto formatado copiado!', 'fa-check');
+                }
+                if (copyBtn) {
+                    const originalHTML = copyBtn.innerHTML;
+                    copyBtn.innerHTML = '<i class="fa-solid fa-check"></i> <span>Copiado!</span>';
+                    copyBtn.style.background = '#10b981';
+                    copyBtn.style.color = '#ffffff';
+                    setTimeout(() => {
+                        copyBtn.innerHTML = originalHTML;
+                        copyBtn.style.background = '';
+                        copyBtn.style.color = '';
+                    }, 2000);
+                }
+            };
 
             if (navigator.clipboard && navigator.clipboard.writeText) {
-                navigator.clipboard.writeText(output.value).then(() => {
-                    showCopyStatus();
-                }).catch(err => {
+                navigator.clipboard.writeText(output.value).then(onSuccess).catch(err => {
                     console.error('Erro ao copiar: ', err);
                     fallbackCopyText(output.value);
                 });
@@ -97,6 +266,9 @@
             try {
                 document.execCommand('copy');
                 showCopyStatus();
+                if (typeof window.showSpellToast === 'function') {
+                    window.showSpellToast('Texto formatado copiado!', 'fa-check');
+                }
             } catch (err) {
                 console.error('Erro ao copiar (fallback): ', err);
             }
@@ -105,11 +277,30 @@
 
         function showCopyStatus() {
             const status = document.getElementById('copy-status');
-            status.style.display = 'block';
-            setTimeout(() => {
-                status.style.display = 'none';
-            }, 2000);
+            if (status) {
+                status.style.display = 'block';
+                setTimeout(() => {
+                    status.style.display = 'none';
+                }, 2000);
+            }
         }
+
+        function clearInput() {
+            document.getElementById('input-text').value = '';
+            document.getElementById('input-text').focus();
+        }
+
+        function clearOutput() {
+            document.getElementById('output-text').value = '';
+        }
+
+        // Atalho Ctrl+Enter para formatar rapidamente
+        document.getElementById('input-text').addEventListener('keydown', (e) => {
+            if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+                e.preventDefault();
+                formatText();
+            }
+        });
     </script>
 </body>
 </html>

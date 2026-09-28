@@ -1,164 +1,225 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <title>Calculadora de Desconto</title>
-  <link rel="stylesheet" href="css/style.css">
-  <style>
-    .calc-flex-container {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      flex-wrap: wrap;
-      padding: 20px;
-      margin-top: 80px;
-    }
-    .calc-container {
-      background-color: var(--procedure-bg);
-      padding: 30px;
-      border-radius: 12px;
-      max-width: 450px;
-      width: 100%;
-      box-shadow: var(--procedure-shadow);
-      color: var(--text-primary);
-    }
-    .calc-container h2 {
-      margin-bottom: 20px;
-      text-align: center;
-    }
-    .calc-container input {
-      width: 100%;
-      padding: 12px;
-      margin: 10px 0 20px 0;
-      border-radius: 8px;
-      border: 1px solid var(--search-border);
-      background-color: var(--bg-primary);
-      color: var(--text-primary);
-      font-size: 16px;
-    }
-    .calc-container button {
-      width: 100%;
-      padding: 12px;
-      margin: 10px 0;
-      border-radius: 8px;
-      border: none;
-      background-color: var(--primary-color);
-      color: white;
-      cursor: pointer;
-      font-size: 16px;
-      font-weight: 600;
-      transition: background-color 0.3s;
-    }
-    .calc-container button:hover {
-      background-color: var(--primary-hover);
-    }
-    .resultado {
-      margin-top: 20px;
-      font-size: 18px;
-      font-weight: bold;
-      text-align: center;
-      padding: 15px;
-      background-color: var(--search-bg);
-      border-radius: 8px;
-    }
-
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Desconto & Tempo - CAT | Internet</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/spell-ui.css">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='45' fill='%2327272a'/><text x='50' y='68' text-anchor='middle' font-size='50' fill='white' font-family='Arial' font-weight='bold'>i</text></svg>">
 </head>
 <body>
-    <div class="navbar"></div>
-  
-  <div class="calc-flex-container">
-
-    <!-- Calculadora de Desconto -->
-    <div class="calc-container">
-      <h2><span class="red">Calculadora de Desconto</span></h2>
-
-      <label for="mensalidade">Valor da mensalidade (R$):</label>
-      <input type="number" id="mensalidade" step="0.01" required>
-
-      <label for="diasMes">Número de dias do mês:</label>
-      <input type="number" id="diasMes" required>
-
-      <label>Tempo sem conexão:</label>
-      <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px;">
-        <input type="number" id="horas" placeholder="Horas" min="0">
-        <input type="number" id="minutos" placeholder="Minutos" min="0" max="59">
-        <input type="number" id="segundos" placeholder="Segundos" min="0" max="59">
-      </div>
-
-      <button onclick="calcularDesconto()">Calcular Desconto</button>
-
-      <div class="resultado" id="resultadoDesconto"></div>
+    <!-- Spell UI Bars Spinner Loader -->
+    <div id="spell-loader" class="spell-loader-overlay">
+        <div class="spell-bars-spinner-wrapper">
+            <div class="spell-spinner">
+                <div class="spell-bar"></div>
+                <div class="spell-bar"></div>
+                <div class="spell-bar"></div>
+                <div class="spell-bar"></div>
+                <div class="spell-bar"></div>
+                <div class="spell-bar"></div>
+                <div class="spell-bar"></div>
+                <div class="spell-bar"></div>
+                <div class="spell-bar"></div>
+                <div class="spell-bar"></div>
+                <div class="spell-bar"></div>
+                <div class="spell-bar"></div>
+            </div>
+        </div>
+        <p class="spell-loader-text">Carregando calculadoras...</p>
     </div>
 
-    <!-- Calculadora de Tempo -->
-    <div class="calc-container">
-      <h2><span class="red">Calculadora de Tempo</span></h2>
-      <label>Data de quando caiu:</label>
-      <input type="date" id="data1">
+    <!-- Spell Light Rays Background -->
+    <canvas id="spell-light-rays" class="spell-canvas-bg"></canvas>
 
-      <label>Hora que caiu (hh:mm:ss)</label>
-      <input type="time" id="hora1" step="1">
+    <div class="corpodireito">
+        <!-- Subpage Navigation Bar -->
+        <header class="spell-subpage-nav spell-blur-reveal" data-blur-delay="0.02">
+            <div class="spell-nav-left">
+                <a href="index.html" class="spell-nav-btn spell-pop-btn">
+                    <i class="fa-solid fa-arrow-left"></i>
+                    <span>Voltar ao Início</span>
+                </a>
+            </div>
+            <div class="spell-nav-right">
+                <div class="spell-nav-tools-group">
+                    <a href="att.html" class="spell-nav-btn spell-pop-btn" title="Abertura de ATT">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                        <span>Abertura ATT</span>
+                    </a>
+                    <a href="pre-registros.html" class="spell-nav-btn spell-pop-btn" title="Pré-Registros">
+                        <i class="fa-solid fa-list-check"></i>
+                        <span>Pré-Registros</span>
+                    </a>
+                    <a href="formatador.html" class="spell-nav-btn spell-pop-btn" title="Formatador">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                        <span>Formatador</span>
+                    </a>
+                </div>
+                <button id="theme-toggle" class="spell-nav-btn spell-pop-btn" title="Alternar tema">
+                    <i class="fa-solid fa-moon"></i>
+                </button>
+            </div>
+        </header>
 
-      <label>Data de quando volto:</label>
-      <input type="date" id="data2">
+        <!-- Hero Section -->
+        <div class="hero-section spell-blur-reveal" data-blur-delay="0.08">
+            <h1 class="hero-title spell-blur-reveal" data-blur-delay="0.16">
+                Calculadora de <span class="hero-highlight">Desconto & Tempo</span>
+            </h1>
+            <p class="hero-subtitle spell-blur-reveal" data-blur-delay="0.22">
+                Descubra a duração exata da interrupção do link e obtenha o cálculo instantâneo do valor proporcional a ser abatido na mensalidade do assinante.
+            </p>
+        </div>
 
-      <label>Hora que volto (hh:mm:ss)</label>
-      <input type="time" id="hora2" step="1">
+        <!-- Calculators Grid -->
+        <div class="spell-grid-2">
+            <!-- 1. Calculadora de Desconto -->
+            <div class="spell-card spell-tilt-card spell-blur-reveal" data-blur-delay="0.26">
+                <div class="spell-card-header">
+                    <div class="spell-card-header-left">
+                        <div class="spell-card-icon" style="color: #f59e0b;">
+                            <i class="fa-solid fa-coins"></i>
+                        </div>
+                        <div>
+                            <h3 class="spell-card-title">Calculadora de Desconto</h3>
+                            <div class="spell-card-subtitle">Abatimento financeiro proporcional</div>
+                        </div>
+                    </div>
+                    <div class="spell-card-actions">
+                        <span class="spell-badge spell-badge-amber">FINANCEIRO</span>
+                    </div>
+                </div>
 
-      <button onclick="calcularTempo()">Subtrair</button>
+                <div class="spell-form-group">
+                    <label for="mensalidade" class="spell-form-label">Valor da mensalidade (R$):</label>
+                    <div class="spell-input-group has-addon">
+                        <span class="spell-input-addon">R$</span>
+                        <input type="number" id="mensalidade" step="0.01" placeholder="Ex: 99.90" required>
+                    </div>
+                </div>
 
-      <div class="resultado" id="resultadoTempo"></div>
+                <div class="spell-form-group">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                        <label for="diasMes" class="spell-form-label" style="margin-bottom: 0;">Dias no mês corrente:</label>
+                        <div style="display: flex; gap: 4px;">
+                            <button type="button" class="spell-pill-btn spell-pop-btn" style="padding: 2px 8px; font-size: 11px;" onclick="setDias(28)">28d</button>
+                            <button type="button" class="spell-pill-btn spell-pop-btn" style="padding: 2px 8px; font-size: 11px;" onclick="setDias(30)">30d</button>
+                            <button type="button" class="spell-pill-btn spell-pop-btn" style="padding: 2px 8px; font-size: 11px;" onclick="setDias(31)">31d</button>
+                        </div>
+                    </div>
+                    <div class="spell-input-group">
+                        <input type="number" id="diasMes" placeholder="Ex: 30" required>
+                    </div>
+                </div>
+
+                <div class="spell-form-group">
+                    <label class="spell-form-label">Tempo sem conexão:</label>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px;">
+                        <div class="spell-input-group">
+                            <input type="number" id="horas" placeholder="Horas" min="0">
+                        </div>
+                        <div class="spell-input-group">
+                            <input type="number" id="minutos" placeholder="Minutos" min="0" max="59">
+                        </div>
+                        <div class="spell-input-group">
+                            <input type="number" id="segundos" placeholder="Segundos" min="0" max="59">
+                        </div>
+                    </div>
+                </div>
+
+                <button class="spell-btn spell-btn-primary spell-pop-btn" style="width: 100%; margin-top: 14px;" onclick="calcularDesconto()">
+                    <i class="fa-solid fa-calculator"></i>
+                    <span>Calcular Desconto</span>
+                </button>
+
+                <!-- Box de Resultado -->
+                <div class="spell-result-box" id="resultadoDescontoBox" style="display: none;">
+                    <div class="spell-result-label">Valor do Abatimento</div>
+                    <div class="resultado spell-result-value" id="resultadoDesconto"></div>
+                    <div style="margin-top: 10px;">
+                        <button class="spell-btn spell-btn-sm spell-btn-secondary spell-pop-btn" id="btn-copy-desc" onclick="copyDesconto()">
+                            <i class="fa-regular fa-copy"></i>
+                            <span>Copiar Valor</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. Calculadora de Tempo -->
+            <div class="spell-card spell-tilt-card spell-blur-reveal" data-blur-delay="0.32">
+                <div class="spell-card-header">
+                    <div class="spell-card-header-left">
+                        <div class="spell-card-icon" style="color: #3b82f6;">
+                            <i class="fa-solid fa-stopwatch"></i>
+                        </div>
+                        <div>
+                            <h3 class="spell-card-title">Calculadora de Tempo</h3>
+                            <div class="spell-card-subtitle">Subtração e duração da indisponibilidade</div>
+                        </div>
+                    </div>
+                    <div class="spell-card-actions">
+                        <span class="spell-badge spell-badge-blue">DURAÇÃO</span>
+                    </div>
+                </div>
+
+                <div class="spell-form-group">
+                    <label class="spell-form-label">
+                        <i class="fa-solid fa-circle-down" style="color: #ef4444; font-size: 11px; margin-right: 4px;"></i> Data e hora de quando caiu:
+                    </label>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+                        <div class="spell-input-group">
+                            <input type="date" id="data1">
+                        </div>
+                        <div class="spell-input-group">
+                            <input type="time" id="hora1" step="1">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="spell-form-group">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                        <label class="spell-form-label" style="margin-bottom: 0;">
+                            <i class="fa-solid fa-circle-up" style="color: #10b981; font-size: 11px; margin-right: 4px;"></i> Data e hora de quando voltou:
+                        </label>
+                        <button type="button" class="spell-pill-btn spell-pop-btn" style="padding: 2px 8px; font-size: 11px;" onclick="preencherAgora()">Agora</button>
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+                        <div class="spell-input-group">
+                            <input type="date" id="data2">
+                        </div>
+                        <div class="spell-input-group">
+                            <input type="time" id="hora2" step="1">
+                        </div>
+                    </div>
+                </div>
+
+                <button class="spell-btn spell-btn-primary spell-pop-btn" style="width: 100%; margin-top: 24px;" onclick="calcularTempo()">
+                    <i class="fa-solid fa-clock-rotate-left"></i>
+                    <span>Subtrair Horários</span>
+                </button>
+
+                <!-- Box de Resultado do Tempo -->
+                <div class="spell-result-box" id="resultadoTempoBox" style="display: none;">
+                    <div class="spell-result-label">Tempo Total de Interrupção</div>
+                    <div class="resultado spell-result-value" id="resultadoTempo"></div>
+                    <div style="margin-top: 10px; display: flex; gap: 8px; justify-content: center;">
+                        <button class="spell-btn spell-btn-sm spell-btn-primary spell-pop-btn" id="btn-use-tempo" onclick="transferirParaDesconto()">
+                            <i class="fa-solid fa-arrow-left"></i>
+                            <span>Usar na Calc. de Desconto</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-
-  </div>
-
-  <script>
-    function calcularDesconto() {
-      const mensalidade = parseFloat(document.getElementById("mensalidade").value);
-      const diasMes = parseInt(document.getElementById("diasMes").value);
-      const horas = parseInt(document.getElementById("horas").value) || 0;
-      const minutos = parseInt(document.getElementById("minutos").value) || 0;
-      const segundos = parseInt(document.getElementById("segundos").value) || 0;
-
-      if (isNaN(mensalidade) || isNaN(diasMes) || diasMes <= 0 || mensalidade < 0 ||
-          horas < 0 || minutos < 0 || segundos < 0 || minutos >= 60 || segundos >= 60) {
-        document.getElementById("resultadoDesconto").innerText = "Por favor, preencha todos os campos corretamente.";
-        return;
-      }
-
-      const valorPorHora = mensalidade / diasMes / 24;
-      const totalHoras = horas + (minutos / 60) + (segundos / 3600);
-      const desconto = valorPorHora * totalHoras;
-
-      document.getElementById("resultadoDesconto").innerText = `Desconto: R$ ${desconto.toFixed(2)}`;
-    }
-
-    function calcularTempo() {
-      const data1Str = document.getElementById('data1').value;
-      const hora1Str = document.getElementById('hora1').value;
-      const data2Str = document.getElementById('data2').value;
-      const hora2Str = document.getElementById('hora2').value;
-
-      if (!data1Str || !hora1Str || !data2Str || !hora2Str) {
-        alert("Preencha todas as datas e horários.");
-        return;
-      }
-
-      const data1 = new Date(`${data1Str}T${hora1Str}`);
-      const data2 = new Date(`${data2Str}T${hora2Str}`);
-
-      const diffMs = Math.abs(data2.getTime() - data1.getTime());
-      const totalSegundos = Math.floor(diffMs / 1000);
-
-      const horas = Math.floor(totalSegundos / 3600);
-      const minutos = Math.floor((totalSegundos % 3600) / 60);
-      const segundos = totalSegundos % 60;
-
-      document.getElementById("resultadoTempo").innerText =
-        `Resultado: ${horas}h ${minutos}min ${segundos}s`;
-    }
-  </script>
 
     <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
@@ -166,5 +227,158 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
     <script src="js/firebase-config.js"></script>
     <script src="js/common.js"></script>
+    <script src="js/spell-components.js"></script>
+
+    <script>
+        let ultimoCalculoTempo = null;
+
+        function setDias(dias) {
+            document.getElementById('diasMes').value = dias;
+        }
+
+        function preencherAgora() {
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+
+            document.getElementById('data2').value = `${year}-${month}-${day}`;
+            document.getElementById('hora2').value = `${hours}:${minutes}:${seconds}`;
+
+            if (typeof window.showSpellToast === 'function') {
+                window.showSpellToast('Data e hora atuais preenchidas!', 'fa-clock');
+            }
+        }
+
+        function calcularDesconto() {
+            const mensalidade = parseFloat(document.getElementById("mensalidade").value);
+            const diasMes = parseInt(document.getElementById("diasMes").value);
+            const horas = parseInt(document.getElementById("horas").value) || 0;
+            const minutos = parseInt(document.getElementById("minutos").value) || 0;
+            const segundos = parseInt(document.getElementById("segundos").value) || 0;
+
+            const resBox = document.getElementById("resultadoDescontoBox");
+            const resEl = document.getElementById("resultadoDesconto");
+
+            if (isNaN(mensalidade) || isNaN(diasMes) || diasMes <= 0 || mensalidade < 0 ||
+                horas < 0 || minutos < 0 || segundos < 0 || minutos >= 60 || segundos >= 60) {
+                resBox.style.display = "block";
+                resEl.innerText = "Por favor, preencha todos os campos corretamente.";
+                resEl.style.fontSize = "14px";
+                resEl.style.color = "#ef4444";
+                if (typeof window.showSpellToast === 'function') {
+                    window.showSpellToast('Preencha os campos corretamente!', 'fa-triangle-exclamation');
+                }
+                return;
+            }
+
+            const valorPorHora = mensalidade / diasMes / 24;
+            const totalHoras = horas + (minutos / 60) + (segundos / 3600);
+            const desconto = valorPorHora * totalHoras;
+
+            resBox.style.display = "block";
+            resEl.style.fontSize = "";
+            resEl.style.color = "";
+            resEl.innerText = `Desconto: R$ ${desconto.toFixed(2)}`;
+
+            if (typeof window.showSpellToast === 'function') {
+                window.showSpellToast(`Desconto calculado: R$ ${desconto.toFixed(2)}`, 'fa-coins');
+            }
+        }
+
+        function copyDesconto() {
+            const resEl = document.getElementById("resultadoDesconto");
+            if (!resEl || !resEl.innerText) return;
+
+            const text = resEl.innerText;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text).then(() => {
+                    if (typeof window.showSpellToast === 'function') {
+                        window.showSpellToast('Valor de desconto copiado!', 'fa-check');
+                    }
+                }).catch(() => {
+                    fallbackCopy(text);
+                });
+            } else {
+                fallbackCopy(text);
+            }
+        }
+
+        function calcularTempo() {
+            const data1Str = document.getElementById('data1').value;
+            const hora1Str = document.getElementById('hora1').value;
+            const data2Str = document.getElementById('data2').value;
+            const hora2Str = document.getElementById('hora2').value;
+
+            const resBox = document.getElementById("resultadoTempoBox");
+            const resEl = document.getElementById("resultadoTempo");
+
+            if (!data1Str || !hora1Str || !data2Str || !hora2Str) {
+                if (typeof window.showSpellToast === 'function') {
+                    window.showSpellToast('Preencha todas as datas e horários!', 'fa-triangle-exclamation');
+                } else {
+                    alert("Preencha todas as datas e horários.");
+                }
+                return;
+            }
+
+            const data1 = new Date(`${data1Str}T${hora1Str}`);
+            const data2 = new Date(`${data2Str}T${hora2Str}`);
+
+            const diffMs = Math.abs(data2.getTime() - data1.getTime());
+            const totalSegundos = Math.floor(diffMs / 1000);
+
+            const horas = Math.floor(totalSegundos / 3600);
+            const minutos = Math.floor((totalSegundos % 3600) / 60);
+            const segundos = totalSegundos % 60;
+
+            ultimoCalculoTempo = { horas, minutos, segundos };
+
+            resBox.style.display = "block";
+            resEl.innerText = `Resultado: ${horas}h ${minutos}min ${segundos}s`;
+
+            if (typeof window.showSpellToast === 'function') {
+                window.showSpellToast(`Duração calculada: ${horas}h ${minutos}min ${segundos}s`, 'fa-stopwatch');
+            }
+        }
+
+        function transferirParaDesconto() {
+            if (!ultimoCalculoTempo) return;
+
+            document.getElementById('horas').value = ultimoCalculoTempo.horas;
+            document.getElementById('minutos').value = ultimoCalculoTempo.minutos;
+            document.getElementById('segundos').value = ultimoCalculoTempo.segundos;
+
+            document.getElementById('horas').scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+            if (typeof window.showSpellToast === 'function') {
+                window.showSpellToast('Tempo transferido para a Calculadora de Desconto!', 'fa-arrow-left');
+            }
+
+            // Se mensalidade e diasMes já estiverem preenchidos, calcula automaticamente o desconto!
+            if (document.getElementById('mensalidade').value && document.getElementById('diasMes').value) {
+                calcularDesconto();
+            }
+        }
+
+        function fallbackCopy(text) {
+            const textArea = document.createElement("textarea");
+            textArea.value = text;
+            document.body.appendChild(textArea);
+            textArea.select();
+            try {
+                document.execCommand('copy');
+                if (typeof window.showSpellToast === 'function') {
+                    window.showSpellToast('Copiado com sucesso!', 'fa-check');
+                }
+            } catch (err) {
+                console.error(err);
+            }
+            document.body.removeChild(textArea);
+        }
+    </script>
 </body>
 </html>

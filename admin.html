@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Admin - Internet</title>
+    <title>Painel Administrativo - CAT | Internet</title>
     
     <!-- Google Fonts - Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,21 +15,47 @@
     
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/spell-ui.css">
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='45' fill='%2310b981'/><text x='50' y='68' text-anchor='middle' font-size='50' fill='white' font-family='Arial' font-weight='bold'>i</text></svg>">
-    
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='45' fill='%2327272a'/><text x='50' y='68' text-anchor='middle' font-size='50' fill='white' font-family='Arial' font-weight='bold'>i</text></svg>">
 </head>
 <body class="admin-panel">
+    <!-- Spell UI Bars Spinner Loader -->
+    <div id="spell-loader" class="spell-loader-overlay">
+        <div class="spell-bars-spinner-wrapper">
+            <div class="spell-spinner">
+                <div class="spell-bar"></div>
+                <div class="spell-bar"></div>
+                <div class="spell-bar"></div>
+                <div class="spell-bar"></div>
+                <div class="spell-bar"></div>
+                <div class="spell-bar"></div>
+                <div class="spell-bar"></div>
+                <div class="spell-bar"></div>
+                <div class="spell-bar"></div>
+                <div class="spell-bar"></div>
+                <div class="spell-bar"></div>
+                <div class="spell-bar"></div>
+            </div>
+        </div>
+        <p class="spell-loader-text">Carregando painel...</p>
+    </div>
+
+    <!-- Spell Light Rays Background -->
+    <canvas id="spell-light-rays" class="spell-canvas-bg"></canvas>
+
     <div class="dashboard-container">
         <!-- Sidebar -->
         <aside class="admin-sidebar" id="sidebar">
             <div class="sidebar-brand">
-                <i class="fa-solid fa-globe"></i>
+                <i class="fa-solid fa-layer-group"></i>
                 <span>Painel Internet</span>
             </div>
             
             <div class="sidebar-profile">
+                <div class="profile-avatar-spell">
+                    <i class="fa-solid fa-user-shield"></i>
+                </div>
                 <div class="profile-info">
-                    <span>Bem-vindo,</span>
+                    <span>Administrador</span>
                     <h4 id="sidebar-user-name">Carregando...</h4>
                 </div>
             </div>
@@ -38,34 +64,39 @@
                 <div class="menu-section">
                     <h5>Geral</h5>
                     <ul>
-                        <li><a href="admin.html" class="active"><i class="fa fa-home"></i> Dashboard</a></li>
-                        <li><a href="index.html"><i class="fa fa-desktop"></i> Ver Site</a></li>
+                        <li><a href="admin.html" class="active spell-pop-btn"><i class="fa-solid fa-chart-pie"></i> <span>Dashboard</span></a></li>
                     </ul>
                 </div>
                 
                 <div class="menu-section">
                     <h5>Conteúdo</h5>
                     <ul>
-                        <li><a href="add-procedure.html"><i class="fa fa-plus-circle"></i> Novo Procedimento</a></li>
-                        <li><a href="admin-procedures.html"><i class="fa fa-list"></i> Lista de Procedimentos</a></li>
-                        <li><a href="admin-logs.html"><i class="fa fa-history"></i> Log de Atividades</a></li>
+                        <li><a href="add-procedure.html" class="spell-pop-btn"><i class="fa-solid fa-plus-circle"></i> <span>Novo Procedimento</span></a></li>
+                        <li><a href="admin-procedures.html" class="spell-pop-btn"><i class="fa-solid fa-list-check"></i> <span>Procedimentos</span></a></li>
+                        <li><a href="admin-logs.html" class="spell-pop-btn"><i class="fa-solid fa-clock-rotate-left"></i> <span>Log de Atividades</span></a></li>
                     </ul>
                 </div>
 
                 <div class="menu-section">
-                    <h5>Configurações</h5>
+                    <h5>Ferramentas</h5>
                     <ul>
-                        <li><a href="admin-settings.html"><i class="fa fa-cog"></i> Configurações</a></li>
-                        <li><a href="#" class="theme-toggle-trigger"><i class="fa fa-moon"></i> Alternar Tema</a></li>
-                        <li><a href="#" id="sidebar-logout-btn"><i class="fa fa-sign-out-alt"></i> Sair</a></li>
+                        <li><a href="att.html" class="spell-pop-btn"><i class="fa-solid fa-pen-to-square"></i> <span>Abertura ATT</span></a></li>
+                        <li><a href="pre-registros.html" class="spell-pop-btn"><i class="fa-solid fa-clipboard-check"></i> <span>Pré-Registros</span></a></li>
+                        <li><a href="formatador.html" class="spell-pop-btn"><i class="fa-solid fa-wand-magic-sparkles"></i> <span>Formatador</span></a></li>
+                        <li><a href="calculadora.html" class="spell-pop-btn"><i class="fa-solid fa-calculator"></i> <span>Calculadora</span></a></li>
+                    </ul>
+                </div>
+
+                <div class="menu-section">
+                    <h5>Sistema</h5>
+                    <ul>
+                        <li><a href="admin-settings.html" class="spell-pop-btn"><i class="fa-solid fa-gear"></i> <span>Configurações</span></a></li>
+                        <li><a href="#" id="sidebar-logout-btn" class="spell-pop-btn" style="color: #ef4444;"><i class="fa-solid fa-right-from-bracket" style="color: #ef4444;"></i> <span>Sair</span></a></li>
                     </ul>
                 </div>
             </nav>
             
             <div class="sidebar-footer" style="display: none;">
-                <a href="#"><i class="fa fa-cog"></i></a>
-                <a href="#"><i class="fa fa-expand"></i></a>
-                <a href="#"><i class="fa fa-lock"></i></a>
                 <a href="#" id="footer-logout-btn"><i class="fa fa-power-off"></i></a>
             </div>
         </aside>
@@ -75,11 +106,13 @@
             <!-- Top Nav -->
             <header class="top-nav">
                 <div class="nav-left">
-                    <button class="toggle-menu-btn" id="toggle-sidebar">
-                        <i class="fa fa-bars"></i>
+                    <button class="toggle-menu-btn spell-pop-btn" id="toggle-sidebar" title="Alternar menu lateral" aria-label="Menu lateral">
+                        <i class="fa-solid fa-bars"></i>
                     </button>
                     <div class="admin-search-wrapper">
+                        <i class="fa-solid fa-search admin-search-icon-spell"></i>
                         <input type="text" id="admin-search-input" placeholder="Pesquisar procedimentos...">
+                        <kbd class="spell-kbd" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%);">/</kbd>
                     </div>
                 </div>
                 
@@ -90,43 +123,86 @@
             
             <!-- Content Body -->
             <div class="content-body">
+                <!-- Page Title -->
+                <div style="margin-bottom: 24px;">
+                    <h1 class="hero-title spell-blur-reveal" style="font-size: 1.85rem; margin-bottom: 6px;">
+                        Painel <span class="hero-highlight">Administrativo</span>
+                    </h1>
+                    <p class="hero-subtitle spell-blur-reveal" style="font-size: 13.5px; margin-bottom: 0;">
+                        Visão geral do sistema, métricas da base de procedimentos e histórico de atividades em tempo real.
+                    </p>
+                </div>
+
                 <!-- Metrics Bar -->
                 <div class="metrics-row">
-                    <div class="metric-tile">
-                        <span class="metric-title"><i class="fa fa-book"></i> Procedimentos</span>
+                    <!-- Metric 1 -->
+                    <div class="metric-tile spell-card spell-tilt-card spell-blur-reveal" data-blur-delay="0.1">
+                        <div class="metric-header-spell">
+                            <span class="metric-title">
+                                <i class="fa-solid fa-file-lines" style="color: #3b82f6;"></i> Procedimentos
+                            </span>
+                            <span class="spell-badge spell-badge-blue">ATIVOS</span>
+                        </div>
                         <span class="metric-value" id="metric-total-procedures">0</span>
-                        <span class="metric-stats"><span class="up"><i class="fa fa-arrow-up"></i> 4%</span> desde a última semana</span>
+                        <span class="metric-stats">
+                            <span class="up"><i class="fa-solid fa-circle-check"></i> Cadastrados no sistema</span>
+                        </span>
                     </div>
-                    <div class="metric-tile">
-                        <span class="metric-title"><i class="fa fa-folder"></i> Categorias</span>
+
+                    <!-- Metric 2 -->
+                    <div class="metric-tile spell-card spell-tilt-card spell-blur-reveal" data-blur-delay="0.16">
+                        <div class="metric-header-spell">
+                            <span class="metric-title">
+                                <i class="fa-solid fa-folder-tree" style="color: #f59e0b;"></i> Categorias
+                            </span>
+                            <span class="spell-badge spell-badge-amber">GRUPOS</span>
+                        </div>
                         <span class="metric-value" id="metric-total-categories">0</span>
-                        <span class="metric-stats"><span class="up"><i class="fa fa-arrow-up"></i> 3%</span> desde a última semana</span>
+                        <span class="metric-stats">
+                            <span class="up"><i class="fa-solid fa-layer-group"></i> Categorias ativas</span>
+                        </span>
                     </div>
-                    <div class="metric-tile">
-                        <span class="metric-title"><i class="fa fa-clock"></i> Log Hoje</span>
+
+                    <!-- Metric 3 -->
+                    <div class="metric-tile spell-card spell-tilt-card spell-blur-reveal" data-blur-delay="0.22">
+                        <div class="metric-header-spell">
+                            <span class="metric-title">
+                                <i class="fa-solid fa-clock-rotate-left" style="color: #10b981;"></i> Logs Hoje
+                            </span>
+                            <span class="spell-badge" style="background: rgba(16,185,129,0.12); color:#10b981; border: 1px solid rgba(16,185,129,0.3);">HOJE</span>
+                        </div>
                         <span class="metric-value" id="metric-logs-today">0</span>
-                        <span class="metric-stats"><span class="up"><i class="fa fa-arrow-up"></i> 34%</span> desde ontem</span>
+                        <span class="metric-stats">
+                            <span class="up"><i class="fa-solid fa-bolt"></i> Ações registradas hoje</span>
+                        </span>
                     </div>
                 </div>
                 
                 <!-- Dashboard Grid -->
                 <div class="dashboard-grid">
                     <!-- Procedures Table Card -->
-                    <div class="dashboard-card card-lg" id="procedures-card">
+                    <div class="dashboard-card card-lg spell-card spell-blur-reveal" id="procedures-card" data-blur-delay="0.28">
                         <div class="card-header">
-                            <h3>Procedimentos Recentes</h3>
+                            <h3>
+                                <i class="fa-solid fa-list-ul" style="color: #3b82f6;"></i>
+                                <span>Procedimentos Recentes</span>
+                            </h3>
                             <div class="card-tools">
+                                <a href="add-procedure.html" class="spell-btn spell-btn-sm spell-btn-primary spell-pop-btn" style="text-decoration: none;">
+                                    <i class="fa-solid fa-plus"></i>
+                                    <span>Novo</span>
+                                </a>
                                 <i class="fa fa-chevron-up" title="Minimizar/Maximizar"></i>
                             </div>
                         </div>
-                        <div class="card-body">
+                        <div class="card-body" style="padding: 0;">
                             <div class="table-wrapper" style="border: none;">
                                 <table class="admin-table-custom">
                                     <thead>
                                         <tr>
                                             <th>Título</th>
                                             <th>Categoria</th>
-                                            <th>Ações</th>
+                                            <th style="width: 110px; text-align: right; padding-right: 20px;">Ações</th>
                                         </tr>
                                     </thead>
                                     <tbody id="procedures-admin-body">
@@ -138,9 +214,12 @@
                     </div>
                     
                     <!-- Activity Log Card -->
-                    <div class="dashboard-card card-sm" id="logs-card">
+                    <div class="dashboard-card card-sm spell-card spell-blur-reveal" id="logs-card" data-blur-delay="0.34">
                         <div class="card-header">
-                            <h3>Atividades Recentes</h3>
+                            <h3>
+                                <i class="fa-solid fa-clock-rotate-left" style="color: #10b981;"></i>
+                                <span>Atividades Recentes</span>
+                            </h3>
                             <div class="card-tools">
                                 <i class="fa fa-chevron-up" title="Minimizar/Maximizar"></i>
                             </div>
@@ -149,8 +228,11 @@
                             <ul class="activity-list" id="activity-log-list">
                                 <!-- Preenchido via JS -->
                             </ul>
-                            <div style="margin-top: 20px; text-align: center;">
-                                <a href="#" id="view-all-logs" style="color: #1ABB9C; font-size: 0.8rem; text-decoration: none; font-weight: 600;">VER TODAS ATIVIDADES</a>
+                            <div style="margin-top: 18px; text-align: center;">
+                                <a href="#" id="view-all-logs" class="spell-btn spell-btn-sm spell-btn-secondary spell-pop-btn" style="width: 100%; text-decoration: none;">
+                                    <i class="fa-solid fa-clock-rotate-left"></i>
+                                    <span>Ver Todas as Atividades</span>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -160,15 +242,16 @@
         </main>
     </div>
 
-    <!-- Firebase (usando as mesmas versões do resto do projeto) -->
+    <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
 
-    <!-- Seus scripts -->
+    <!-- Scripts -->
     <script src="js/firebase-config.js"></script>
     <script src="js/common.js"></script>
     <script src="js/admin.js"></script>
+    <script src="js/spell-components.js"></script>
 
     <script>
         // Sidebar Toggle Logic
@@ -191,8 +274,11 @@
             });
         };
         
-        document.getElementById('sidebar-logout-btn').addEventListener('click', logoutHandler);
-        document.getElementById('footer-logout-btn').addEventListener('click', logoutHandler);
+        const sidebarLogout = document.getElementById('sidebar-logout-btn');
+        if (sidebarLogout) sidebarLogout.addEventListener('click', logoutHandler);
+        
+        const footerLogout = document.getElementById('footer-logout-btn');
+        if (footerLogout) footerLogout.addEventListener('click', logoutHandler);
     </script>
 </body>
 </html>

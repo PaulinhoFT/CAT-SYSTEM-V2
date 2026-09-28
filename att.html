@@ -1,28 +1,110 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CAT - Abertura de atendimento para equipe de campo</title>
+    <title>Abertura de Atendimento - CAT | Internet</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/spell-ui.css">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='45' fill='%2327272a'/><text x='50' y='68' text-anchor='middle' font-size='50' fill='white' font-family='Arial' font-weight='bold'>i</text></svg>">
 </head>
 <body>
-    <div class="navbar"></div>
+    <!-- Spell UI Bars Spinner Loader -->
+    <div id="spell-loader" class="spell-loader-overlay">
+        <div class="spell-bars-spinner-wrapper">
+            <div class="spell-spinner">
+                <div class="spell-bar"></div>
+                <div class="spell-bar"></div>
+                <div class="spell-bar"></div>
+                <div class="spell-bar"></div>
+                <div class="spell-bar"></div>
+                <div class="spell-bar"></div>
+                <div class="spell-bar"></div>
+                <div class="spell-bar"></div>
+                <div class="spell-bar"></div>
+                <div class="spell-bar"></div>
+                <div class="spell-bar"></div>
+                <div class="spell-bar"></div>
+            </div>
+        </div>
+        <p class="spell-loader-text">Carregando templates...</p>
+    </div>
 
+    <!-- Spell Light Rays Background -->
+    <canvas id="spell-light-rays" class="spell-canvas-bg"></canvas>
 
+    <div class="corpodireito">
+        <!-- Subpage Navigation Bar -->
+        <header class="spell-subpage-nav spell-blur-reveal" data-blur-delay="0.02">
+            <div class="spell-nav-left">
+                <a href="index.html" class="spell-nav-btn spell-pop-btn">
+                    <i class="fa-solid fa-arrow-left"></i>
+                    <span>Voltar ao Início</span>
+                </a>
+            </div>
+            <div class="spell-nav-right">
+                <div class="spell-nav-tools-group">
+                    <a href="pre-registros.html" class="spell-nav-btn spell-pop-btn" title="Pré-Registros">
+                        <i class="fa-solid fa-list-check"></i>
+                        <span>Pré-Registros</span>
+                    </a>
+                    <a href="formatador.html" class="spell-nav-btn spell-pop-btn" title="Formatador">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                        <span>Formatador</span>
+                    </a>
+                    <a href="calculadora.html" class="spell-nav-btn spell-pop-btn" title="Calculadora">
+                        <i class="fa-solid fa-calculator"></i>
+                        <span>Calculadora</span>
+                    </a>
+                </div>
+                <button id="theme-toggle" class="spell-nav-btn spell-pop-btn" title="Alternar tema">
+                    <i class="fa-solid fa-moon"></i>
+                </button>
+            </div>
+        </header>
 
-    <div class="main">
+        <!-- Hero Section -->
+        <div class="hero-section spell-blur-reveal" data-blur-delay="0.08">
+            <h1 class="hero-title spell-blur-reveal" data-blur-delay="0.16">
+                Abertura de <span class="hero-highlight">Atendimento</span>
+            </h1>
+            <p class="hero-subtitle spell-blur-reveal" data-blur-delay="0.22">
+                Templates padronizados para abertura de chamados técnicos e despacho para equipes de campo. Edite ou copie com um clique.
+            </p>
+        </div>
 
-        <div class="corpodireito">
-
-            <div class="titulo">
-                <div class="voltar"><a href="index.html"> Voltar </a></div>
-                <h1>Abertura de atendimento para equipe de campo - CAT | Internet</h1>
-
-            <div class="sntp">
-            <h3>Abertura de LOS</h3>
-            <textarea rows="10" cols="100">
-CAIXA: 
+        <!-- Templates Grid -->
+        <div class="spell-grid-2">
+            <!-- 1. Abertura de LOS -->
+            <div class="spell-card spell-tilt-card spell-blur-reveal" data-blur-delay="0.26">
+                <div class="spell-card-header">
+                    <div class="spell-card-header-left">
+                        <div class="spell-card-icon" style="color: #ef4444;">
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+                        </div>
+                        <div>
+                            <h3 class="spell-card-title">Abertura de LOS</h3>
+                            <div class="spell-card-subtitle">Sem sinal óptico / Rompimento</div>
+                        </div>
+                    </div>
+                    <div class="spell-card-actions">
+                        <span class="spell-badge spell-badge-red">LOS</span>
+                        <button class="spell-btn spell-btn-sm spell-btn-secondary spell-pop-btn" onclick="resetTemplate('tpl-los', 1)" title="Restaurar padrão">
+                            <i class="fa-solid fa-rotate-left"></i>
+                        </button>
+                        <button class="spell-btn spell-btn-sm spell-btn-primary spell-pop-btn" onclick="copyTemplate('tpl-los', this)">
+                            <i class="fa-regular fa-copy"></i>
+                            <span>Copiar</span>
+                        </button>
+                    </div>
+                </div>
+                <textarea id="tpl-los" class="spell-textarea" rows="9" spellcheck="false">CAIXA: 
 
 EMENDA: 
 
@@ -31,9 +113,32 @@ PPPOE:
 CONTATO: 
 
 PONTO DE REF.: </textarea>
-            <h3>Abertura de Atendimento Tecnico - Setor tecnico</h3>
-            <textarea rows="10" cols="100">
-CAIXA: 
+            </div>
+
+            <!-- 2. Abertura de Atendimento Tecnico - Setor tecnico -->
+            <div class="spell-card spell-tilt-card spell-blur-reveal" data-blur-delay="0.32">
+                <div class="spell-card-header">
+                    <div class="spell-card-header-left">
+                        <div class="spell-card-icon" style="color: #3b82f6;">
+                            <i class="fa-solid fa-screwdriver-wrench"></i>
+                        </div>
+                        <div>
+                            <h3 class="spell-card-title">Setor Técnico</h3>
+                            <div class="spell-card-subtitle">Atendimento Técnico Geral</div>
+                        </div>
+                    </div>
+                    <div class="spell-card-actions">
+                        <span class="spell-badge spell-badge-blue">TÉCNICO</span>
+                        <button class="spell-btn spell-btn-sm spell-btn-secondary spell-pop-btn" onclick="resetTemplate('tpl-setor-tec', 2)" title="Restaurar padrão">
+                            <i class="fa-solid fa-rotate-left"></i>
+                        </button>
+                        <button class="spell-btn spell-btn-sm spell-btn-primary spell-pop-btn" onclick="copyTemplate('tpl-setor-tec', this)">
+                            <i class="fa-regular fa-copy"></i>
+                            <span>Copiar</span>
+                        </button>
+                    </div>
+                </div>
+                <textarea id="tpl-setor-tec" class="spell-textarea" rows="9" spellcheck="false">CAIXA: 
 
 RECLAMAÇÃO: 
 
@@ -44,9 +149,32 @@ PPPOE:
 CONTATO: 
 
 PONTO DE REF.: </textarea>
-            <h3>Abertura de atendimento Tecnico - Fast</h3>
-            <textarea rows="10" cols="100">
-CAIXA: 
+            </div>
+
+            <!-- 3. Abertura de atendimento Tecnico - Fast -->
+            <div class="spell-card spell-tilt-card spell-blur-reveal" data-blur-delay="0.38">
+                <div class="spell-card-header">
+                    <div class="spell-card-header-left">
+                        <div class="spell-card-icon" style="color: #f59e0b;">
+                            <i class="fa-solid fa-bolt-lightning"></i>
+                        </div>
+                        <div>
+                            <h3 class="spell-card-title">Atendimento Fast</h3>
+                            <div class="spell-card-subtitle">Encaminhamento rápido com orientação</div>
+                        </div>
+                    </div>
+                    <div class="spell-card-actions">
+                        <span class="spell-badge spell-badge-amber">FAST</span>
+                        <button class="spell-btn spell-btn-sm spell-btn-secondary spell-pop-btn" onclick="resetTemplate('tpl-fast', 3)" title="Restaurar padrão">
+                            <i class="fa-solid fa-rotate-left"></i>
+                        </button>
+                        <button class="spell-btn spell-btn-sm spell-btn-primary spell-pop-btn" onclick="copyTemplate('tpl-fast', this)">
+                            <i class="fa-regular fa-copy"></i>
+                            <span>Copiar</span>
+                        </button>
+                    </div>
+                </div>
+                <textarea id="tpl-fast" class="spell-textarea" rows="9" spellcheck="false">CAIXA: 
 
 RECLAMAÇÃO: 
 
@@ -59,9 +187,32 @@ PPPOE:
 CONTATO: 
 
 PONTO DE REF.: </textarea>
-            <h3>Abertura de Sinal baixo</h3>
-            <textarea rows="10" cols="100">
-CAIXA: 
+            </div>
+
+            <!-- 4. Abertura de Sinal baixo -->
+            <div class="spell-card spell-tilt-card spell-blur-reveal" data-blur-delay="0.44">
+                <div class="spell-card-header">
+                    <div class="spell-card-header-left">
+                        <div class="spell-card-icon" style="color: #eab308;">
+                            <i class="fa-solid fa-signal"></i>
+                        </div>
+                        <div>
+                            <h3 class="spell-card-title">Sinal Baixo</h3>
+                            <div class="spell-card-subtitle">Atenuação óptica e verificação de caixa</div>
+                        </div>
+                    </div>
+                    <div class="spell-card-actions">
+                        <span class="spell-badge spell-badge-yellow">SINAL</span>
+                        <button class="spell-btn spell-btn-sm spell-btn-secondary spell-pop-btn" onclick="resetTemplate('tpl-sinal', 4)" title="Restaurar padrão">
+                            <i class="fa-solid fa-rotate-left"></i>
+                        </button>
+                        <button class="spell-btn spell-btn-sm spell-btn-primary spell-pop-btn" onclick="copyTemplate('tpl-sinal', this)">
+                            <i class="fa-regular fa-copy"></i>
+                            <span>Copiar</span>
+                        </button>
+                    </div>
+                </div>
+                <textarea id="tpl-sinal" class="spell-textarea" rows="9" spellcheck="false">CAIXA: 
 
 RECLAMAÇÃO: 
 
@@ -77,8 +228,6 @@ CONTATO:
 
 PONTO DE REF.: </textarea>
             </div>
-        
-            </div>
         </div>
     </div>
 
@@ -88,5 +237,58 @@ PONTO DE REF.: </textarea>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
     <script src="js/firebase-config.js"></script>
     <script src="js/common.js"></script>
+    <script src="js/spell-components.js"></script>
+
+    <script>
+        const defaultTemplates = {
+            1: "CAIXA: \n\nEMENDA: \n\nPPPOE: \n\nCONTATO: \n\nPONTO DE REF.: ",
+            2: "CAIXA: \n\nRECLAMAÇÃO: \n\nEMENDA: \n\nPPPOE: \n\nCONTATO: \n\nPONTO DE REF.: ",
+            3: "CAIXA: \n\nRECLAMAÇÃO: \n\nPROCEDIMENTOS REALIZADOS: \n\nORIENTAÇÃO: \n\nPPPOE: \n\nCONTATO: \n\nPONTO DE REF.: ",
+            4: "CAIXA: \n\nRECLAMAÇÃO: \n\nPROCEDIMENTOS REALIZADOS: EQUIPAMENTO COM SINAL BAIXO\nSINAL DA ONU: \nMELHOR SINAL DA CAIXA: \n\nEMENDA:  \n\nPPPOE: \n\nCONTATO: \n\nPONTO DE REF.: "
+        };
+
+        function copyTemplate(textareaId, btnElement) {
+            const textarea = document.getElementById(textareaId);
+            if (!textarea) return;
+
+            const text = textarea.value;
+            textarea.select();
+
+            const onSuccess = () => {
+                if (typeof window.showSpellToast === 'function') {
+                    window.showSpellToast('Template copiado com sucesso!', 'fa-check');
+                }
+                if (btnElement) {
+                    const originalHTML = btnElement.innerHTML;
+                    btnElement.innerHTML = '<i class="fa-solid fa-check"></i> <span>Copiado!</span>';
+                    btnElement.classList.add('spell-btn-success');
+                    setTimeout(() => {
+                        btnElement.innerHTML = originalHTML;
+                        btnElement.classList.remove('spell-btn-success');
+                    }, 2000);
+                }
+            };
+
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text).then(onSuccess).catch(() => {
+                    document.execCommand('copy');
+                    onSuccess();
+                });
+            } else {
+                document.execCommand('copy');
+                onSuccess();
+            }
+        }
+
+        function resetTemplate(textareaId, templateNumber) {
+            const textarea = document.getElementById(textareaId);
+            if (textarea && defaultTemplates[templateNumber]) {
+                textarea.value = defaultTemplates[templateNumber];
+                if (typeof window.showSpellToast === 'function') {
+                    window.showSpellToast('Template restaurado ao padrão!', 'fa-rotate-left');
+                }
+            }
+        }
+    </script>
 </body>
 </html>

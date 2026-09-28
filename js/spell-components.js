@@ -177,7 +177,7 @@
      * Based on spell.sh's Perspective Card and Tilt Card
      */
     function initSpellTiltCards() {
-        const targets = document.querySelectorAll('.quick-link-card, .hero-stat-card, .hero-section');
+        const targets = document.querySelectorAll('.quick-link-card, .hero-stat-card, .hero-section, .spell-card, .spell-pre-card, .spell-tilt-card');
 
         targets.forEach(card => {
             card.addEventListener('mousemove', (e) => {
@@ -190,13 +190,13 @@
                 card.style.setProperty('--mouse-y', `${y}px`);
 
                 // Calcula inclinação 3D se for card individual
-                if (card.classList.contains('quick-link-card') || card.classList.contains('hero-stat-card')) {
+                if (card.classList.contains('quick-link-card') || card.classList.contains('hero-stat-card') || card.classList.contains('spell-pre-card') || card.classList.contains('spell-tilt-card')) {
                     const centerX = rect.width / 2;
                     const centerY = rect.height / 2;
-                    const rotateX = ((y - centerY) / centerY) * -6; // max 6deg
-                    const rotateY = ((x - centerX) / centerX) * 6;  // max 6deg
+                    const rotateX = ((y - centerY) / centerY) * -5; // max 5deg
+                    const rotateY = ((x - centerX) / centerX) * 5;  // max 5deg
 
-                    card.style.transform = `perspective(800px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) translateY(-2px) scale3d(1.015, 1.015, 1.015)`;
+                    card.style.transform = `perspective(800px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) translateY(-2px) scale3d(1.012, 1.012, 1.012)`;
                 }
             });
 
@@ -237,7 +237,7 @@
      * 5. Spell Tactile Pop-Button Feedback
      */
     function initSpellPopButtons() {
-        const buttons = document.querySelectorAll('#login-btn, #logout-btn, #theme-toggle, .radio-toggle-btn, button[type="submit"]');
+        const buttons = document.querySelectorAll('#login-btn, #logout-btn, #theme-toggle, .radio-toggle-btn, button[type="submit"], .spell-btn, .spell-nav-btn, .spell-pill-btn, .spell-pre-btn');
 
         buttons.forEach(btn => {
             btn.classList.add('spell-pop-btn');
@@ -281,4 +281,70 @@
     };
 
     window.applySpellBlurReveal = applySpellBlurReveal;
+
+    /**
+     * 7. Spell UI Floating Toast Notification
+     */
+    window.showSpellToast = function(message = 'Copiado para a área de transferência!', icon = 'fa-check') {
+        let container = document.getElementById('spell-toast-container');
+        if (!container) {
+            container = document.createElement('div');
+            container.id = 'spell-toast-container';
+            container.className = 'spell-toast-container';
+            document.body.appendChild(container);
+        }
+
+        const toast = document.createElement('div');
+        toast.className = 'spell-toast';
+        toast.innerHTML = `<i class="fa-solid ${icon} spell-toast-icon"></i> <span>${message}</span>`;
+        container.appendChild(toast);
+
+        // Animação de entrada
+        requestAnimationFrame(() => {
+            toast.classList.add('show');
+        });
+
+        // Remoção com fade out
+        setTimeout(() => {
+            toast.classList.remove('show');
+            setTimeout(() => {
+                if (toast.parentNode) toast.parentNode.removeChild(toast);
+            }, 300);
+        }, 2200);
+    };
+
+    /**
+     * 8. Unified Spell UI Loader Controller
+     */
+    window.hideSpellLoader = function () {
+        const loader = document.getElementById('spell-loader');
+        if (loader && !loader.classList.contains('hidden')) {
+            loader.classList.add('hidden');
+            setTimeout(() => {
+                if (loader.parentNode) loader.parentNode.removeChild(loader);
+            }, 450);
+            if (typeof window.triggerSpellBlurReveal === 'function') {
+                window.triggerSpellBlurReveal();
+            }
+        }
+    };
+
+    // Auto-dismiss do loader EXCLUSIVAMENTE em páginas estáticas/ferramentas sem consulta ao Firestore
+    window.addEventListener('load', () => {
+        const pathname = window.location.pathname;
+        const isDbPage = pathname.endsWith('index.html') || 
+                         pathname === '/' || 
+                         pathname.endsWith('admin.html') ||
+                         pathname.endsWith('admin-procedures.html') ||
+                         pathname.endsWith('admin-logs.html') ||
+                         document.getElementById('procedures-list') !== null ||
+                         document.getElementById('procedures-admin-body') !== null;
+
+        // Páginas com banco de dados (index, admin) gerenciam a remoção do loader somente após a resposta do Firestore
+        if (!isDbPage) {
+            setTimeout(() => {
+                window.hideSpellLoader();
+            }, 120);
+        }
+    });
 })();

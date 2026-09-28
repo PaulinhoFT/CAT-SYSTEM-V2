@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gerenciar Procedimento - Internet</title>
+    <title>Gerenciar Procedimento - CAT | Internet</title>
     
     <!-- Google Fonts - Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,22 +14,50 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <link rel="stylesheet" href="css/style.css">
-    <!-- Incluir o CSS do Quill -->
+    <link rel="stylesheet" href="css/spell-ui.css">
+    <!-- Quill CSS -->
     <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='45' fill='%2310b981'/><text x='50' y='68' text-anchor='middle' font-size='50' fill='white' font-family='Arial' font-weight='bold'>i</text></svg>">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='45' fill='%2327272a'/><text x='50' y='68' text-anchor='middle' font-size='50' fill='white' font-family='Arial' font-weight='bold'>i</text></svg>">
 </head>
 <body class="admin-panel">
+    <!-- Spell UI Bars Spinner Loader -->
+    <div id="spell-loader" class="spell-loader-overlay">
+        <div class="spell-bars-spinner-wrapper">
+            <div class="spell-spinner">
+                <div class="spell-bar"></div>
+                <div class="spell-bar"></div>
+                <div class="spell-bar"></div>
+                <div class="spell-bar"></div>
+                <div class="spell-bar"></div>
+                <div class="spell-bar"></div>
+                <div class="spell-bar"></div>
+                <div class="spell-bar"></div>
+                <div class="spell-bar"></div>
+                <div class="spell-bar"></div>
+                <div class="spell-bar"></div>
+                <div class="spell-bar"></div>
+            </div>
+        </div>
+        <p class="spell-loader-text">Carregando editor...</p>
+    </div>
+
+    <!-- Spell Light Rays Background -->
+    <canvas id="spell-light-rays" class="spell-canvas-bg"></canvas>
+
     <div class="dashboard-container">
         <!-- Sidebar -->
         <aside class="admin-sidebar" id="sidebar">
             <div class="sidebar-brand">
-                <i class="fa-solid fa-globe"></i>
+                <i class="fa-solid fa-layer-group"></i>
                 <span>Painel Internet</span>
             </div>
             
             <div class="sidebar-profile">
+                <div class="profile-avatar-spell">
+                    <i class="fa-solid fa-user-shield"></i>
+                </div>
                 <div class="profile-info">
-                    <span>Bem-vindo,</span>
+                    <span>Administrador</span>
                     <h4 id="sidebar-user-name">Carregando...</h4>
                 </div>
             </div>
@@ -38,26 +66,34 @@
                 <div class="menu-section">
                     <h5>Geral</h5>
                     <ul>
-                        <li><a href="admin.html"><i class="fa fa-home"></i> Dashboard</a></li>
-                        <li><a href="index.html"><i class="fa fa-desktop"></i> Ver Site</a></li>
+                        <li><a href="admin.html" class="spell-pop-btn"><i class="fa-solid fa-chart-pie"></i> <span>Dashboard</span></a></li>
                     </ul>
                 </div>
                 
                 <div class="menu-section">
                     <h5>Conteúdo</h5>
                     <ul>
-                        <li><a href="add-procedure.html" class="active"><i class="fa fa-plus-circle"></i> Novo Procedimento</a></li>
-                        <li><a href="admin-procedures.html"><i class="fa fa-list"></i> Lista de Procedimentos</a></li>
-                        <li><a href="admin-logs.html"><i class="fa fa-history"></i> Log de Atividades</a></li>
+                        <li><a href="add-procedure.html" class="active spell-pop-btn"><i class="fa-solid fa-plus-circle"></i> <span>Novo Procedimento</span></a></li>
+                        <li><a href="admin-procedures.html" class="spell-pop-btn"><i class="fa-solid fa-list-check"></i> <span>Procedimentos</span></a></li>
+                        <li><a href="admin-logs.html" class="spell-pop-btn"><i class="fa-solid fa-clock-rotate-left"></i> <span>Log de Atividades</span></a></li>
                     </ul>
                 </div>
 
                 <div class="menu-section">
-                    <h5>Configurações</h5>
+                    <h5>Ferramentas</h5>
                     <ul>
-                        <li><a href="admin-settings.html"><i class="fa fa-cog"></i> Configurações</a></li>
-                        <li><a href="#" class="theme-toggle-trigger"><i class="fa fa-moon"></i> Alternar Tema</a></li>
-                        <li><a href="#" id="sidebar-logout-btn"><i class="fa fa-sign-out-alt"></i> Sair</a></li>
+                        <li><a href="att.html" class="spell-pop-btn"><i class="fa-solid fa-pen-to-square"></i> <span>Abertura ATT</span></a></li>
+                        <li><a href="pre-registros.html" class="spell-pop-btn"><i class="fa-solid fa-clipboard-check"></i> <span>Pré-Registros</span></a></li>
+                        <li><a href="formatador.html" class="spell-pop-btn"><i class="fa-solid fa-wand-magic-sparkles"></i> <span>Formatador</span></a></li>
+                        <li><a href="calculadora.html" class="spell-pop-btn"><i class="fa-solid fa-calculator"></i> <span>Calculadora</span></a></li>
+                    </ul>
+                </div>
+
+                <div class="menu-section">
+                    <h5>Sistema</h5>
+                    <ul>
+                        <li><a href="admin-settings.html" class="spell-pop-btn"><i class="fa-solid fa-gear"></i> <span>Configurações</span></a></li>
+                        <li><a href="#" id="sidebar-logout-btn" class="spell-pop-btn" style="color: #ef4444;"><i class="fa-solid fa-right-from-bracket" style="color: #ef4444;"></i> <span>Sair</span></a></li>
                     </ul>
                 </div>
             </nav>
@@ -68,36 +104,52 @@
             <!-- Top Nav -->
             <header class="top-nav">
                 <div class="nav-left">
-                    <button class="toggle-menu-btn" id="toggle-sidebar">
-                        <i class="fa fa-bars"></i>
+                    <button class="toggle-menu-btn spell-pop-btn" id="toggle-sidebar" title="Alternar menu lateral" aria-label="Menu lateral">
+                        <i class="fa-solid fa-bars"></i>
                     </button>
                     <div class="admin-search-wrapper" style="visibility: hidden;">
                         <input type="text" placeholder="Pesquisar...">
                     </div>
                 </div>
-                <div class="nav-right"></div>
+                
+                <div class="nav-right">
+                    <!-- Botões removidos conforme solicitado -->
+                </div>
             </header>
             
             <!-- Content Body -->
             <div class="content-body">
-                <div class="page-title" style="margin-bottom: 30px;">
-                    <h2 id="page-title" style="color: #6a8a7a; font-weight: 700;">Adicionar Novo Procedimento</h2>
+                <div style="margin-bottom: 24px;">
+                    <h1 class="hero-title spell-blur-reveal" id="page-title" style="font-size: 1.85rem; margin-bottom: 6px;">
+                        Adicionar Novo <span class="hero-highlight">Procedimento</span>
+                    </h1>
+                    <p class="hero-subtitle spell-blur-reveal" style="font-size: 13.5px; margin-bottom: 0;">
+                        Crie ou edite diretrizes, manuais técnicos e protocolos para o setor de atendimento.
+                    </p>
                 </div>
 
                 <div class="dashboard-grid">
-                    <div class="dashboard-card card-lg">
+                    <!-- Form Card -->
+                    <div class="dashboard-card card-lg spell-card spell-blur-reveal" data-blur-delay="0.1">
                         <div class="card-header">
-                            <h3>Formulário do Procedimento</h3>
+                            <h3>
+                                <i class="fa-solid fa-file-pen" style="color: #3b82f6;"></i>
+                                <span>Formulário do Procedimento</span>
+                            </h3>
                         </div>
                         <div class="card-body">
                             <form id="procedure-form">
-                                <div class="form-group" style="margin-bottom: 20px;">
-                                    <label for="title" style="display: block; margin-bottom: 5px; font-weight: 600;">Título do Procedimento</label>
-                                    <input type="text" id="title" required style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px;">
+                                <div class="spell-form-group">
+                                    <label for="title" class="spell-form-label">
+                                        <i class="fa-regular fa-heading" style="color: var(--text-muted); margin-right: 4px;"></i> Título do Procedimento
+                                    </label>
+                                    <input type="text" id="title" class="spell-input" required placeholder="Ex: Configuração de ONT ZTE F6600">
                                 </div>
-                                <div class="form-group" style="margin-bottom: 20px;">
-                                    <label for="category" style="display: block; margin-bottom: 5px; font-weight: 600;">Categoria</label>
-                                    <select id="category" required style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px;">
+                                <div class="spell-form-group">
+                                    <label for="category" class="spell-form-label">
+                                        <i class="fa-regular fa-folder" style="color: var(--text-muted); margin-right: 4px;"></i> Categoria
+                                    </label>
+                                    <select id="category" class="spell-select" required>
                                         <option value="" disabled selected>Selecione uma categoria</option>
                                         <option value="Suporte">Suporte</option>
                                         <option value="Financeiro">Financeiro</option>
@@ -106,24 +158,46 @@
                                         <option value="Informativo">Informativo</option>
                                     </select>
                                 </div>
-                                <div class="form-group" style="margin-bottom: 20px;">
-                                    <label for="editor" style="display: block; margin-bottom: 5px; font-weight: 600;">Conteúdo do Procedimento</label>
-                                    <div id="editor" style="height: 400px; background-color: white;"></div>
+                                <div class="spell-form-group">
+                                    <label for="editor" class="spell-form-label">
+                                        <i class="fa-regular fa-file-lines" style="color: var(--text-muted); margin-right: 4px;"></i> Conteúdo do Procedimento
+                                    </label>
+                                    <div id="editor" style="height: 380px;"></div>
                                 </div>
-                                <button type="submit" class="btn-action-sm btn-edit-sm" style="padding: 12px 24px; font-size: 1rem;">Salvar Procedimento</button>
+                                <button type="submit" class="spell-btn spell-btn-primary spell-pop-btn" style="padding: 12px 28px; font-size: 14px; margin-top: 14px;">
+                                    <i class="fa-solid fa-floppy-disk"></i>
+                                    <span>Salvar Procedimento</span>
+                                </button>
                             </form>
                         </div>
                     </div>
 
-                    <div class="dashboard-card card-sm">
+                    <!-- Guide Card -->
+                    <div class="dashboard-card card-sm spell-card spell-blur-reveal" data-blur-delay="0.18">
                         <div class="card-header">
-                            <h3>Guia do Editor</h3>
+                            <h3>
+                                <i class="fa-solid fa-circle-info" style="color: #f59e0b;"></i>
+                                <span>Guia do Editor</span>
+                            </h3>
                         </div>
                         <div class="card-body">
-                            <div class="manual">
-                                <p style="margin-bottom: 10px;"><strong>Negrito:</strong> Use o botão "B" na barra de ferramentas.</p>
-                                <p style="margin-bottom: 10px;"><strong>Cores:</strong> Use o seletor de cores.</p>
-                                <p style="margin-bottom: 10px;"><strong>Imagens:</strong> Clique no ícone de imagem para upload. Arraste as alças para redimensionar.</p>
+                            <div class="manual" style="display: flex; flex-direction: column; gap: 14px; font-size: 13px; color: var(--text-muted); line-height: 1.5;">
+                                <div style="display: flex; gap: 10px; align-items: flex-start;">
+                                    <i class="fa-solid fa-bold" style="color: var(--text); margin-top: 3px;"></i>
+                                    <div><strong style="color: var(--text);">Negrito & Ênfase:</strong> Utilize o botão <code>B</code> na barra de ferramentas ou o atalho <code>Ctrl+B</code>.</div>
+                                </div>
+                                <div style="display: flex; gap: 10px; align-items: flex-start;">
+                                    <i class="fa-solid fa-palette" style="color: var(--text); margin-top: 3px;"></i>
+                                    <div><strong style="color: var(--text);">Cores & Realce:</strong> Destaque termos cruciais usando a paleta de cores.</div>
+                                </div>
+                                <div style="display: flex; gap: 10px; align-items: flex-start;">
+                                    <i class="fa-solid fa-image" style="color: var(--text); margin-top: 3px;"></i>
+                                    <div><strong style="color: var(--text);">Imagens & Prints:</strong> Cole diretamente com <code>Ctrl+V</code> ou use o ícone de imagem para upload em nuvem com redimensionamento.</div>
+                                </div>
+                                <div style="display: flex; gap: 10px; align-items: flex-start;">
+                                    <i class="fa-solid fa-list-ol" style="color: var(--text); margin-top: 3px;"></i>
+                                    <div><strong style="color: var(--text);">Listas & Passos:</strong> Organize guias técnicos em passos numerados sequenciais.</div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -138,13 +212,15 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
 
-    <!-- Incluir o JavaScript do Quill -->
+    <!-- Quill JS -->
     <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/quill-image-resize-module@3.0.0/image-resize.min.js"></script>
 
+    <!-- App Scripts -->
     <script src="js/firebase-config.js"></script>
     <script src="js/common.js"></script>
     <script src="js/add-procedure.js"></script>
+    <script src="js/spell-components.js"></script>
 
     <script>
         // Sidebar Toggle Logic
@@ -164,6 +240,15 @@
             firebase.auth().signOut().then(() => {
                 window.location.href = 'index.html';
             });
+        });
+
+        // Auto-dismiss do loader nesta tela após iniciar o editor
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                if (typeof window.hideSpellLoader === 'function') {
+                    window.hideSpellLoader();
+                }
+            }, 150);
         });
     </script>
 </body>

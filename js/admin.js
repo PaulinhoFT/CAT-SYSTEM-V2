@@ -11,8 +11,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (!db) {
         console.error('Firebase DB not initialized');
+        if (typeof window.hideSpellLoader === 'function') window.hideSpellLoader();
         return;
     }
+
+    // Timeout de segurança para o loader no painel admin
+    setTimeout(() => {
+        if (typeof window.hideSpellLoader === 'function') window.hideSpellLoader();
+    }, 5000);
 
     // Carregar Procedimentos
     const isDashboard = window.location.pathname.includes('admin.html') && !window.location.pathname.includes('admin-');
@@ -54,8 +60,10 @@ document.addEventListener('DOMContentLoaded', () => {
             if (metricTotalProcedures) metricTotalProcedures.textContent = snapshot.size;
             if (metricTotalCategories) metricTotalCategories.textContent = categories.size;
         }
+        if (typeof window.hideSpellLoader === 'function') window.hideSpellLoader();
     }, error => {
         console.error("Erro ao carregar procedimentos:", error);
+        if (typeof window.hideSpellLoader === 'function') window.hideSpellLoader();
     });
 
     // Carregar Logs de Atividade (Resumo para o Dashboard)
@@ -130,8 +138,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 `;
                 fullLogsBody.appendChild(tr);
             });
+            if (typeof window.hideSpellLoader === 'function') window.hideSpellLoader();
         }, error => {
             console.error("Erro ao carregar logs completos:", error);
+            if (typeof window.hideSpellLoader === 'function') window.hideSpellLoader();
         });
     }
 
@@ -194,6 +204,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 userNameElems.forEach(el => {
                     if (el) el.textContent = nameToShow;
                 });
+            }
+            if (!proceduresAdminBody && !fullLogsBody && !activityLogList) {
+                if (typeof window.hideSpellLoader === 'function') window.hideSpellLoader();
             }
         });
     }

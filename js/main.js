@@ -3,6 +3,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const procedureContent = document.getElementById('procedure-content');
     const searchInput = document.getElementById('search-input');
 
+    let initialProceduresDone = false;
+    let initialLogsDone = false;
+
     const hideSpellLoader = () => {
         const loader = document.getElementById('spell-loader');
         if (loader && !loader.classList.contains('hidden')) {
@@ -11,15 +14,30 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (loader.parentNode) loader.parentNode.removeChild(loader);
             }, 450);
 
-            // Dispara a animação Blur Reveal do Spell UI nos textos da página após carregamento
+            // Dispara a animação Blur Reveal do Spell UI nos textos da página após carregamento completo
             if (typeof window.triggerSpellBlurReveal === 'function') {
                 window.triggerSpellBlurReveal();
             }
         }
     };
+    window.hideSpellLoader = hideSpellLoader;
 
-    // Segurança: se o Firestore demorar mais de 4 segundos, remove o loader
-    setTimeout(hideSpellLoader, 4000);
+    const tryDismissLoader = () => {
+        // Oculta o loader apenas quando os procedimentos E a tabela inicial de logs terminarem de carregar
+        if (initialProceduresDone && (initialLogsDone || !document.getElementById('log-table-body'))) {
+            hideSpellLoader();
+        }
+    };
+
+    // Segurança: se o Firestore demorar mais de 5 segundos, remove o loader para não travar
+    setTimeout(hideSpellLoader, 5000);
+
+    // Se os procedimentos já carregaram e os logs estiverem demorando mais de 2s adicionais, libera a tela
+    setTimeout(() => {
+        if (initialProceduresDone) {
+            hideSpellLoader();
+        }
+    }, 2500);
 
     if (!db) {
         console.error('Firestore indisponível — procedimentos e logs não serão carregados.');
@@ -47,11 +65,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Atualiza hero stats
         const categories = new Set(allProcedures.map(p => p.category).filter(Boolean));
-        document.getElementById('statProcedures').textContent = allProcedures.length;
-        document.getElementById('statCategories').textContent = categories.size;
+        const statProcEl = document.getElementById('statProcedures');
+        const statCatEl = document.getElementById('statCategories');
+        if (statProcEl) statProcEl.textContent = allProcedures.length;
+        if (statCatEl) statCatEl.textContent = categories.size;
 
+        initialProceduresDone = true;
+        tryDismissLoader();
+    }, error => {
+        handleFirestoreError('procedimentos', error);
+        initialProceduresDone = true;
         hideSpellLoader();
-    }, error => handleFirestoreError('procedimentos', error));
+    });
 
     // Atualiza contagem de atualizações do histórico
     db.collection('activity_logs').get().then(snapshot => {
@@ -212,7 +237,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 `;
                 logTableBody.appendChild(tr);
             });
-        }, error => handleFirestoreError('log de atividades', error));
+            initialLogsDone = true;
+            tryDismissLoader();
+        }, error => {
+            handleFirestoreError('log de atividades', error);
+            initialLogsDone = true;
+            tryDismissLoader();
+        });
+    } else {
+        initialLogsDone = true;
+        tryDismissLoader();
     }
 
     // Limpa cores escuras inline (como preto, cinza escuro, rgb(0,0,0)) para que herdem a cor do tema dinamicamente

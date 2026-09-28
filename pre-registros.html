@@ -1,41 +1,342 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pré Registros - Internet</title>
+    <title>Pré-Registros Prontos - CAT | Internet</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/spell-ui.css">
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='45' fill='%2310b981'/><text x='50' y='68' text-anchor='middle' font-size='50' fill='white' font-family='Arial' font-weight='bold'>i</text></svg>">
 </head>
 <body>
-    <div class="navbar"></div>
+    <!-- Spell UI Bars Spinner Loader -->
+    <div id="spell-loader" class="spell-loader-overlay">
+        <div class="spell-bars-spinner-wrapper">
+            <div class="spell-spinner">
+                <div class="spell-bar"></div>
+                <div class="spell-bar"></div>
+                <div class="spell-bar"></div>
+                <div class="spell-bar"></div>
+                <div class="spell-bar"></div>
+                <div class="spell-bar"></div>
+                <div class="spell-bar"></div>
+                <div class="spell-bar"></div>
+                <div class="spell-bar"></div>
+                <div class="spell-bar"></div>
+                <div class="spell-bar"></div>
+                <div class="spell-bar"></div>
+            </div>
+        </div>
+        <p class="spell-loader-text">Carregando registros...</p>
+    </div>
 
-    <div class="main">
-        <div class="corpodireito">
-            <div class="titulo">
-                <div class="voltar"><a href="index.html"> Voltar </a></div>
-                <h1>Pré Registros Prontos</h1>
-                <p>Clique nos botões abaixo para copiar o registro correspondente.</p>
+    <!-- Spell Light Rays Background -->
+    <canvas id="spell-light-rays" class="spell-canvas-bg"></canvas>
+
+    <div class="corpodireito">
+        <!-- Subpage Navigation Bar -->
+        <header class="spell-subpage-nav spell-blur-reveal" data-blur-delay="0.02">
+            <div class="spell-nav-left">
+                <a href="index.html" class="spell-nav-btn spell-pop-btn">
+                    <i class="fa-solid fa-arrow-left"></i>
+                    <span>Voltar ao Início</span>
+                </a>
+            </div>
+            <div class="spell-nav-right">
+                <div class="spell-nav-tools-group">
+                    <a href="att.html" class="spell-nav-btn spell-pop-btn" title="Abertura de ATT">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                        <span>Abertura ATT</span>
+                    </a>
+                    <a href="formatador.html" class="spell-nav-btn spell-pop-btn" title="Formatador">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                        <span>Formatador</span>
+                    </a>
+                    <a href="calculadora.html" class="spell-nav-btn spell-pop-btn" title="Calculadora">
+                        <i class="fa-solid fa-calculator"></i>
+                        <span>Calculadora</span>
+                    </a>
+                </div>
+                <button id="theme-toggle" class="spell-nav-btn spell-pop-btn" title="Alternar tema">
+                    <i class="fa-solid fa-moon"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- Hero Section -->
+        <div class="hero-section spell-blur-reveal" data-blur-delay="0.08">
+            <h1 class="hero-title spell-blur-reveal" data-blur-delay="0.16">
+                Pré-Registros <span class="hero-highlight">Prontos</span>
+            </h1>
+            <p class="hero-subtitle spell-blur-reveal" data-blur-delay="0.22">
+                Modelos pré-formatados de apontamentos técnicos, finalizações e prompts de IA. Clique no card ou no botão para copiar instantaneamente.
+            </p>
+        </div>
+
+        <!-- Filter & Search Toolbar -->
+        <div class="spell-filter-wrapper spell-blur-reveal" data-blur-delay="0.26">
+            <div class="spell-search-bar" id="reg-search-container">
+                <i class="fa-solid fa-search spell-search-icon"></i>
+                <input type="text" id="reg-search-input" placeholder="Filtrar registros por título ou conteúdo..." oninput="filterRegistros()">
+                <kbd class="spell-kbd" title="Pressione / para buscar">/</kbd>
+            </div>
+            <div class="spell-pill-filters">
+                <button class="spell-pill-btn active spell-pop-btn" data-category="all" onclick="setCategoryFilter('all', this)">Todos (<span id="count-all">15</span>)</button>
+                <button class="spell-pill-btn spell-pop-btn" data-category="tecnico" onclick="setCategoryFilter('tecnico', this)">Técnico & Rede</button>
+                <button class="spell-pill-btn spell-pop-btn" data-category="atendimento" onclick="setCategoryFilter('atendimento', this)">Atendimento</button>
+                <button class="spell-pill-btn spell-pop-btn" data-category="financeiro" onclick="setCategoryFilter('financeiro', this)">Financeiro</button>
+                <button class="spell-pill-btn spell-pop-btn" data-category="ia" onclick="setCategoryFilter('ia', this)"><i class="fa-solid fa-wand-magic-sparkles"></i> Prompts IA</button>
+            </div>
+        </div>
+
+        <div id="copy-status" class="copy-success" style="margin-bottom: 20px; display: none;">Copiado com sucesso!</div>
+
+        <!-- Cards Grid -->
+        <div class="spell-grid-cards" id="registros-container">
+            <!-- Card 1 -->
+            <div class="spell-pre-card spell-blur-reveal" data-category="tecnico" data-id="1" data-blur-delay="0.28" onclick="handleCardClick(event, 1)">
+                <div>
+                    <div class="spell-pre-header">
+                        <span class="spell-pre-num">REG #01</span>
+                        <span class="spell-badge spell-badge-amber">TÉCNICO</span>
+                    </div>
+                    <h3 class="spell-pre-title">Lentidão com att de firmware</h3>
+                    <div class="spell-pre-preview">LENTIDÃO. VALIDADO QUE NÃO CONSTA DIVERGENCIA NA REDE DO ASSINANTE ATIVADO TOPOLOGIA. ATIVADO UPNP...</div>
+                </div>
+                <button class="spell-pre-btn pre-registro-btn" onclick="copyPreRegistro(1); event.stopPropagation();">
+                    <i class="fa-regular fa-copy"></i>
+                    <span>Copiar Registro</span>
+                </button>
             </div>
 
-            <div id="copy-status" class="copy-success" style="margin-bottom: 20px; display: none;">Copiado com sucesso!</div>
+            <!-- Card 2 -->
+            <div class="spell-pre-card spell-blur-reveal" data-category="tecnico" data-id="2" data-blur-delay="0.30" onclick="handleCardClick(event, 2)">
+                <div>
+                    <div class="spell-pre-header">
+                        <span class="spell-pre-num">REG #02</span>
+                        <span class="spell-badge spell-badge-amber">TÉCNICO</span>
+                    </div>
+                    <h3 class="spell-pre-title">Lentidão com reinicio de equipamento</h3>
+                    <div class="spell-pre-preview">LENTIDÃO. VALIDADO QUE NÃO CONSTA DIVERGENCIA NA REDE DO ASSINANTE ATIVADO TOPOLOGIA... ASSINANTE RELATA MELHORA APÓS REINICIO...</div>
+                </div>
+                <button class="spell-pre-btn pre-registro-btn" onclick="copyPreRegistro(2); event.stopPropagation();">
+                    <i class="fa-regular fa-copy"></i>
+                    <span>Copiar Registro</span>
+                </button>
+            </div>
 
-            <div class="pre-registros-grid">
-                <button class="pre-registro-btn" onclick="copyPreRegistro(1)">Botão 1 - Lentidão com att de firmware</button>
-                <button class="pre-registro-btn" onclick="copyPreRegistro(2)">Botão 2 - Lentidão com reinicio de equipamento</button>
-                <button class="pre-registro-btn" onclick="copyPreRegistro(3)">Botão 3 - Conflito de rede interna</button>
-                <button class="pre-registro-btn" onclick="copyPreRegistro(4)">Botão 4 - Assinante sem internet (Tudo OK)</button>
-                <button class="pre-registro-btn" onclick="copyPreRegistro(5)">Botão 5 - Teste de velocidade solucionado</button>
-                <button class="pre-registro-btn" onclick="copyPreRegistro(6)">Botão 6 - Serviço não homologado (TVBOX/IPTV)</button>
-                <button class="pre-registro-btn" onclick="copyPreRegistro(7)">Botão 7 - Troca da senha Wi-Fi</button>
-                <button class="pre-registro-btn" onclick="copyPreRegistro(8)">Botão 8 - Não autentica solucionado interno</button>
-                <button class="pre-registro-btn" onclick="copyPreRegistro(9)">Botão 9 - Inatividade (Não falou nada)</button>
-                <button class="pre-registro-btn" onclick="copyPreRegistro(10)">Botão 10 - Envio de boleto</button>
-                <button class="pre-registro-btn" onclick="copyPreRegistro(11)">Botão 11 - Assinante enviou comprovante desbloqueio do assinante.</button>
-                <button class="pre-registro-btn" onclick="copyPreRegistro(12)">Botão 12 - Inatividade (lentidão)</button>
-                <button class="pre-registro-btn" onclick="copyPreRegistro(13)">Botão 13 - Registro pra IA</button>
-                <button class="pre-registro-btn" onclick="copyPreRegistro(14)">Botão 14 - IA leia o atendimento</button>
-                <button class="pre-registro-btn" onclick="copyPreRegistro(15)">Botão 15 - abertura de OS setor tec IA</button>
+            <!-- Card 3 -->
+            <div class="spell-pre-card spell-blur-reveal" data-category="tecnico" data-id="3" data-blur-delay="0.32" onclick="handleCardClick(event, 3)">
+                <div>
+                    <div class="spell-pre-header">
+                        <span class="spell-pre-num">REG #03</span>
+                        <span class="spell-badge spell-badge-amber">TÉCNICO</span>
+                    </div>
+                    <h3 class="spell-pre-title">Conflito de rede interna</h3>
+                    <div class="spell-pre-preview">VALIDADO QUE ASSINANTE ESTAVA COM CONFLITO DE REDE INTERNA. ORIENTADO SOBRE O CONFLITO. TESTADO PONTO PRINCIPAL...</div>
+                </div>
+                <button class="spell-pre-btn pre-registro-btn" onclick="copyPreRegistro(3); event.stopPropagation();">
+                    <i class="fa-regular fa-copy"></i>
+                    <span>Copiar Registro</span>
+                </button>
+            </div>
+
+            <!-- Card 4 -->
+            <div class="spell-pre-card spell-blur-reveal" data-category="tecnico" data-id="4" data-blur-delay="0.34" onclick="handleCardClick(event, 4)">
+                <div>
+                    <div class="spell-pre-header">
+                        <span class="spell-pre-num">REG #04</span>
+                        <span class="spell-badge spell-badge-blue">CONEXÃO</span>
+                    </div>
+                    <h3 class="spell-pre-title">Assinante sem internet (Tudo OK)</h3>
+                    <div class="spell-pre-preview">VERIFICADO QUE NÃO POSSUI NENHUMA DIVERGENCIA NA REDE DO ASSINANTE. TESTADO E TUDO OK.</div>
+                </div>
+                <button class="spell-pre-btn pre-registro-btn" onclick="copyPreRegistro(4); event.stopPropagation();">
+                    <i class="fa-regular fa-copy"></i>
+                    <span>Copiar Registro</span>
+                </button>
+            </div>
+
+            <!-- Card 5 -->
+            <div class="spell-pre-card spell-blur-reveal" data-category="tecnico" data-id="5" data-blur-delay="0.36" onclick="handleCardClick(event, 5)">
+                <div>
+                    <div class="spell-pre-header">
+                        <span class="spell-pre-num">REG #05</span>
+                        <span class="spell-badge spell-badge-blue">VELOCIDADE</span>
+                    </div>
+                    <h3 class="spell-pre-title">Teste de velocidade solucionado</h3>
+                    <div class="spell-pre-preview">ASSINANTE RELATA NÃO RECEBER OS MEGAS. ORIENTADO SOBRE AS REDES WI-FI E SOBRE O TESTE DE VELOCIDADE. TUDO OK.</div>
+                </div>
+                <button class="spell-pre-btn pre-registro-btn" onclick="copyPreRegistro(5); event.stopPropagation();">
+                    <i class="fa-regular fa-copy"></i>
+                    <span>Copiar Registro</span>
+                </button>
+            </div>
+
+            <!-- Card 6 -->
+            <div class="spell-pre-card spell-blur-reveal" data-category="atendimento" data-id="6" data-blur-delay="0.38" onclick="handleCardClick(event, 6)">
+                <div>
+                    <div class="spell-pre-header">
+                        <span class="spell-pre-num">REG #06</span>
+                        <span class="spell-badge spell-badge-red">SERVIÇO</span>
+                    </div>
+                    <h3 class="spell-pre-title">Serviço não homologado (TVBOX/IPTV)</h3>
+                    <div class="spell-pre-preview">VALIDADO QUE ASSINANTE POSSUI TVBOX/IPTV NÃO HOMOLOGADO. VALIDADO A CONEXÃO DE INTERNET TUDO OK.</div>
+                </div>
+                <button class="spell-pre-btn pre-registro-btn" onclick="copyPreRegistro(6); event.stopPropagation();">
+                    <i class="fa-regular fa-copy"></i>
+                    <span>Copiar Registro</span>
+                </button>
+            </div>
+
+            <!-- Card 7 -->
+            <div class="spell-pre-card spell-blur-reveal" data-category="atendimento" data-id="7" data-blur-delay="0.40" onclick="handleCardClick(event, 7)">
+                <div>
+                    <div class="spell-pre-header">
+                        <span class="spell-pre-num">REG #07</span>
+                        <span class="spell-badge spell-badge-blue">WI-FI</span>
+                    </div>
+                    <h3 class="spell-pre-title">Troca da senha Wi-Fi</h3>
+                    <div class="spell-pre-preview">SENHA ANTIGA: \nSENHA NOVA: \nCONTATO:</div>
+                </div>
+                <button class="spell-pre-btn pre-registro-btn" onclick="copyPreRegistro(7); event.stopPropagation();">
+                    <i class="fa-regular fa-copy"></i>
+                    <span>Copiar Registro</span>
+                </button>
+            </div>
+
+            <!-- Card 8 -->
+            <div class="spell-pre-card spell-blur-reveal" data-category="tecnico" data-id="8" data-blur-delay="0.42" onclick="handleCardClick(event, 8)">
+                <div>
+                    <div class="spell-pre-header">
+                        <span class="spell-pre-num">REG #08</span>
+                        <span class="spell-badge spell-badge-amber">AUTENTICAÇÃO</span>
+                    </div>
+                    <h3 class="spell-pre-title">Não autentica solucionado interno</h3>
+                    <div class="spell-pre-preview">VALIDADO QUE REDE DO ASSINANTE NÃO ESTAVA AUTENTICADA. REALIZADO PROCEDIMENTOS... ONDE SUBIU A CONEXÃO.</div>
+                </div>
+                <button class="spell-pre-btn pre-registro-btn" onclick="copyPreRegistro(8); event.stopPropagation();">
+                    <i class="fa-regular fa-copy"></i>
+                    <span>Copiar Registro</span>
+                </button>
+            </div>
+
+            <!-- Card 9 -->
+            <div class="spell-pre-card spell-blur-reveal" data-category="atendimento" data-id="9" data-blur-delay="0.44" onclick="handleCardClick(event, 9)">
+                <div>
+                    <div class="spell-pre-header">
+                        <span class="spell-pre-num">REG #09</span>
+                        <span class="spell-badge spell-badge-yellow">INATIVIDADE</span>
+                    </div>
+                    <h3 class="spell-pre-title">Inatividade (Não falou nada)</h3>
+                    <div class="spell-pre-preview">ASSINANTE ENTROU EM CONTATO, POREM NÃO RELATOU NADA. ATENDIMENTO FINALIZADO COM INATIVIDADE.</div>
+                </div>
+                <button class="spell-pre-btn pre-registro-btn" onclick="copyPreRegistro(9); event.stopPropagation();">
+                    <i class="fa-regular fa-copy"></i>
+                    <span>Copiar Registro</span>
+                </button>
+            </div>
+
+            <!-- Card 10 -->
+            <div class="spell-pre-card spell-blur-reveal" data-category="financeiro" data-id="10" data-blur-delay="0.46" onclick="handleCardClick(event, 10)">
+                <div>
+                    <div class="spell-pre-header">
+                        <span class="spell-pre-num">REG #10</span>
+                        <span class="spell-badge spell-badge-blue">FINANCEIRO</span>
+                    </div>
+                    <h3 class="spell-pre-title">Envio de boleto</h3>
+                    <div class="spell-pre-preview">ENVIADO BOLETO PARA ASSINANTE, CONFORME SOLICITADO.</div>
+                </div>
+                <button class="spell-pre-btn pre-registro-btn" onclick="copyPreRegistro(10); event.stopPropagation();">
+                    <i class="fa-regular fa-copy"></i>
+                    <span>Copiar Registro</span>
+                </button>
+            </div>
+
+            <!-- Card 11 -->
+            <div class="spell-pre-card spell-blur-reveal" data-category="financeiro" data-id="11" data-blur-delay="0.48" onclick="handleCardClick(event, 11)">
+                <div>
+                    <div class="spell-pre-header">
+                        <span class="spell-pre-num">REG #11</span>
+                        <span class="spell-badge spell-badge-blue">FINANCEIRO</span>
+                    </div>
+                    <h3 class="spell-pre-title">Assinante enviou comprovante desbloqueio</h3>
+                    <div class="spell-pre-preview">ASSINANTE DESBLOQUEADO, CONFORME ENVIO DO COMPROVANTE.</div>
+                </div>
+                <button class="spell-pre-btn pre-registro-btn" onclick="copyPreRegistro(11); event.stopPropagation();">
+                    <i class="fa-regular fa-copy"></i>
+                    <span>Copiar Registro</span>
+                </button>
+            </div>
+
+            <!-- Card 12 -->
+            <div class="spell-pre-card spell-blur-reveal" data-category="atendimento" data-id="12" data-blur-delay="0.50" onclick="handleCardClick(event, 12)">
+                <div>
+                    <div class="spell-pre-header">
+                        <span class="spell-pre-num">REG #12</span>
+                        <span class="spell-badge spell-badge-yellow">INATIVIDADE</span>
+                    </div>
+                    <h3 class="spell-pre-title">Inatividade (lentidão)</h3>
+                    <div class="spell-pre-preview">ASSINANTE ENTROU EM CONTATO RELATOU LENTIDÃO POREM FICOU INATIVO SENDO IMPOSSIVEL DAR SEQUENCIA...</div>
+                </div>
+                <button class="spell-pre-btn pre-registro-btn" onclick="copyPreRegistro(12); event.stopPropagation();">
+                    <i class="fa-regular fa-copy"></i>
+                    <span>Copiar Registro</span>
+                </button>
+            </div>
+
+            <!-- Card 13 -->
+            <div class="spell-pre-card spell-blur-reveal" data-category="ia" data-id="13" data-blur-delay="0.52" onclick="handleCardClick(event, 13)">
+                <div>
+                    <div class="spell-pre-header">
+                        <span class="spell-pre-num">REG #13</span>
+                        <span class="spell-badge spell-badge-blue"><i class="fa-solid fa-sparkles"></i> IA PROMPT</span>
+                    </div>
+                    <h3 class="spell-pre-title">Registro pra IA (Criar Registro)</h3>
+                    <div class="spell-pre-preview">Crie um registro desse atendimento do(a) XXX para poder registrar na ordem de serviço relatando o problema...</div>
+                </div>
+                <button class="spell-pre-btn pre-registro-btn" onclick="copyPreRegistro(13); event.stopPropagation();">
+                    <i class="fa-regular fa-copy"></i>
+                    <span>Copiar Prompt IA</span>
+                </button>
+            </div>
+
+            <!-- Card 14 -->
+            <div class="spell-pre-card spell-blur-reveal" data-category="ia" data-id="14" data-blur-delay="0.54" onclick="handleCardClick(event, 14)">
+                <div>
+                    <div class="spell-pre-header">
+                        <span class="spell-pre-num">REG #14</span>
+                        <span class="spell-badge spell-badge-blue"><i class="fa-solid fa-sparkles"></i> IA PROMPT</span>
+                    </div>
+                    <h3 class="spell-pre-title">IA leia o atendimento (3 Opções)</h3>
+                    <div class="spell-pre-preview">Por favor, leia todo o histórico deste atendimento e sugira 3 opções diferentes de respostas educadas...</div>
+                </div>
+                <button class="spell-pre-btn pre-registro-btn" onclick="copyPreRegistro(14); event.stopPropagation();">
+                    <i class="fa-regular fa-copy"></i>
+                    <span>Copiar Prompt IA</span>
+                </button>
+            </div>
+
+            <!-- Card 15 -->
+            <div class="spell-pre-card spell-blur-reveal" data-category="ia" data-id="15" data-blur-delay="0.56" onclick="handleCardClick(event, 15)">
+                <div>
+                    <div class="spell-pre-header">
+                        <span class="spell-pre-num">REG #15</span>
+                        <span class="spell-badge spell-badge-blue"><i class="fa-solid fa-sparkles"></i> IA PROMPT</span>
+                    </div>
+                    <h3 class="spell-pre-title">Abertura de OS setor tec IA</h3>
+                    <div class="spell-pre-preview">Por favor, analise este atendimento e extraia as informações necessárias para a abertura de uma Ordem de Serviço (OS)...</div>
+                </div>
+                <button class="spell-pre-btn pre-registro-btn" onclick="copyPreRegistro(15); event.stopPropagation();">
+                    <i class="fa-regular fa-copy"></i>
+                    <span>Copiar Prompt IA</span>
+                </button>
             </div>
         </div>
     </div>
@@ -46,6 +347,7 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
     <script src="js/firebase-config.js"></script>
     <script src="js/common.js"></script>
+    <script src="js/spell-components.js"></script>
 
     <script>
         const preRegistros = {
@@ -66,14 +368,43 @@
             15: `Por favor, analise este atendimento e extraia as informações necessárias para a abertura de uma Ordem de Serviço (OS) técnica. Preencha os seguintes campos de forma clara e objetiva:\n\nRECLAMAÇÃO DO ASSINANTE: [Detalhe o problema relatado]\nPROCEDIMENTOS REALIZADOS: [Liste SOMENTE os testes e ações técnicas feitas remotamente. Não inclua confirmação de endereço ou informações não técnicas]\nORIENTAÇÃO AO TEC. DE CAMPO: [O que o técnico precisará verificar ou fazer no local]\n\nIMPORTANTE: Todo o texto gerado deve estar EXCLUSIVAMENTE em letras MAIÚSCULAS para compatibilidade com nosso sistema.`
         };
 
+        let currentCategory = 'all';
+
+        function handleCardClick(event, id) {
+            // Evita disparar duas vezes se clicar direto no botão
+            if (event.target.closest('button')) return;
+            copyPreRegistro(id);
+        }
+
         function copyPreRegistro(id) {
             const text = preRegistros[id];
             if (!text) return;
 
+            const card = document.querySelector(`.spell-pre-card[data-id="${id}"]`);
+            const btn = card ? card.querySelector('.spell-pre-btn') : null;
+
+            const onSuccess = () => {
+                showCopyStatus();
+                if (typeof window.showSpellToast === 'function') {
+                    window.showSpellToast('Registro copiado com sucesso!', 'fa-check');
+                }
+                if (btn) {
+                    const originalHTML = btn.innerHTML;
+                    btn.innerHTML = '<i class="fa-solid fa-check"></i> <span>Copiado!</span>';
+                    btn.style.background = '#10b981';
+                    btn.style.color = '#ffffff';
+                    btn.style.borderColor = '#10b981';
+                    setTimeout(() => {
+                        btn.innerHTML = originalHTML;
+                        btn.style.background = '';
+                        btn.style.color = '';
+                        btn.style.borderColor = '';
+                    }, 1800);
+                }
+            };
+
             if (navigator.clipboard && navigator.clipboard.writeText) {
-                navigator.clipboard.writeText(text).then(() => {
-                    showCopyStatus();
-                }).catch(err => {
+                navigator.clipboard.writeText(text).then(onSuccess).catch(err => {
                     console.error('Erro ao copiar: ', err);
                     fallbackCopyText(text);
                 });
@@ -90,6 +421,9 @@
             try {
                 document.execCommand('copy');
                 showCopyStatus();
+                if (typeof window.showSpellToast === 'function') {
+                    window.showSpellToast('Registro copiado com sucesso!', 'fa-check');
+                }
             } catch (err) {
                 console.error('Erro ao copiar (fallback): ', err);
             }
@@ -98,10 +432,42 @@
 
         function showCopyStatus() {
             const status = document.getElementById('copy-status');
-            status.style.display = 'block';
-            setTimeout(() => {
-                status.style.display = 'none';
-            }, 2000);
+            if (status) {
+                status.style.display = 'block';
+                setTimeout(() => {
+                    status.style.display = 'none';
+                }, 2000);
+            }
+        }
+
+        function setCategoryFilter(category, btnElement) {
+            currentCategory = category;
+            document.querySelectorAll('.spell-pill-btn').forEach(btn => btn.classList.remove('active'));
+            if (btnElement) btnElement.classList.add('active');
+            filterRegistros();
+        }
+
+        function filterRegistros() {
+            const searchVal = (document.getElementById('reg-search-input').value || '').toLowerCase().trim();
+            const cards = document.querySelectorAll('.spell-pre-card');
+
+            cards.forEach(card => {
+                const category = card.dataset.category;
+                const matchesCategory = (currentCategory === 'all') || (category === currentCategory);
+
+                const title = (card.querySelector('.spell-pre-title')?.textContent || '').toLowerCase();
+                const preview = (card.querySelector('.spell-pre-preview')?.textContent || '').toLowerCase();
+                const cardId = card.dataset.id;
+                const fullText = (preRegistros[cardId] || '').toLowerCase();
+
+                const matchesSearch = !searchVal || title.includes(searchVal) || preview.includes(searchVal) || fullText.includes(searchVal);
+
+                if (matchesCategory && matchesSearch) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
         }
     </script>
 </body>
